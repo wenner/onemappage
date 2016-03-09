@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+    <meta charset="UTF-8">
+    <title>一张网地图展示</title>
+    <link rel="stylesheet" href="assets/css/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/esri/css/esri.css">
+    <link rel="stylesheet" href="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/claro.css" media="screen">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrapmap1.min.css">
+    <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <style type="text/css">
+        #mapDiv {
+            min-height: 100px;
+            max-height: 1000px;
+        }
+    </style>
+</head>
+<body  class="claro" style="height:100%;">
+<div id="outerwrap" style="height:100%">
+    <div id="mainwrap" style="height:100%">
+        <div id="mapPanel" style="position: relative;height:100%">
+            <div id="mapDiv" style="height:100%;width:100%"></div>
+            <!--bottom menu start-->
+            <div class="bmenu text-center">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#" data-modaltarget="modal1">
+                            <i class="fa fa-info-circle"></i>
+                            <p>AAA</p>
+                        </a>
+                    </li>
+                    <li class="current-menu-item">
+                        <a href="#" data-modaltarget="modal2">
+                            <i class="fa fa-bank"></i>
+
+                            <p>BBB</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-lightbulb-o"></i>
+
+                            <p>CCC</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-sign-in"></i>
+
+                            <p>DDD</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-question-circle"></i>
+
+                            <p>EEE</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-map-marker"></i>
+
+                            <p>FFF</p>
+                        </a>
+                    </li>
+                </ul>
+                <div class="navbar-right" style="margin-right:0;line-height:65px;padding-right:15px;">
+                    <a href="#"><i class="fa fa-home" style="font-size:24px"></i></a>
+                    <i class="fa fa-home" style="font-size:24px"></i>
+                </div>
+            </div>
+            <!--bottom menu end-->
+
+            <!--图例-->
+            <div id="toptools">
+                <div class="tool dropdown" id="maptype">
+                    <a data-toggle="dropdown" style="background:#fff">
+                        <i class="fa fa-map-marker"></i>
+                        地图类别
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div id="basemapGallery"></div>
+                    </div>
+
+                </div>
+                <div class="tool">
+                    <a href="#" id="sidepanel-togglemenu"><i class="fa fa-indent"></i></a>
+                </div>
+            </div>
+
+            <div id="BasemapToggle"></div>
+        </div>
+        <div id="sidepanel">
+            <div class='bg-primary' style="position:fixed;padding:10px 20px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:300">
+
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">关键字查询 <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">关键字查询</a></li>
+                            <li><a href="#">病害类别</a></li>
+                            <li><a href="#">危险品</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">其他</a></li>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+
+            <div style="padding:10px 20px;height:100%;margin-top:50px" class="mCustomScrollbar" data-mcs-theme="minimal-dark">
+                <input type="button" id="aaaa" value="啊啊啊啊">
+
+                <ul class="list-group">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="dijitHidden">
+    <!-- dialog that gets its content via ajax, uses loading message -->
+    <div data-dojo-type="dijit/Dialog"
+         style="width:300px;height:300px;background:#Fff"
+         data-dojo-props="title:'弹出框例子1',href:'scripts/views/modal1.html',loadingMessage:'Loading dialog content...'"
+         id="modal1"></div>
+
+    <div data-dojo-type="dijit/Dialog"
+         style="width:300px;height:300px;background:#Fff"
+         data-dojo-props="title:'弹出框例子2',href:'scripts/views/modal2.html',loadingMessage:'Loading dialog content...'"
+         id="modal2"></div>
+</div>
+
+
+<script>
+    var dojoConfig={
+        parseOnLoad:true ,
+        packages:[{
+            "name":"myModules" ,
+            "location":location.pathname.replace(/\/[^/]+$/ , "")+"/scripts/modules"
+        }]
+    };
+</script>
+<script type="text/javascript" src="assets/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="assets/scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/scripts/owl.carousel.min.js"></script>
+<script type="text/javascript" src="assets/scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script src="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/init.js"></script>
+<script src="scripts/main.js"></script>
+
+<script src="scripts/map.js"></script>
+
+</body>
+</html>
