@@ -38,6 +38,24 @@ a {cursor: pointer}
     width:25%
 }
 
+#sidecontent {
+    padding:10px 0px;height:100%;margin-top:50px
+}
+
+#sidecontent .list-group {
+    border-radius: 0;
+}
+#sidecontent .list-group {
+    border-radius: 0;
+}
+
+
+#XYinfo {
+    position:absolute;
+    left: 10px;
+    bottom:70px;
+    background:#eee;
+}
 
 
 .bmenu {z-index:200;background:#0265dc;border:0;

@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/esri/css/esri.css">
     <link rel="stylesheet" href="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/dijit/themes/claro/claro.css">
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/claro.css" media="screen">
 
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrapmap1.min.css">
     <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.css" type="text/css">
+    <link rel="stylesheet" href="scripts/modules/infoWindow/InfoWindow.css" type="text/css">
+
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <style type="text/css">
         #mapDiv {
@@ -96,6 +96,8 @@
             </div>
 
             <div id="BasemapToggle"></div>
+
+            <div id="XYinfo"></div>
         </div>
         <div id="sidepanel">
             <div class='bg-primary' style="position:fixed;padding:10px 20px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:300">
@@ -112,25 +114,18 @@
                             <li><a href="#">其他</a></li>
                         </ul>
                     </div>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="searchText" value="空港">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
+                        <button class="btn btn-default" type="button" id="findBtn">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
                 </div>
             </div>
 
-            <div style="padding:10px 20px;height:100%;margin-top:50px" class="mCustomScrollbar" data-mcs-theme="minimal-dark">
-                <input type="button" id="aaaa" value="啊啊啊啊">
-
-                <ul class="list-group">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
+            <div id="sidecontent" class="mCustomScrollbar" data-mcs-theme="minimal-dark">
+                <div class="list-group" id="contentsContainer">
+                </div>
             </div>
 
         </div>

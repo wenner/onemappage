@@ -3,7 +3,7 @@ var map;
 require(["dojo/parser","dojo/dom","dojo/dom-construct", "dojo/on","dojo/string", "esri/map","esri/basemaps","esri/dijit/Basemap","esri/dijit/BasemapLayer", "esri/dijit/BasemapToggle","esri/dijit/BasemapGallery","esri/arcgis/utils",
         "esri/geometry/Extent", "esri/layers/GraphicsLayer","esri/graphic","esri/layers/FeatureLayer",
         "esri/SpatialReference", "esri/layers/ArcGISTiledMapServiceLayer", "esri/layers/ArcGISDynamicMapServiceLayer","esri/layers/ArcGISImageServiceLayer","esri/layers/ImageServiceParameters", "esri/geometry/Point",
-        "esri/tasks/FindTask", "esri/tasks/FindParameters", "esri/InfoTemplate","myModules/InfoWindow", //自定义的Infowindow
+        "esri/tasks/FindTask", "esri/tasks/FindParameters", "esri/InfoTemplate","myModules/InfoWindow/InfoWindow", //自定义的Infowindow
         "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol", "esri/symbols/SimpleFillSymbol", "esri/renderers/SimpleRenderer","esri/Color",
         "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dojo/domReady!"],
     function (parser, dom,domConstruct,on, string,Map,esriBasemaps,Basemap,BasemapLayer,BasemapToggle, BasemapGallery, arcgisUtils,
@@ -244,13 +244,13 @@ require(["dojo/parser","dojo/dom","dojo/dom-construct", "dojo/on","dojo/string",
                 map.graphics.add(graphic);
 
                 if (curFeature.layerId === 0) {
-                    innerHtml += "<a href='javascript:positionFeature(" + graphic.attributes.FID + ")'>" + graphic.attributes.ObjName + "</a><br>";
+                    innerHtml += "<a href='javascript:positionFeature(" + graphic.attributes.FID + ")' class='list-group-item'>" + graphic.attributes.ObjName + "</a>";
                 }
                 else if (curFeature.layerId === 1) {
-                    innerHtml += "<a href='javascript:positionFeature(" + graphic.attributes.FID + ")'>" + graphic.attributes.ObjName + "</a><br>";
+                    innerHtml += "<a href='javascript:positionFeature(" + graphic.attributes.FID + ")' class='list-group-item'>" + graphic.attributes.ObjName + "</a>";
                 }
                 else if(curFeature.layerId == 2) {
-                    innerHtml += "<a href='javascript:positionFeature(" + graphic.attributes.FID + ")'>" + graphic.attributes.XMMC + "</a><br>";
+                    innerHtml += "<a href='javascript:positionFeature(" + graphic.attributes.FID + ")' class='list-group-item'>" + graphic.attributes.XMMC + "</a>";
                 }
             }
 
@@ -264,6 +264,7 @@ require(["dojo/parser","dojo/dom","dojo/dom-construct", "dojo/on","dojo/string",
 
 
         window.positionFeature = function (id) {
+            console.log($(this));
             var sGrapphic;
             //遍历地图的图形查找FID和点击行的FID相同的图形
             for (var i = 0; i < map.graphics.graphics.length; i++) {
