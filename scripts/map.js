@@ -1,15 +1,19 @@
 var map, tb, toolbar;
 require(["dojo/parser", "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/string", "esri/map", "esri/basemaps", "esri/dijit/Basemap", "esri/dijit/BasemapLayer", "esri/dijit/BasemapToggle", "esri/dijit/BasemapGallery", "esri/arcgis/utils",
-        "esri/geometry/Extent", "esri/layers/GraphicsLayer", "esri/graphic", "esri/layers/FeatureLayer", "esri/toolbars/draw",
+        "esri/geometry/Extent", "esri/layers/GraphicsLayer", "esri/graphic", "esri/layers/FeatureLayer", "esri/toolbars/draw","esri/tasks/Geoprocessor","esri/tasks/JobInfo",
+        "esri/tasks/FeatureSet","esri/tasks/LinearUnit",
         "esri/SpatialReference", "esri/layers/ArcGISTiledMapServiceLayer", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISImageServiceLayer", "esri/layers/ImageServiceParameters", "esri/geometry/Point",
         "esri/tasks/FindTask", "esri/tasks/FindParameters", "esri/InfoTemplate", "myModules/InfoWindow/InfoWindow",  "esri/symbols/CartographicLineSymbol", "esri/symbols/PictureFillSymbol", //自定义的Infowindow
         "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol", "esri/symbols/SimpleFillSymbol", "esri/renderers/SimpleRenderer", "esri/Color",
         "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dojo/domReady!"],
     function (parser, dom, domConstruct, on, string, Map, esriBasemaps, Basemap, BasemapLayer, BasemapToggle, BasemapGallery, arcgisUtils,
-              Extent, GraphicsLayer, Graphic, FeatureLayer, Draw,
+              Extent, GraphicsLayer, Graphic, FeatureLayer, Draw,Geoprocessor,JobInfo,FeatureSet,LinearUnit,
               SpatialReference, ArcGISTiledMapServiceLayer, ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ImageServiceParameters, Point,
               FindTask, FindParameters, InfoTemplate, InfoWindow,CartographicLineSymbol, PictureFillSymbol,
               SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol, SimpleRenderer, Color) {
+        //配置代理------------------------------------------A
+        esriConfig.defaults.io.proxyUrl = "/proxy/proxy.ashx";
+        //esriConfig.defaults.io.alwaysUseProxy = true;
         //parser.parse();
         //自定义basemap
         var basemaps = [];
@@ -128,11 +132,7 @@ require(["dojo/parser", "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/strin
          );//end require
          }//end createBmGallery*/
 
-        //如果没有basemap 在此处添加静态或动态图
-        /*var agoServiceURL = "http://60.29.110.104:6080/arcgis/rest/services/kgmap/MapServer";
-         var agoLayer = new ArcGISTiledMapServiceLayer(agoServiceURL);
-         map.addLayer(agoLayer);*/
-        var symbol;
+        var symbol,graphic;
         var markerSymbol = new SimpleMarkerSymbol();
         markerSymbol.setPath("M50,2.125c26.441,0,47.875,21.434,47.875,47.875c0,26.441-21.434,47.875-47.875,47.875C17.857,97.875,2.125,76.441,2.125,50C2.125,23.559,23.559,2.125,50,2.125z'/><g class='icon'><path class='base' d='M50,19.53c13.945,0,25.248,11.213,25.248,25.045C75.248,60.437,54.207,80.47,50,80.47c-4.208,0-25.248-20.033-25.248-35.895C24.752,30.743,36.056,19.53,50,19.53z'/><path class='inner' d='M50,30.488c8.174,0,14.8,6.625,14.8,14.799c0,8.173-6.626,14.8-14.8,14.8s-14.8-6.626-14.8-14.799C35.2,37.114,41.826,30.488,50,30.488z");
         markerSymbol.setColor(new Color("red"));
@@ -147,7 +147,7 @@ require(["dojo/parser", "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/strin
         // fill symbol used for extent, polygon and freehand polygon, use a picture fill symbol
         // the images folder contains additional fill images, other options: sand.png, swamp.png or stiple.png
         var fillSymbol = new PictureFillSymbol(
-            "../onemappage-master/assets/images/mangrove.png",
+            "../onemappage/assets/images/mangrove.png",
             new SimpleLineSymbol(
                 SimpleLineSymbol.STYLE_SOLID,
                 new Color('#000'),
@@ -370,8 +370,32 @@ require(["dojo/parser", "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/strin
         });
         on(dom.byId("modal2"), "click", function(evt) {
             console.log("触发的ID为："+evt.target.id.toLowerCase());
-            if ( evt.target.id === "info" ) {
-                return;
+            if ( evt.target.id === "btnBuffer" ) {
+                var bufferNum=dom.byId("inputBufferNum").value;
+                var bufferDistance=dom.byId("inputBufferDistance").value;
+                console.log("绘制缓存层级为："+bufferNum+"缓冲区半径为："+bufferDistance);
+
+                if(bufferNum > 0){
+                    console.log("bufferNum > 0,进入switch语句");
+                    switch(bufferNum)
+                    {
+                        case "1":
+                            console.log("进入switch语句，执行buffer的层级数量1");
+                            tojob(graphic,bufferDistance);
+                            break;
+                        case "2":
+                            tojob(graphic,bufferDistance);
+                            tojob(graphic,bufferDistance*2);
+                            break;
+                        case "3":
+                            tojob(graphic,bufferDistance);
+                            tojob(graphic,bufferDistance*2);
+                            tojob(graphic,bufferDistance*3);
+                            break;
+                        default:
+                            return;
+                    }
+                }
             }else if(evt.target.id.toLowerCase()==="polygon"){
                 var tool = evt.target.id.toLowerCase();
                 console.log("var tool = evt.target.id.toLowerCase();   "+tool);
@@ -393,11 +417,16 @@ require(["dojo/parser", "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/strin
                 console.log("var tool = evt.target.id.toLowerCase();   "+tool);
                 map.disableMapNavigation();
                 tb.activate(tool);
+            }else if(evt.target.id.toLowerCase()==="btncleanbuffer"){
+                cleanGraphic();
             }
-            else {
+            else{
                 return;
             }
         });
+
+
+
         function addGraphic(evt) {
             //deactivate the toolbar and clear existing graphics
             tb.deactivate();
@@ -412,8 +441,65 @@ require(["dojo/parser", "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/strin
             else {
                 symbol = fillSymbol;
             }
+            graphic=new Graphic(evt.geometry,symbol);
             map.graphics.add(new Graphic(evt.geometry, symbol));
+        }
 
+        function tojob(graphic,distance) {
+            //第一步构造GP
+            var gpUrl = 'http://60.29.110.104:6080/arcgis/rest/services/GP/缓冲区分析/GPServer/Buffer_point2poly';
+            gp = new Geoprocessor(gpUrl);
+            //第二步，构造参数
+            //我们通过上面，了解到GPFeatureRecordSetLayer对应FeatureSet
+            var features = [];
+            features.push(graphic);
+            var featureset = new FeatureSet();
+            featureset.features = features;
+            //构造缓冲长度，这里的单位是可以更改的
+            var Dis = new LinearUnit();
+            Dis.distance = distance;
+            //Dis.units = "esriKilometers";
+            Dis.units = "esriMeters";
+            var parms = {
+                pDistance: Dis,
+                pDataSet: featureset
+            };
+            //这里函数是异步的，使用函数是submitJob,同步的使用的是execute。
+            //成功之后，调用jobResult,建议看一下这个参数。
+            gp.submitJob(parms, jobResult);
+        }
+
+        /**
+         * 计算完成
+         * @param result
+         */
+        function jobResult(result) {
+            var jobId = result.jobId;
+            var status = result.jobStatus;
+            if(status === JobInfo.STATUS_SUCCEEDED) {
+                //成功之后，将其中的结果取出来，当然这也是参数名字。
+                //在模型中，想要取出中间结果，需要设置为模型参数
+                console.log("GP服务执行成功。   status:"+status  + "   jobId:"+jobId);
+                gp.getResultData(jobId, "outSHP", addResults);
+            }
+        }
+        function addResults(results){
+            var features = results.value.features;
+            if(features.length>0) {
+                console.log("callback success... features.length="+features.length);
+                for (var i = 0, length = features.length; i != length; ++i) {
+                    var feature = features[i];
+                    var polySymbolRed = new SimpleFillSymbol();
+                    polySymbolRed.setOutline(new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0, 0, 0, 0.5]), 1));
+                    polySymbolRed.setColor(new Color([255, 0, 0, 0.5]));
+                    feature.setSymbol(polySymbolRed);
+                    map.graphics.add(feature);
+                }
+                console.log("提示","计算成功！");
+            }
+            else{
+                console.log("提示","计算失败！");
+            }
         }
 /*        function drawEnd(geometry) {
             console.log("执行绘制结束后的操作   geometry:type   " + geometry);
@@ -437,22 +523,27 @@ require(["dojo/parser", "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/strin
         }*/
 
         //点击一级查询结果单条记录，进行二次ajax查询sql数据库，返回数据 by wwmin 20160304 13:52:16
-        function QueryTextFromSql() {
-            console.log("进入ajax查询数据方法");
-            $.ajax({
-                //                type: "GET",
-                //                url: "http://ajhb.tjxrs.cn/FMService/chemical",
-                type: "POST",
-                url: "http://ajhb.tjxrs.cn/LoginService/test",
-                async: true,  //是否异步，true为是异步
-                dataType: "text",
-                success: function (response) {
-                    alert("ajax成功，返回数据为：" + response);
-                },
-                error: function (ex) {
-                    console.log(ex.toLocaleString() + "   alarm失败 。");
-                }
-            });
+        //function QueryTextFromSql() {
+        //    console.log("进入ajax查询数据方法");
+        //    $.ajax({
+        //        //                type: "GET",
+        //        //                url: "http://ajhb.tjxrs.cn/FMService/chemical",
+        //        type: "POST",
+        //        url: "http://ajhb.tjxrs.cn/LoginService/test",
+        //        async: true,  //是否异步，true为是异步
+        //        dataType: "text",
+        //        success: function (response) {
+        //            alert("ajax成功，返回数据为：" + response);
+        //        },
+        //        error: function (ex) {
+        //            console.log(ex.toLocaleString() + "   alarm失败 。");
+        //        }
+        //    });
+        //}
+
+        //清楚map上的graphic
+        function cleanGraphic(){
+            map.graphics.clear();
         }
     });
 
