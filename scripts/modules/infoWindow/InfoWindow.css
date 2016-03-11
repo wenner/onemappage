@@ -28,8 +28,8 @@ body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div
 }
 .myInfoWindow .xndw_con_bg {
   background: url(info_content_fj.png) no-repeat;
-  width: 345px;  /*控制文字背景图片的宽度*/
-  height: 340px;
+  width: 335px;  /*控制文字背景图片的宽度*/
+  height: 250px;
   margin: 0 auto;
   margin: 4px 0 0 7px;
   float: left;
