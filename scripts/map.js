@@ -416,7 +416,7 @@ require(["dojo/parser", "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/strin
                 console.log("var tool = evt.target.id.toLowerCase();   "+tool);
                 map.disableMapNavigation();
                 tb.activate(tool);
-            }else if(evt.target.id.toLowerCase()==="btncleanbuffer"){
+            }else if(evt.target.id.toLowerCase()==="btncleanbuffer" || evt.target.id.toLowerCase()==="btncleanresult"){
                 cleanGraphic();
             }
             else{
