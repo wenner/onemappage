@@ -15,7 +15,7 @@
     <style type="text/css">
         #mapDiv {
             min-height: 100px;
-            max-height: 1000px;
+            max-height: 2000px;
         }
     </style>
 </head>
@@ -29,43 +29,40 @@
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="#" data-modaltarget="modal1">
-                            <i class="fa fa-info-circle"></i>
-                            <p>AAA</p>
+                            <i class="fa fa-map-marker"></i>
+                            <p>事件定位</p>
                         </a>
                     </li>
                     <li class="current-menu-item">
                         <a href="#" data-modaltarget="modal2">
                             <i class="fa fa-bank"></i>
 
-                            <p>BBB</p>
+                            <p>范围确定</p>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" data-modaltarget="modal3">
                             <i class="fa fa-lightbulb-o"></i>
-
-                            <p>CCC</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-sign-in"></i>
-
-                            <p>DDD</p>
+                            <p>影响分析</p>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <i class="fa fa-question-circle"></i>
 
-                            <p>EEE</p>
+                            <p>资源分析</p>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <i class="fa fa-map-marker"></i>
-
-                            <p>FFF</p>
+                            <i class="fa fa-sign-in"></i>
+                            <p>路径分析</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-info-circle"></i>
+                            <p>态势分析</p>
                         </a>
                     </li>
                 </ul>
@@ -98,6 +95,7 @@
             <div id="BasemapToggle"></div>
 
             <div id="XYinfo"></div>
+
         </div>
         <div id="sidepanel">
             <div class='bg-primary' style="position:fixed;padding:10px 20px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:300">
@@ -137,13 +135,18 @@
     <!-- dialog that gets its content via ajax, uses loading message -->
     <div data-dojo-type="dijit/Dialog"
          style="width:300px;height:300px;background:#Fff"
-         data-dojo-props="title:'弹出框例子1',href:'scripts/views/modal1.html',loadingMessage:'Loading dialog content...'"
+         data-dojo-props="title:'事件地点定位',href:'scripts/views/modal1.html',loadingMessage:'Loading dialog content...'"
          id="modal1"></div>
 
     <div data-dojo-type="dijit/Dialog"
-         style="width:300px;height:300px;background:#Fff"
-         data-dojo-props="title:'弹出框例子2',href:'scripts/views/modal2.html',loadingMessage:'Loading dialog content...'"
+         style="width:400px;height:300px;background:#Fff"
+         data-dojo-props="title:'范围确定',href:'scripts/views/modal2.html',loadingMessage:'Loading dialog content...'"
          id="modal2"></div>
+
+    <div data-dojo-type="dijit/Dialog"
+         style="width:400px;height:350px;background:#Fff"
+         data-dojo-props="title:'公共影响因素分析',href:'scripts/views/modal3.html',loadingMessage:'Loading dialog content...'"
+         id="modal3"></div>
 </div>
 
 
