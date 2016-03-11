@@ -94,6 +94,8 @@ require(["dojo/parser", "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/strin
         }, "basemapGallery");
         basemapGallery.startup();
 
+
+        $("#pageloader").hide();
         /*        function createBasemapGallery(){
          var basemaps=[];
          require(["esri/dijit/BasemapLayer","esri/dijit/Basemap","esri/dijit/BasemapGallery"],
