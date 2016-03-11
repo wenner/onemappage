@@ -26,6 +26,9 @@ require(["dijit/registry", "dojo/query" , "dojo/parser", "dojo/dom-prop" , "dojo
             $("#mainwrap").toggleClass("sidecollapsed" , "");
         });
 
+
+
+
         $(document).on( 'click' ,"#modal1 .savebtn" , function(){
             alert("这个按钮的事件触发了! 表单数据:"+$("#modal1 .tab1 form").serialize());
         });
