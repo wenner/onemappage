@@ -5,6 +5,7 @@
     <title>一张网地图展示</title>
     <link rel="stylesheet" href="assets/css/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/bootstrap-dialog.min.css" type="text/css">
     <link rel="stylesheet" href="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/esri/css/esri.css">
     <link rel="stylesheet" href="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/dijit/themes/claro/claro.css">
 
@@ -29,48 +30,17 @@
     <div style="text-align:center;margin-top:10%;font-size:50px;color:#fff">空港 一张网地图展示</div>
 </div>
 <div id="outerwrap" style="height:100%">
-    <div id="mainwrap" style="height:100%">
+    <div id="mainwrap" style="height:100%" {{sidecollapsed}} v-bind:class="{ 'sidecollapsed': sideCollapsed}">
+
         <div id="mapPanel" style="position: relative;height:100%">
             <div id="mapDiv" style="height:100%;width:100%"></div>
             <!--bottom menu start-->
-            <div class="bmenu text-center">
+            <div class="bmenu text-center" id="bottomBar">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#" data-modaltarget="modal1">
-                            <i class="fa fa-map-marker"></i>
-                            <p>事件定位</p>
-                        </a>
-                    </li>
-                    <li class="current-menu-item">
-                        <a href="#" data-modaltarget="modal2">
-                            <i class="fa fa-bank"></i>
-
-                            <p>范围确定</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-modaltarget="modal3">
-                            <i class="fa fa-lightbulb-o"></i>
-                            <p>影响分析</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-question-circle"></i>
-
-                            <p>资源分析</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-sign-in"></i>
-                            <p>路径分析</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-info-circle"></i>
-                            <p>态势分析</p>
+                    <li v-for="menu in menus">
+                        <a href="#" data-modaltarget1="{{menu.modal}}" @click="openModal(menu)">
+                            <i class="fa {{menu.icon}}"></i>
+                            <p>{{menu.text}}</p>
                         </a>
                     </li>
                 </ul>
@@ -96,7 +66,7 @@
 
                 </div>
                 <div class="tool">
-                    <a href="#" id="sidepanel-togglemenu"><i class="fa fa-indent"></i></a>
+                    <a href="#" id="sidepanel-togglemenu" @click="toggle"><i class="fa fa-indent"></i></a>
                 </div>
             </div>
 
@@ -153,12 +123,10 @@
          id="modal2"></div>
 
     <div data-dojo-type="dijit/Dialog"
-         style="width:400px;height:350px;background:#Fff"
+         style="width:400px;height:400px;background:#Fff"
          data-dojo-props="title:'公共影响因素分析',href:'scripts/views/modal3.html',loadingMessage:'Loading dialog content...'"
          id="modal3"></div>
 </div>
-
-
 <script>
     var dojoConfig={
         parseOnLoad:true ,
@@ -168,18 +136,25 @@
         }]
     };
 </script>
+
 <script type="text/javascript" src="assets/scripts/vue.js"></script>
-
-<script src="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/init.js"></script>
-<script type="text/javascript" src="scripts/golbal.js"></script>
-
 <script type="text/javascript" src="assets/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="assets/scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="assets/scripts/owl.carousel.min.js"></script>
 <script type="text/javascript" src="assets/scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="assets/scripts/bootstrap-dialog.js"></script>
 
-<script type="text/javascript" src="scripts/requireDojo.js"></script>
+<script type="text/javascript" src="scripts/golbal.js"></script>
+<script src="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/init.js"></script>
+
+<script type="text/javascript" src="scripts/vue/mainWrap.js"></script>
+<script type="text/javascript" src="scripts/vue/query.js"></script>
+<script type="text/javascript" src="scripts/vue/bottomBar.js"></script>
+<script type="text/javascript" src="scripts/vue/modal1.js"></script>
+<script type="text/javascript" src="scripts/vue/modal2.js"></script>
+
 <script src="scripts/init.js"></script>
+<script type="text/javascript" src="scripts/requireDojo.js"></script>
 
 </body>
 </html>

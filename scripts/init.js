@@ -1,6 +1,13 @@
 (function(){
+
+    new Vue(vueExports.query);
+    new Vue(vueExports.bottomBar);
+    new Vue(vueExports.mainWrap);
+
     window.createMap = function(){
-        var InfoWindow = myInfoWindow;
+        var InfoWindow = myInfoWindow ,
+            Draw = esri.toolbars.Draw;
+
         var infoWindow = new InfoWindow({
             domNode: dojoDomConstruct.create("div", null, dojoDom.byId("mapDiv"))
         });
@@ -21,12 +28,19 @@
             basemap: "kgmap"
             //basemap: "topo"
         });
+
+        $Toolbar = new Draw($Map);
+        $Toolbar.on("draw-end", addGraphic);
+
         var baseMaps = getBaseMaps();
         createMapToggle();
         createMapGallery(baseMaps);
 
         //initmapevent
         initMapEvent();
+
+        $("#pageloader").hide();
+
     };
 
     function getBaseMaps(){
@@ -94,44 +108,34 @@
         basemapGallery.startup();
     }
 
+    function addGraphic(evt) {
+        var markerSymbol = esri.symbol.SimpleMarkerSymbol ,
+            lineSymbol = esri.symbol.SimpleLineSymbol ,
+            fillSymbol =esri.symbol.SimpleFillSymbol ,
+            Graphic = esri.Graphic;
+        //deactivate the toolbar and clear existing graphics
+        //console.log(evt)
+        $Toolbar.deactivate();
+        $Map.enableMapNavigation();
+        // figure out which symbol to use
+        if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
+            symbol = markerSymbol;
+            //map.on('mouse-click', showPointXY);  //显示地图坐标到制定label没有成功
+        } else if ( evt.geometry.type === "line" || evt.geometry.type === "polyline") {
+            symbol = lineSymbol;
+        }
+        else {
+            symbol = fillSymbol;
+        }
+        $CurrentGraphic=new Graphic(evt.geometry , symbol);
+        $Map.graphics.add($CurrentGraphic);
+        console.log($CurrentGraphic)
+    }
+
     function initMapEvent(){
         //$Map.on('mouse-move', showCoordinates);
         //$Map.on('mouse-drag', showCoordinates);
     }
-
-    new Vue({
-        el: '#sidepanel',
-        data: {
-            keyword: '空港' ,
-            result: []
-        },
-        methods: {
-            search: function () {
-                var self = this;
-                var FindParameters = esri.tasks.FindParameters ,
-                    FindTask = esri.tasks.FindTask;
-
-                var findTask = new FindTask($BaseServiceUrl+"一张网/一张网企业项目动态图map/MapServer");
-                // FindTask的参数`
-                var findParams = new FindParameters();
-                // 返回Geometry
-                findParams.returnGeometry = true;
-                // 查询的图层id
-                findParams.layerIds = [2];  //Layer: 雨水井 (0)   Layer: 建筑物 (1)   Layer: 项目 (2)
-                // 查询字段
-                findParams.searchFields = ["XMMC", "UNAME"];
-                findParams.searchText = this.keyword;
-
-                findTask.execute(findParams, function(result){
-                    self.result = result;
-                });
-            }
-        }
-    });
-
-
-
-
 })();
 
 

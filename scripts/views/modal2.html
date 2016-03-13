@@ -3,60 +3,60 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li role="presentation" class="active">
-            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">接入点分析</a>
+            <a href="#modal2a" aria-controls="modal2a" role="tab" data-toggle="tab">接入点分析</a>
         </li>
         <li role="presentation">
-            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">手绘</a>
+            <a href="#modal2b" aria-controls="modal2b" role="tab" data-toggle="tab">手绘</a>
         </li>
         <li role="presentation">
-            <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">ERG模型</a>
+            <a href="#modal2c" aria-controls="modal2c" role="tab" data-toggle="tab">ERG模型</a>
         </li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="home"  style="padding:5px">
+        <div role="tabpanel" class="tab-pane tab1 active" id="modal2a" style="padding:5px">
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="inputBufferNum" class="col-sm-4 control-label">层级</label>
                     <div class="col-sm-8">
                         <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
-                        <select class="form-control" id="inputBufferNum" >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
+                        <select class="form-control" id="inputBufferNum" v-model="tab1.level">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="inputBufferDistance">缓冲区距离</label>
                     <div class="col-sm-8">
-                        <select class="form-control" id="inputBufferDistance">
-                            <option>100</option>
-                            <option>200</option>
-                            <option>300</option>
-                            <option>400</option>
-                            <option>500</option>
-                            <option>1000</option>
-                            <option>2000</option>
-                            <option>4000</option>
+                        <select class="form-control" id="inputBufferDistance" v-model="tab1.distance">
+                            <option value='100'>100</option>
+                            <option value='200'>200</option>
+                            <option value='300'>300</option>
+                            <option value='400'>400</option>
+                            <option value='500'>500</option>
+                            <option value='1000'>1000</option>
+                            <option value='2000'>2000</option>
+                            <option value='4000'>4000</option>
                         </select>
                     </div>
                 </div>
             </form>
             <div class="text-center">
-                <button class="btn btn-sm btn-primary" id="btnBuffer">
+                <button class="btn btn-sm btn-primary" id="btnBuffer" @click="tab1a">
                     <i class="fa fa-question"></i> 分析
                 </button>
-                <button class="btn btn-sm btn-warning" id="btnCleanBuffer">
+                <button class="btn btn-sm btn-warning" id="btnCleanBuffer" @click="tab1b">
                     <i class="fa fa-phone"></i> 清除
                 </button>
             </div>
 
         </div>
-        <div role="tabpanel" class="tab-pane" id="profile">
+        <div role="tabpanel" class="tab-pane tab2" id="modal2b" >
             <div class="text-center" style="padding:20px">
-                <button class="btn btn-sm btn-primary">
+                <button class="btn btn-sm btn-primary" @click>
                     <i class="fa fa-question"></i> 调色板
                 </button>
                 <button class="btn btn-sm btn-primary" id="Rectangle">
@@ -73,9 +73,7 @@
                 </button>
             </div>
         </div>
-
-
-        <div role="tabpanel" class="tab-pane" id="messages">
+        <div role="tabpanel" class="tab-pane tab3" id="modal2c" >
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="inputMaterial" class="col-sm-4 control-label">泄露物质</label>

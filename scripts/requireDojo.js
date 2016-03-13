@@ -5,6 +5,7 @@ require([
     //dojo lib
     "dojo/dom" ,
     "dojo/dom-construct" ,
+    "dijit/registry" ,
     "dojo/on" ,
     "dojo/parser" ,
     "dojo/string" ,
@@ -40,18 +41,24 @@ require([
     "esri/symbols/SimpleLineSymbol" ,
     "esri/symbols/SimpleFillSymbol" ,
     "esri/renderers/SimpleRenderer" ,
+    "esri/tasks/Geoprocessor",
+    "esri/tasks/JobInfo",
+    "esri/tasks/FeatureSet",
+    "esri/tasks/LinearUnit",
+
     "esri/Color" ,
 
     "dojo/domReady!"
 ] , function(
     InfoWindow ,
     dom ,
-    domConstruct
+    domConstruct ,
+    registry
 ){
     myInfoWindow = InfoWindow;
     dojoDom = dom;
     dojoDomConstruct = domConstruct;
+    dojoRegistry = registry;
 
     createMap();
-    $("#pageloader").hide();
 });
