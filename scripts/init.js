@@ -193,6 +193,7 @@
     }
 
     function showCoordinates(evt) {
+
         var mp = evt.mapPoint;
         dojo.byId("XYinfo").innerHTML = "坐标：" + mp.x.toFixed(4) + " , " + mp.y.toFixed(4);  //toFiex(2) 限制小数点后显示的位数
     }

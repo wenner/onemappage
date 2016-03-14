@@ -32,6 +32,7 @@ require([
     "esri/layers/ArcGISImageServiceLayer" ,
     "esri/layers/ImageServiceParameters" ,
     "esri/geometry/Point" ,
+    "esri/geometry/Polygon",
     "esri/tasks/FindTask" ,
     "esri/tasks/FindParameters" ,
     "esri/InfoTemplate" ,

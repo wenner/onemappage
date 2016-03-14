@@ -130,23 +130,96 @@ vueExports.modal2={
             $Map.graphics.clear();
         },
         setERGgraphic:function(){
+            var Polygon=esri.geometry.Polygon;
             //自己实现一个polygon，以便自动覆盖全区所有范围
+            //首先获取时间点的位置
+            console.log($CurrentGraphic.geometry.x,$CurrentGraphic.geometry.x);
+
+            //var Graphic=esri.graphic;
+            var SimpleFillSymbol = esri.symbol.SimpleFillSymbol ,
+                SimpleLineSymbol = esri.symbol.SimpleLineSymbol ,
+                Color = esri.Color;
+            var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.5]));
+
+            //根据数据框数据的条件进行参数设定，包括大小，旋转方向
+            //1.大小的确定
+            var weight=140;
+            var height=180;
+            var rings=[
+                [-200, -200],
+                [200, -200],
+                [200, 200],
+                [-200, 200],
+                [-200,-200]     //poly面需要闭合，故首尾坐标一致
+            ];
+            rings[0][0]=-(weight/2);
+            rings[0][1]=-(height/2);
+            rings[1][0]=weight/2;
+            rings[1][1]=-(height/2);
+            rings[2][0]=weight/2;
+            rings[2][1]=height/2;
+            rings[3][0]=-(weight/2);
+            rings[3][1]=height/2;
+            rings[4][0]=rings[0][0];
+            rings[4][1]=rings[0][1];
+
+
+            //2.旋转方向的确定
+            var ra=45*0.017453293;
+            var rate=25;
+            var arc=rate*0.017453293; //将角度转换成弧度
+            //rings[0][0] =rings[0][0]+Math.abs(rings[0][0])*Math.cos(ra)-Math.abs(rings[0][0])*Math.cos(ra+arc);
+            rings[0][0] =-Math.abs(rings[0][0])*Math.cos(ra+arc);
+            rings[0][1] =-Math.abs(rings[0][1])*Math.sin(ra+arc);
+            rings[1][0] =Math.abs(rings[1][0])*Math.cos(ra-arc);
+            rings[1][1] =-Math.abs(rings[1][1])*Math.sin(ra-arc);
+            rings[2][0] =Math.abs(rings[2][0])*Math.cos(ra+arc);
+            rings[2][1] =Math.abs(rings[2][1])*Math.sin(ra+arc);
+            rings[3][0] =-Math.abs(rings[3][0])*Math.cos(ra-arc);
+            rings[3][1] =Math.abs(rings[3][1])*Math.sin(ra-arc);
+            rings[4][0] =rings[0][0];
+            rings[4][1] =rings[0][1];
+            for(var i=0;i<4;i++){
+                for(var j=0;j<2;j++){
+                    console.log(rings[i][j]);
+                }
+            }
             var polygon = new Polygon({
-                "rings": [
+                "rings": [   //作为默认poly
                     [
-                        [13058455.6036, 4732130.0963],
-                        [13110312.3447, 4719396.2062],
-                        [13114701.4726, 4721075.9959],
-                        [13116855.3971, 4727944.1698],
-                        [13077773.1877, 4746340.5785],
-                        [13054974.1037, 4747776.5273],
-                        [13058455.6036, 4732130.0963]
+                        rings[0],
+                        rings[1],
+                        rings[2],
+                        rings[3],
+                        rings[4]     //poly面需要闭合，故首尾坐标一致
                     ]
                 ],
                 "spatialReference": {
                     "wkid": 102100
                 }
             });
+            console.log(polygon.rings[0]);
+            var ERGgraphic =new esri.Graphic(polygon, symbol);
+            console.log(ERGgraphic.geometry);
+            //以事故地点的坐标为中心点，进行平移
+            for(var i=0;i<polygon.rings[0].length;i++){
+                var x= parseFloat(ERGgraphic.geometry.rings[0][i][0])+parseFloat($CurrentGraphic.geometry.x);
+                ERGgraphic.geometry.rings[0][i][0]=x;
+                var y= parseFloat(ERGgraphic.geometry.rings[0][i][1])+parseFloat($CurrentGraphic.geometry.y);
+                ERGgraphic.geometry.rings[0][i][1]=y;
+                console.log("x: "+ x+"  | y: "+ y);
+            }
+            $Map.graphics.add(ERGgraphic);
+
+            //var myPolygon = {"geometry":{"rings":[[[-115.3125,37.96875],[-111.4453125,37.96875],
+            //    [-99.84375,36.2109375],[-99.84375,23.90625],[-116.015625,24.609375],
+            //    [-115.3125,37.96875]]],"spatialReference":{"wkid":102100}},
+            //    "symbol":{"color":[0,0,0,64],"outline":{"color":[0,0,0,255],
+            //        "width":1,"type":"esriSLS","style":"esriSLSSolid"},
+            //        "type":"esriSFS","style":"esriSFSSolid"}};
+            //var p=myPolygon.geometry.rings;
+            //console.log(p);
+            //var gra = new esri.Graphic(myPolygon);
         }
 
     }
