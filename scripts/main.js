@@ -20,7 +20,7 @@ require(["dijit/registry", "dojo/query", "dojo/parser", "dojo/dom-prop", "dojo/d
 (function ($) {
     $(document).ready(function () {
         $("#sidepanel-togglemenu").click(function () {
-            $("#mainwrap").toggleClass("sidecollapsed", "");
+            $("#mainwrap").toggleClass("sidecollapsed", "");3333d
         });
         //$(document).on('click', "#modal1 .searchBtn", function () {
         //    alert("这个按钮的事件触发了! 表单数据:"+$("#modal1 .tab2 form").serialize());

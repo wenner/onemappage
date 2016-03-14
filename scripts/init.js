@@ -29,6 +29,8 @@
             //basemap: "topo"
         });
 
+		setSymbolStyle();
+
         $Toolbar = new Draw($Map);
         $Toolbar.on("draw-end", addGraphic);
 
@@ -42,6 +44,57 @@
         $("#pageloader").hide();
 
     };
+
+	function setSymbolStyle(){		
+        var SimpleMarkerSymbol = esri.symbol.SimpleMarkerSymbol ,
+            SimpleLineSymbol = esri.symbol.SimpleLineSymbol ,
+            SimpleFillSymbol =esri.symbol.SimpleFillSymbol ,
+			CartographicLineSymbol = esri.symbol.CartographicLineSymbol ,
+			PictureFillSymbol = esri.symbol.PictureFillSymbol ,
+			Color = esri.Color ,
+            Graphic = esri.Graphic;
+
+        var markerSymbol  = $markerSymbol = new SimpleMarkerSymbol();
+        markerSymbol.setPath("M50,2.125c26.441,0,47.875,21.434,47.875,47.875c0,26.441-21.434,47.875-47.875,47.875C17.857,97.875,2.125,76.441,2.125,50C2.125,23.559,23.559,2.125,50,2.125z'/><g class='icon'><path class='base' d='M50,19.53c13.945,0,25.248,11.213,25.248,25.045C75.248,60.437,54.207,80.47,50,80.47c-4.208,0-25.248-20.033-25.248-35.895C24.752,30.743,36.056,19.53,50,19.53z'/><path class='inner' d='M50,30.488c8.174,0,14.8,6.625,14.8,14.799c0,8.173-6.626,14.8-14.8,14.8s-14.8-6.626-14.8-14.799C35.2,37.114,41.826,30.488,50,30.488z");
+        markerSymbol.setColor(new Color("red"));
+
+
+        // lineSymbol used for freehand polyline, polyline and line.
+        var lineSymbol = $lineSymbol = new CartographicLineSymbol(
+            CartographicLineSymbol.STYLE_SOLID,
+            new Color([255,0,0]), 10,
+            CartographicLineSymbol.CAP_ROUND,
+            CartographicLineSymbol.JOIN_MITER, 5
+        );
+
+
+        // fill symbol used for extent, polygon and freehand polygon, use a picture fill symbol
+        // the images folder contains additional fill images, other options: sand.png, swamp.png or stiple.png
+        var fillSymbol = $fillSymbo = new PictureFillSymbol(
+            "../onemappage/assets/images/mangrove.png",
+            new SimpleLineSymbol(
+                SimpleLineSymbol.STYLE_SOLID,
+                new Color('#000'),
+                1
+            ),
+            60,
+            60
+        );
+
+
+        //定义矢量显示样式
+        var ptSymbol = $ptSymbol = new SimpleMarkerSymbol(
+			SimpleMarkerSymbol.STYLE_SQUARE, 10, 
+			new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, 
+				new Color([204, 204, 204]), 1), 
+				new Color([0, 255, 0, 0.25])
+			);
+        var lineSymbol2 = $lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASH, new Color([255, 0, 0]), 1);
+        var polygonSymbol = $polygonSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_NONE, new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, new Color([204, 204, 204]), 2), new Color([255, 204, 204, 0.25]));
+		
+
+	}
+
 
     function getBaseMaps(){
         var Basemap = esri.dijit.Basemap ,
@@ -109,25 +162,27 @@
     }
 
     function addGraphic(evt) {
+		/*
         var markerSymbol = esri.symbol.SimpleMarkerSymbol ,
             lineSymbol = esri.symbol.SimpleLineSymbol ,
             fillSymbol =esri.symbol.SimpleFillSymbol ,
-            Graphic = esri.Graphic;
+			*/
+            var Graphic = esri.Graphic;
         //deactivate the toolbar and clear existing graphics
         //console.log(evt)
         $Toolbar.deactivate();
         $Map.enableMapNavigation();
         // figure out which symbol to use
         if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
-            symbol = markerSymbol;
+            $CurrentSymbol = $markerSymbol;
             //map.on('mouse-click', showPointXY);  //显示地图坐标到制定label没有成功
         } else if ( evt.geometry.type === "line" || evt.geometry.type === "polyline") {
-            symbol = lineSymbol;
+            $CurrentSymbol = $lineSymbol;
         }
         else {
-            symbol = fillSymbol;
+            $CurrentSymbol = $fillSymbol;
         }
-        $CurrentGraphic=new Graphic(evt.geometry , symbol);
+        $CurrentGraphic=new Graphic(evt.geometry , $CurrentSymbol);
         $Map.graphics.add($CurrentGraphic);
         console.log($CurrentGraphic)
     }

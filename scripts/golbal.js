@@ -1,4 +1,5 @@
-var $Map , $Toolbar , $CurrentGraphic;
+var $Map , $Toolbar , $CurrentGraphic , $CurrentSymbol;
+var $markerSymbol , $lineSymbol , $fillSymbo , $ptSymbol , $lineSymbol , $polygonSymbol;
 var $BaseServiceUrl = "http://60.29.110.104:6080/arcgis/rest/services/";
 
 //dojo变量
