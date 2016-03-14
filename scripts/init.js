@@ -70,7 +70,7 @@
 
         // fill symbol used for extent, polygon and freehand polygon, use a picture fill symbol
         // the images folder contains additional fill images, other options: sand.png, swamp.png or stiple.png
-        var fillSymbol = $fillSymbo = new PictureFillSymbol(
+        var fillSymbol = $fillSymbol = new PictureFillSymbol(
             "../onemappage/assets/images/mangrove.png",
             new SimpleLineSymbol(
                 SimpleLineSymbol.STYLE_SOLID,

@@ -56,20 +56,26 @@
         </div>
         <div role="tabpanel" class="tab-pane tab2" id="modal2b" >
             <div class="text-center" style="padding:20px">
-                <button class="btn btn-sm btn-primary" @click>
+                <button class="btn btn-sm btn-primary" @click="setColor">
                     <i class="fa fa-question"></i> 调色板
                 </button>
-                <button class="btn btn-sm btn-primary" id="Rectangle">
+                <button class="btn btn-sm btn-primary" id="Rectangle" @click="drawRectangle">
                     <i class="fa fa-question"></i> 矩形
                 </button>
-                <button class="btn btn-sm btn-primary" id="Circle">
+                <button class="btn btn-sm btn-primary" id="Circle" @click="drawCircle">
                     <i class="fa fa-question"></i> 圆形
                 </button>
-                <button class="btn btn-sm btn-primary" id="Polygon">
+                <button class="btn btn-sm btn-primary" id="Polygon" @click="drawPolygon">
                     <i class="fa fa-question"></i> 多边形
                 </button>
-                <button class="btn btn-sm btn-warning" id="FreehandPolygon">
+                <button class="btn btn-sm btn-warning" id="FreehandPolygon" @click="drawFreehandPolygon">
                     <i class="fa fa-phone"></i> 手绘
+                </button>
+            </div>
+            <br/>
+            <div>
+                <button class="btn btn-lg btn-warning" @click="clearGraphic">
+                    清楚所有图形
                 </button>
             </div>
         </div>

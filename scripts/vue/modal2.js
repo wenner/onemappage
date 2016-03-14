@@ -5,7 +5,9 @@ vueExports.modal2={
             level:1 ,
             distance:100
         } ,
-        tab2:{} ,
+        tab2:{
+
+        } ,
         tab3:{} ,
         gp: null
     } ,
@@ -38,7 +40,7 @@ vueExports.modal2={
                         this.tojob($CurrentGraphic , bufferDistance*3);
                         break;
                     default:
-                        console.log("other level"+bufferNum)
+                        console.log("other level"+bufferNum);
                         return;
                 }
             }
@@ -106,6 +108,26 @@ vueExports.modal2={
             else{
                 console.log("提示","计算失败！");
             }
+        },
+
+        drawRectangle:function(){
+            $Map.disableMapNavigation();
+            $Toolbar.activate("rectangle");
+        },
+        drawCircle:function(){
+            $Map.disableMapNavigation();
+            $Toolbar.activate("circle");
+        },
+        drawPolygon:function(){
+            $Map.disableMapNavigation();
+            $Toolbar.activate("polygon");
+        },
+        drawFreehandPolygon:function(){
+            $Map.disableMapNavigation();
+            $Toolbar.activate("freehandpolygon");
+        },
+        clearGraphic:function(){
+            $Map.graphics.clear();
         }
 
     }
