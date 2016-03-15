@@ -1,7 +1,7 @@
 require([
     //custom lib
     "myModules/InfoWindow/InfoWindow" ,
-
+    "bism/bism/HeatmapLayer",
     //dojo lib
     "dojo/dom" ,
     "dojo/dom-construct" ,
@@ -52,6 +52,7 @@ require([
     "dojo/domReady!"
 ] , function(
     InfoWindow ,
+    HeatmapLayer,
     dom ,
     domConstruct ,
     registry
@@ -60,6 +61,6 @@ require([
     dojoDom = dom;
     dojoDomConstruct = domConstruct;
     dojoRegistry = registry;
-
+    bism = HeatmapLayer;
     createMap();
 });

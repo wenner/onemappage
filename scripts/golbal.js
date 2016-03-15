@@ -6,6 +6,6 @@ var $BaseServiceUrl = "http://60.29.110.104:6080/arcgis/rest/services/";
 var dojoDom , dojoDomConstruct , dojoRegistry;
 //自定义变量
 var myInfoWindow;
-
+var bism;  //热度图变量
 var vueExports = {};
 
