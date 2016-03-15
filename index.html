@@ -33,6 +33,7 @@
     <div id="mainwrap" style="height:100%" {{sidecollapsed}} v-bind:class="{ 'sidecollapsed': sideCollapsed}">
 
         <div id="mapPanel" style="position: relative;height:100%">
+            <div id="heatLayer"></div>
             <div id="mapDiv" style="height:100%;width:100%"></div>
             <!--bottom menu start-->
             <div class="bmenu text-center" id="bottomBar">
@@ -130,9 +131,13 @@
 <script>
     var dojoConfig={
         parseOnLoad:true ,
-        packages:[{
+        //配置多个自定义modules的方法
+        packages: [{
             "name":"myModules" ,
             "location":location.pathname.replace(/\/[^/]+$/ , "")+"/scripts/modules"
+        }, {
+            "name": 'bism',
+            "location": location.pathname.replace(/\/[^/]+$/ , "")+"/scripts/modules"
         }]
     };
 </script>
@@ -145,13 +150,14 @@
 <script type="text/javascript" src="assets/scripts/bootstrap-dialog.js"></script>
 
 <script type="text/javascript" src="scripts/golbal.js"></script>
-<script src="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/init.js"></script>
-
+<script type="text/javascript" src="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/init.js"></script>
+<script type="text/javascript" src="scripts/modules/heatmap.js"></script>
 <script type="text/javascript" src="scripts/vue/mainWrap.js"></script>
 <script type="text/javascript" src="scripts/vue/query.js"></script>
 <script type="text/javascript" src="scripts/vue/bottomBar.js"></script>
 <script type="text/javascript" src="scripts/vue/modal1.js"></script>
 <script type="text/javascript" src="scripts/vue/modal2.js"></script>
+<script type="text/javascript" src="scripts/vue/modal3.js"></script>
 
 <script src="scripts/init.js"></script>
 <script type="text/javascript" src="scripts/requireDojo.js"></script>

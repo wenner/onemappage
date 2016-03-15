@@ -1,4 +1,4 @@
-<div>
+<div xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified" role="tablist">
@@ -25,24 +25,27 @@
             <div class="text-center" style="padding: 10px;">
                 <label class="label label-info" style="color: #000;font-size:16px;">选择下列图层，查看周边情况</label>
             </div>
-
-            <form class="form-inline">
-                <div class="panel">
+            <br/>
+            <div>
+                <div class="radio"   >
                     <label>
-                        <input type="checkbox"> 人口流动热度图
+                        <input type="radio" name="HeatMap" id="personHeatMap" value="option1"  v-model="pick" @click="personHeatMap">
+                        人口流动热度图{{pick}}
                     </label>
                 </div>
-                <div class="panel">
+                <div class="radio" @click="wealthHeatMap">
                     <label>
-                        <input type="checkbox"> 财富分布热度图
+                        <input type="radio" name="HeatMap" id="wealthHeatMap" value="option2">
+                        财富分布热度图
                     </label>
                 </div>
-                <div class="panel">
+                <div class="radio" @click="trafficHeatMap">
                     <label>
-                        <input type="checkbox"> 实时交通流量图
+                        <input type="radio" name="HeatMap" id="trafficHeatMap" value="option3" >
+                        实时交通流量图
                     </label>
                 </div>
-            </form>
+            </div>
             <div class="text-center">
                 <button class="btn btn-lg btn-warning">
                      清  除
