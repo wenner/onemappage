@@ -55,39 +55,57 @@
             </div>
 
         </div>
+
+
         <div role="tabpanel" class="tab-pane" id="search">
-            <div class="container">
-                <div clsas='row'>
-                    <div class='col-sm-4'>
-                        <div class="col-sm-2">
-                            <input type="radio" id="modal3-tab2-1" value="1" v-model="picked" @click='reset'>
-                            <label for="modal3-tab2-1">重点防护目标</label>
-                            <br/><br/>
-                            <input type="radio" id="modal3-tab2-2" value="2" v-model="picked" @click='reset'>
-                            <label for="modal3-tab2-2">公众聚集场所</label>
-                            <br/><br/>
-                            <input type="radio" id="modal3-tab2-3" value="3" v-model="picked" @click='reset'>
-                            <label for="modal3-tab2-3">学校</label>
-                            <br/><br/>
-                            <input type="radio" id="modal3-tab2-4" value="4" v-model="picked" @click='reset'>
-                            <label for="modal3-tab2-4">危险源</label>
-                            <br/><br/>
-                        </div>
+			<div style='padding:15px 0'>
+                <div class='row'>
+                    <div class='col-md-5'>
+						<div class="radio">
+							<label>
+								<input type="radio" id="modal3-tab2-1" value="1" v-model="picked" @click='reset'>
+								重点防护目标
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" id="modal3-tab2-2" value="2" v-model="picked" @click='reset'>
+								公众聚集场所
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" id="modal3-tab2-3" value="3" v-model="picked" @click='reset'>
+								学校
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" id="modal3-tab2-4" value="4" v-model="picked" @click='reset'>
+								危险源
+								</label>
+						</div>
                     </div>
-                    <div class='col-sm-8'>
-                        <div class="col-sm-2">
+                    <div class='col-md-7'>
                             <div v-show="picked == '1'">
                                 重点防护目标
-                                <br/>
-                                <input type="checkbox" id="m3-tb2-v1-1" value="党政机关" v-model="c1">
-                                <label for="m3-tb2-v1-1">党政机关</label>
-                                <input type="checkbox" id="m3-tb2-v1-2" value="科研机构" v-model="c1">
-                                <label for="m3-tb2-v1-2">科研机构</label>
-                                <input type="checkbox" id="m3-tb2-v1-3" value="银行机构" v-model="c1">
-                                <label for="m3-tb2-v1-3">银行机构</label>
-                                <input type="checkbox" id="m3-tb2-v1-4" value="飞机场" v-model="c1">
-                                <label for="m3-tb2-v1-4">飞机场</label>
-                                <br/>
+								<div class="checkbox">
+								  <label>
+									<input type="checkbox" id="m3-tb2-v1-1" value="党政机关" v-model="c1">党政机关</label>
+								</div>
+								<div class="checkbox">
+								  <label>
+									<input type="checkbox" id="m3-tb2-v1-2" value="科研机构" v-model="c1">科研机构</label>
+								</div>
+								 <div class="checkbox">
+								  <label>
+									<input type="checkbox" id="m3-tb2-v1-3" value="银行机构" v-model="c1">银行机构</label>
+								</div>
+								 <div class="checkbox">
+								  <label>
+									<input type="checkbox" id="m3-tb2-v1-4" value="飞机场" v-model="c1">飞机场</label>
+								</div>
+  
                                 <span>选择的值: {{ c1 }}</span>
                             </div>
                             <div v-show="picked=='2'">
@@ -126,39 +144,31 @@
                                 <br>
                                 <span>选择的值: {{ c4 }}</span>
                             </div>
-                        </div>
                     </div>
                 </div>
-                <div class='col-sm-4'>
-                    <button class="btn btn-sm btn-primary" @click="analysis">
-                        <i class="fa fa-question"></i> 分析
-                    </button>
-                </div>
-                <div class='col-sm-2'>
-                    <button class="btn btn-sm btn-primary" id="Rectangle" @click="drawRectangleAnalysis">
-                        <i class="fa fa-question"></i> 矩形
-                    </button>
-                </div>
-                <div class='col-sm-2'>
-                    <button class="btn btn-sm btn-primary" id="Circle" @click="drawCircleAnalysis">
-                        <i class="fa fa-question"></i> 圆形
-                    </button>
-                </div>
-                <div class='col-sm-2'>
-                    <button class="btn btn-sm btn-primary" id="Polygon" @click="drawPolygonAnalysis">
-                        <i class="fa fa-question"></i> 多边形
-                    </button>
-                </div>
-                <div class='col-sm-2'>
-                    <button class="btn btn-sm btn-warning" id="FreehandPolygon"
-                            @click="drawFreehandPolygonAnalysis">
-                        <i class="fa fa-phone"></i> 手绘
-                    </button>
-                </div>
-            </div>
-            <div>
-                <button class='btn btn-block'>删除</button>
-            </div>
+				<div class='text-center'>				
+						<button class="btn btn-primary" @click="analysis">
+							<i class="fa fa-question"></i><br>分析
+						</button>
+						<button class="btn btn-primary" id="Rectangle" @click="drawRectangleAnalysis">
+							<i class="fa fa-question"></i><br>矩形
+						</button>
+						<button class="btn btn-primary" id="Circle" @click="drawCircleAnalysis">
+							<i class="fa fa-question"></i><br>圆形
+						</button>
+						<button class="btn btn-primary" id="Polygon" @click="drawPolygonAnalysis">
+							<i class="fa fa-question"></i><br>多边形
+						</button>
+						<button class="btn btn-warning" id="FreehandPolygon"
+								@click="drawFreehandPolygonAnalysis">
+							<i class="fa fa-phone"></i><br>手绘
+						</button>
+				</div>
+    
+				<div style='padding:15px 0'>
+					<button class='btn btn-block btn-danger'>删除</button>
+				</div>
+			</div>
         </div>
         <div role="tabpanel" class="tab-pane" id="result">
             <form class="form-horizontal">
