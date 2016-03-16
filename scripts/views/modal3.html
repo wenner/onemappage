@@ -21,64 +21,137 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="topic"  style="padding:5px">
+        <div role="tabpanel" class="tab-pane active" id="topic" style="padding:5px">
             <div class="text-center" style="padding: 10px;">
                 <label class="label label-info" style="color: #000;font-size:16px;">选择下列图层，查看周边情况</label>
             </div>
             <br/>
+
             <div>
-                <div class="radio"   >
+                <div class="radio">
                     <label>
-                        <input type="radio" name="HeatMap" id="personHeatMap" value="option1"  v-model="pick" @click="personHeatMap">
+                        <input type="radio" name="HeatMap" id="personHeatMap" value="option1" v-model="pick"
+                               @click="personHeatMap">
                         人口流动热度图{{pick}}
                     </label>
                 </div>
-                <div class="radio" @click="wealthHeatMap">
+                <div class="radio">
                     <label>
-                        <input type="radio" name="HeatMap" id="wealthHeatMap" value="option2">
+                        <input type="radio" name="HeatMap" id="wealthHeatMap" value="option2" @click="wealthHeatMap">
                         财富分布热度图
                     </label>
                 </div>
-                <div class="radio" @click="trafficHeatMap">
+                <div class="radio">
                     <label>
-                        <input type="radio" name="HeatMap" id="trafficHeatMap" value="option3" >
+                        <input type="radio" name="HeatMap" id="trafficHeatMap" value="option3" @click="trafficHeatMap">
                         实时交通流量图
                     </label>
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-lg btn-warning">
-                     清  除
+                <button class="btn btn-lg btn-warning" @click="clearHeatMap">
+                    清 除
                 </button>
             </div>
 
         </div>
         <div role="tabpanel" class="tab-pane" id="search">
-            <div class="text-center">
-                <button class="btn btn-sm btn-primary">
-                    <i class="fa fa-question"></i> 调色板
-                </button>
-                <button class="btn btn-sm btn-primary" id="Rectangle">
-                    <i class="fa fa-question"></i> 矩形
-                </button>
-                <button class="btn btn-sm btn-primary" id="Circle">
-                    <i class="fa fa-question"></i> 圆形
-                </button>
-                <button class="btn btn-sm btn-primary" id="Polygon">
-                    <i class="fa fa-question"></i> 多边形
-                </button>
-                <button class="btn btn-sm btn-warning" id="FreehandPolygon">
-                    <i class="fa fa-phone"></i> 手绘
-                </button>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <input type="radio" id="modal3-tab2-1" value="1" v-model="picked" @click='reset'>
+                        <label for="modal3-tab2-1">重点防护目标</label>
+                        <br/><br/>
+                        <input type="radio" id="modal3-tab2-2" value="2" v-model="picked" @click='reset'>
+                        <label for="modal3-tab2-2">公众聚集场所</label>
+                        <br/><br/>
+                        <input type="radio" id="modal3-tab2-3" value="3" v-model="picked" @click='reset'>
+                        <label for="modal3-tab2-3">学校</label>
+                        <br/><br/>
+                        <input type="radio" id="modal3-tab2-4" value="4" v-model="picked" @click='reset'>
+                        <label for="modal3-tab2-4">危险源</label>
+                        <br/><br/>
+                    </div>
+                    <div class="col-sm-2">
+                        <div v-show="picked == '1'">
+                            重点防护目标
+                            <br/>
+                            <input type="checkbox" id="m3-tb2-v1-1" value="党政机关" v-model="c1">
+                            <label for="m3-tb2-v1-1">党政机关</label>
+                            <input type="checkbox" id="m3-tb2-v1-2" value="科研机构" v-model="c1">
+                            <label for="m3-tb2-v1-2">科研机构</label>
+                            <input type="checkbox" id="m3-tb2-v1-3" value="银行机构" v-model="c1">
+                            <label for="m3-tb2-v1-3">银行机构</label>
+                            <input type="checkbox" id="m3-tb2-v1-4" value="飞机场" v-model="c1">
+                            <label for="m3-tb2-v1-4">飞机场</label>
+                            <br/>
+                            <span>选择的值: {{ c1 }}</span>
+                        </div>
+                        <div v-show="picked=='2'">
+                            公众聚集场所
+                            <br/>
+                            <input type="checkbox" id="m3-tb2-v2-1" value="大型商场超市" v-model="c2">
+                            <label for="m3-tb2-v2-1">大型商场超市</label>
+                            <input type="checkbox" id="m3-tb2-v2-2" value="星级宾馆饭店" v-model="c2">
+                            <label for="m3-tb2-v2-2">星级宾馆饭店</label>
+                            <input type="checkbox" id="m3-tb2-v2-3" value="体育场所" v-model="c2">
+                            <label for="m3-tb2-v2-3">体育场所</label>
+                            <br>
+                            <span>选择的值: {{ c2 }}</span>
+                        </div>
+                        <div v-show="picked=='3'">
+                            学校
+                            <br/>
+                            <input type="checkbox" id="m3-tb2-v3-1" value="幼儿园" v-model="c3">
+                            <label for="m3-tb2-v3-1">幼儿园</label>
+                            <input type="checkbox" id="m3-tb2-v3-2" value="小学" v-model="c3">
+                            <label for="m3-tb2-v3-2">小学</label>
+                            <input type="checkbox" id="m3-tb2-v3-3" value="中学" v-model="c3">
+                            <label for="m3-tb2-v3-3">中学</label>
+                            <br>
+                            <span>选择的值: {{ c3 }}</span>
+                        </div>
+                        <div v-show="picked=='4'">
+                            危险源
+                            <br/>
+                            <input type="checkbox" id="m3-tb2-v4-1" value="化学工厂" v-model="c4">
+                            <label for="m3-tb2-v4-1">化学工厂</label>
+                            <input type="checkbox" id="m3-tb2-v4-2" value="危险品仓库" v-model="c4">
+                            <label for="m3-tb2-v4-2">危险品仓库</label>
+                            <input type="checkbox" id="m3-tb2-v4-3" value="石油化工品" v-model="c4">
+                            <label for="m3-tb2-v4-3">石油化工品</label>
+                            <br>
+                            <span>选择的值: {{ c4 }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" style="padding:20px">
+                    <button class="btn btn-sm btn-primary" @click="analysis">
+                        <i class="fa fa-question"></i> 分析
+                    </button>
+                    <button class="btn btn-sm btn-primary" id="Rectangle" @click="drawRectangleAnalysis">
+                        <i class="fa fa-question"></i> 矩形
+                    </button>
+                    <button class="btn btn-sm btn-primary" id="Circle" @click="drawCircleAnalysis">
+                        <i class="fa fa-question"></i> 圆形
+                    </button>
+                    <button class="btn btn-sm btn-primary" id="Polygon" @click="drawPolygonAnalysis">
+                        <i class="fa fa-question"></i> 多边形
+                    </button>
+                    <button class="btn btn-sm btn-warning" id="FreehandPolygon" @click="drawFreehandPolygonAnalysis">
+                        <i class="fa fa-phone"></i> 手绘
+                    </button>
+                </div>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="result">
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="inputMaterial" class="col-sm-4 control-label">泄露物质</label>
+
                     <div class="col-sm-8">
                         <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
-                        <select class="form-control input-sm" id="inputMaterial" >
+                        <select class="form-control input-sm" id="inputMaterial00">
                             <option>无水氯</option>
                             <option>三氧化硼</option>
                             <option>煤气</option>
@@ -89,9 +162,10 @@
                 </div>
                 <div class="form-group">
                     <label for="inputAreal" class="col-sm-4 control-label">泄露面积</label>
+
                     <div class="col-sm-8">
                         <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
-                        <select class="form-control input-sm" id="inputAreal" >
+                        <select class="form-control input-sm" id="inputAreal00">
                             <option>大</option>
                             <option>小</option>
                         </select>
@@ -99,8 +173,9 @@
                 </div>
                 <div class="form-group">
                     <label for="inputTime" class="col-sm-4 control-label">泄露时间</label>
+
                     <div class="col-sm-8">
-                        <select class="form-control input-sm" id="inputTime">
+                        <select class="form-control input-sm" id="inputTime00">
                             <option>白天</option>
                             <option>晚上</option>
                         </select>
@@ -108,13 +183,15 @@
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-4 control-label">风向偏北</label>
+
                     <div class="col-sm-8">
-                        <input type="number" class="form-control input-sm" id="inputEmail3" name="num" placeholder="偏北角度" value="45">
+                        <input type="number" class="form-control input-sm" id="inputEmail300" name="num"
+                               placeholder="偏北角度" value="45">
                     </div>
                 </div>
             </form>
             <div class="text-center">
-                <button class="btn btn-sm btn-primary" id="analysePoint">
+                <button class="btn btn-sm btn-primary" id="">
                     <i class="fa fa-question"></i> 事发点作为泄漏点
                 </button>
                 <button class="btn btn-sm btn-warning">
@@ -129,9 +206,10 @@
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="inputMaterial" class="col-sm-4 control-label">泄露物质</label>
+
                     <div class="col-sm-8">
                         <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
-                        <select class="form-control input-sm" id="inputMaterial" >
+                        <select class="form-control input-sm" id="">
                             <option>无水氯</option>
                             <option>三氧化硼</option>
                             <option>煤气</option>
@@ -142,9 +220,10 @@
                 </div>
                 <div class="form-group">
                     <label for="inputAreal" class="col-sm-4 control-label">泄露面积</label>
+
                     <div class="col-sm-8">
                         <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
-                        <select class="form-control input-sm" id="inputAreal" >
+                        <select class="form-control input-sm" id="">
                             <option>大</option>
                             <option>小</option>
                         </select>
@@ -152,8 +231,9 @@
                 </div>
                 <div class="form-group">
                     <label for="inputTime" class="col-sm-4 control-label">泄露时间</label>
+
                     <div class="col-sm-8">
-                        <select class="form-control input-sm" id="inputTime">
+                        <select class="form-control input-sm" id="">
                             <option>白天</option>
                             <option>晚上</option>
                         </select>
@@ -161,13 +241,15 @@
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-4 control-label">风向偏北</label>
+
                     <div class="col-sm-8">
-                        <input type="number" class="form-control input-sm" id="inputEmail3" name="num" placeholder="偏北角度" value="45">
+                        <input type="number" class="form-control input-sm" id="" name="num"
+                               placeholder="偏北角度" value="45">
                     </div>
                 </div>
             </form>
             <div class="text-center">
-                <button class="btn btn-sm btn-primary" id="analysePoint">
+                <button class="btn btn-sm btn-primary" id="analysePoint00">
                     <i class="fa fa-question"></i> 事发点作为泄漏点
                 </button>
                 <button class="btn btn-sm btn-warning">
@@ -182,9 +264,10 @@
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="inputMaterial" class="col-sm-4 control-label">泄露物质</label>
+
                     <div class="col-sm-8">
                         <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
-                        <select class="form-control input-sm" id="inputMaterial" >
+                        <select class="form-control input-sm" id="inputMaterial">
                             <option>无水氯</option>
                             <option>三氧化硼</option>
                             <option>煤气</option>
@@ -195,9 +278,10 @@
                 </div>
                 <div class="form-group">
                     <label for="inputAreal" class="col-sm-4 control-label">泄露面积</label>
+
                     <div class="col-sm-8">
                         <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
-                        <select class="form-control input-sm" id="inputAreal" >
+                        <select class="form-control input-sm" id="inputAreal">
                             <option>大</option>
                             <option>小</option>
                         </select>
@@ -205,6 +289,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputTime" class="col-sm-4 control-label">泄露时间</label>
+
                     <div class="col-sm-8">
                         <select class="form-control input-sm" id="inputTime">
                             <option>白天</option>
@@ -214,8 +299,10 @@
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-4 control-label">风向偏北</label>
+
                     <div class="col-sm-8">
-                        <input type="number" class="form-control input-sm" id="inputEmail3" name="num" placeholder="偏北角度" value="45">
+                        <input type="number" class="form-control input-sm" id="inputEmail3" name="num"
+                               placeholder="偏北角度" value="45">
                     </div>
                 </div>
             </form>
@@ -232,5 +319,4 @@
             </div>
         </div>
     </div>
-
 </div>

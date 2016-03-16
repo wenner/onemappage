@@ -6,13 +6,27 @@ var featureLayer;
 vueExports.modal3 = {
     el: '#modal3',
     data: {
-        address: ""
+        picked: 1,
+        c1: [],
+        c2: [],
+        c3:[],
+        c4:[]
     },
     methods: {
+        reset: function () {
+            this.c1 = [];
+            this.c2 = [];
+            this.c3=[];
+            this.c4=[];
 
+        },
         personHeatMap: function () {
+            //防止第二次点击后重复添加热度图，可以设置逻辑为
+            if (heatLayer) {
+                $Map.removeLayer(heatLayer);
+            }
             console.log("进入HeatMap");
-            var FeatureLayer=esri.layers.FeatureLayer;
+            var FeatureLayer = esri.layers.FeatureLayer;
             //配置代理------------------------------------------
             esriConfig.defaults.io.proxyUrl = "../assets/proxy/proxy.ashx";
             //esriConfig.defaults.io.alwaysUseProxy = true;
@@ -48,14 +62,7 @@ vueExports.modal3 = {
                 "opacity": 0.85
             })
         },
-        //showHeatMap:function(){
-        //    if (heatLayer.visible) {
-        //        heatLayer.hide();
-        //    } else {
-        //        heatLayer.show();
-        //    }
-        //},
-        getFeatures:function(){
+        getFeatures: function () {
             // 创建查询
             var query = new esri.tasks.Query();
             // 只查询当前显示范围内的要素
@@ -71,6 +78,24 @@ vueExports.modal3 = {
                 // 将数据赋给热度图图层
                 heatLayer.setData(data);
             });
+        },
+        wealthHeatMap: function () {
+            if (heatLayer.visible) {
+                heatLayer.hide();
+            } else {
+                heatLayer.show();
+            }
+        },
+        trafficHeatMap: function () {
+            if (heatLayer.visible) {
+                heatLayer.hide();
+            } else {
+                heatLayer.show();
+            }
+        },
+        clearHeatMap: function () {
+            console.log("清除热度图");
+            $Map.removeLayer(heatLayer);
         }
     }
 };
