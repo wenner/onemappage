@@ -57,91 +57,107 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="search">
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <input type="radio" id="modal3-tab2-1" value="1" v-model="picked" @click='reset'>
-                        <label for="modal3-tab2-1">重点防护目标</label>
-                        <br/><br/>
-                        <input type="radio" id="modal3-tab2-2" value="2" v-model="picked" @click='reset'>
-                        <label for="modal3-tab2-2">公众聚集场所</label>
-                        <br/><br/>
-                        <input type="radio" id="modal3-tab2-3" value="3" v-model="picked" @click='reset'>
-                        <label for="modal3-tab2-3">学校</label>
-                        <br/><br/>
-                        <input type="radio" id="modal3-tab2-4" value="4" v-model="picked" @click='reset'>
-                        <label for="modal3-tab2-4">危险源</label>
-                        <br/><br/>
+                <div clsas='row'>
+                    <div class='col-sm-4'>
+                        <div class="col-sm-2">
+                            <input type="radio" id="modal3-tab2-1" value="1" v-model="picked" @click='reset'>
+                            <label for="modal3-tab2-1">重点防护目标</label>
+                            <br/><br/>
+                            <input type="radio" id="modal3-tab2-2" value="2" v-model="picked" @click='reset'>
+                            <label for="modal3-tab2-2">公众聚集场所</label>
+                            <br/><br/>
+                            <input type="radio" id="modal3-tab2-3" value="3" v-model="picked" @click='reset'>
+                            <label for="modal3-tab2-3">学校</label>
+                            <br/><br/>
+                            <input type="radio" id="modal3-tab2-4" value="4" v-model="picked" @click='reset'>
+                            <label for="modal3-tab2-4">危险源</label>
+                            <br/><br/>
+                        </div>
                     </div>
-                    <div class="col-sm-2">
-                        <div v-show="picked == '1'">
-                            重点防护目标
-                            <br/>
-                            <input type="checkbox" id="m3-tb2-v1-1" value="党政机关" v-model="c1">
-                            <label for="m3-tb2-v1-1">党政机关</label>
-                            <input type="checkbox" id="m3-tb2-v1-2" value="科研机构" v-model="c1">
-                            <label for="m3-tb2-v1-2">科研机构</label>
-                            <input type="checkbox" id="m3-tb2-v1-3" value="银行机构" v-model="c1">
-                            <label for="m3-tb2-v1-3">银行机构</label>
-                            <input type="checkbox" id="m3-tb2-v1-4" value="飞机场" v-model="c1">
-                            <label for="m3-tb2-v1-4">飞机场</label>
-                            <br/>
-                            <span>选择的值: {{ c1 }}</span>
-                        </div>
-                        <div v-show="picked=='2'">
-                            公众聚集场所
-                            <br/>
-                            <input type="checkbox" id="m3-tb2-v2-1" value="大型商场超市" v-model="c2">
-                            <label for="m3-tb2-v2-1">大型商场超市</label>
-                            <input type="checkbox" id="m3-tb2-v2-2" value="星级宾馆饭店" v-model="c2">
-                            <label for="m3-tb2-v2-2">星级宾馆饭店</label>
-                            <input type="checkbox" id="m3-tb2-v2-3" value="体育场所" v-model="c2">
-                            <label for="m3-tb2-v2-3">体育场所</label>
-                            <br>
-                            <span>选择的值: {{ c2 }}</span>
-                        </div>
-                        <div v-show="picked=='3'">
-                            学校
-                            <br/>
-                            <input type="checkbox" id="m3-tb2-v3-1" value="幼儿园" v-model="c3">
-                            <label for="m3-tb2-v3-1">幼儿园</label>
-                            <input type="checkbox" id="m3-tb2-v3-2" value="小学" v-model="c3">
-                            <label for="m3-tb2-v3-2">小学</label>
-                            <input type="checkbox" id="m3-tb2-v3-3" value="中学" v-model="c3">
-                            <label for="m3-tb2-v3-3">中学</label>
-                            <br>
-                            <span>选择的值: {{ c3 }}</span>
-                        </div>
-                        <div v-show="picked=='4'">
-                            危险源
-                            <br/>
-                            <input type="checkbox" id="m3-tb2-v4-1" value="化学工厂" v-model="c4">
-                            <label for="m3-tb2-v4-1">化学工厂</label>
-                            <input type="checkbox" id="m3-tb2-v4-2" value="危险品仓库" v-model="c4">
-                            <label for="m3-tb2-v4-2">危险品仓库</label>
-                            <input type="checkbox" id="m3-tb2-v4-3" value="石油化工品" v-model="c4">
-                            <label for="m3-tb2-v4-3">石油化工品</label>
-                            <br>
-                            <span>选择的值: {{ c4 }}</span>
+                    <div class='col-sm-8'>
+                        <div class="col-sm-2">
+                            <div v-show="picked == '1'">
+                                重点防护目标
+                                <br/>
+                                <input type="checkbox" id="m3-tb2-v1-1" value="党政机关" v-model="c1">
+                                <label for="m3-tb2-v1-1">党政机关</label>
+                                <input type="checkbox" id="m3-tb2-v1-2" value="科研机构" v-model="c1">
+                                <label for="m3-tb2-v1-2">科研机构</label>
+                                <input type="checkbox" id="m3-tb2-v1-3" value="银行机构" v-model="c1">
+                                <label for="m3-tb2-v1-3">银行机构</label>
+                                <input type="checkbox" id="m3-tb2-v1-4" value="飞机场" v-model="c1">
+                                <label for="m3-tb2-v1-4">飞机场</label>
+                                <br/>
+                                <span>选择的值: {{ c1 }}</span>
+                            </div>
+                            <div v-show="picked=='2'">
+                                公众聚集场所
+                                <br/>
+                                <input type="checkbox" id="m3-tb2-v2-1" value="大型商场超市" v-model="c2">
+                                <label for="m3-tb2-v2-1">大型商场超市</label>
+                                <input type="checkbox" id="m3-tb2-v2-2" value="星级宾馆饭店" v-model="c2">
+                                <label for="m3-tb2-v2-2">星级宾馆饭店</label>
+                                <input type="checkbox" id="m3-tb2-v2-3" value="体育场所" v-model="c2">
+                                <label for="m3-tb2-v2-3">体育场所</label>
+                                <br>
+                                <span>选择的值: {{ c2 }}</span>
+                            </div>
+                            <div v-show="picked=='3'">
+                                学校
+                                <br/>
+                                <input type="checkbox" id="m3-tb2-v3-1" value="幼儿园" v-model="c3">
+                                <label for="m3-tb2-v3-1">幼儿园</label>
+                                <input type="checkbox" id="m3-tb2-v3-2" value="小学" v-model="c3">
+                                <label for="m3-tb2-v3-2">小学</label>
+                                <input type="checkbox" id="m3-tb2-v3-3" value="中学" v-model="c3">
+                                <label for="m3-tb2-v3-3">中学</label>
+                                <br>
+                                <span>选择的值: {{ c3 }}</span>
+                            </div>
+                            <div v-show="picked=='4'">
+                                危险源
+                                <br/>
+                                <input type="checkbox" id="m3-tb2-v4-1" value="化学工厂" v-model="c4">
+                                <label for="m3-tb2-v4-1">化学工厂</label>
+                                <input type="checkbox" id="m3-tb2-v4-2" value="危险品仓库" v-model="c4">
+                                <label for="m3-tb2-v4-2">危险品仓库</label>
+                                <input type="checkbox" id="m3-tb2-v4-3" value="石油化工品" v-model="c4">
+                                <label for="m3-tb2-v4-3">石油化工品</label>
+                                <br>
+                                <span>选择的值: {{ c4 }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="text-center" style="padding:20px">
+                <div class='col-sm-4'>
                     <button class="btn btn-sm btn-primary" @click="analysis">
                         <i class="fa fa-question"></i> 分析
                     </button>
+                </div>
+                <div class='col-sm-2'>
                     <button class="btn btn-sm btn-primary" id="Rectangle" @click="drawRectangleAnalysis">
                         <i class="fa fa-question"></i> 矩形
                     </button>
+                </div>
+                <div class='col-sm-2'>
                     <button class="btn btn-sm btn-primary" id="Circle" @click="drawCircleAnalysis">
                         <i class="fa fa-question"></i> 圆形
                     </button>
+                </div>
+                <div class='col-sm-2'>
                     <button class="btn btn-sm btn-primary" id="Polygon" @click="drawPolygonAnalysis">
                         <i class="fa fa-question"></i> 多边形
                     </button>
-                    <button class="btn btn-sm btn-warning" id="FreehandPolygon" @click="drawFreehandPolygonAnalysis">
+                </div>
+                <div class='col-sm-2'>
+                    <button class="btn btn-sm btn-warning" id="FreehandPolygon"
+                            @click="drawFreehandPolygonAnalysis">
                         <i class="fa fa-phone"></i> 手绘
                     </button>
                 </div>
+            </div>
+            <div>
+                <button class='btn btn-block'>删除</button>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="result">
