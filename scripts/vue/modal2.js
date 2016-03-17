@@ -96,12 +96,12 @@ vueExports.modal2={
             if(features.length>0) {
                 console.log("callback success... features.length="+features.length);
                 for (var i = 0, length = features.length; i != length; ++i) {
-                    var feature = features[i];
+                    pointBufferFeature = features[i];
                     var polySymbolRed = new SimpleFillSymbol();
                     polySymbolRed.setOutline(new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0, 0, 0, 0.5]), 1));
                     polySymbolRed.setColor(new Color([255, 0, 0, 0.5]));
-                    feature.setSymbol(polySymbolRed);
-                    $Map.graphics.add(feature);
+                    pointBufferFeature.setSymbol(polySymbolRed);
+                    $Map.graphics.add(pointBufferFeature);
                 }
                 console.log("提示","计算成功！");
             }

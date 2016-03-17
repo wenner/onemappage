@@ -9,15 +9,15 @@ vueExports.modal3 = {
         picked: 1,
         c1: [],
         c2: [],
-        c3:[],
-        c4:[]
+        c3: [],
+        c4: []
     },
     methods: {
         reset: function () {
             this.c1 = [];
             this.c2 = [];
-            this.c3=[];
-            this.c4=[];
+            this.c3 = [];
+            this.c4 = [];
 
         },
         personHeatMap: function () {
@@ -96,6 +96,46 @@ vueExports.modal3 = {
         clearHeatMap: function () {
             console.log("清除热度图");
             $Map.removeLayer(heatLayer);
+        },
+        analysis: function () {   /////实现查询图层点，并显示到地图上，目前只做了一个查询后期要根据选择内容查询多个图层
+            //console.log(this.c1+"  "+this.picked);
+            var SimpleMarkerSymbol = esri.symbol.SimpleMarkerSymbol;
+            var SimpleLineSymbol = esri.symbol.SimpleLineSymbol;
+            var SimpleFillSymbol = esri.symbol.SimpleFillSymbol;
+            var QueryTask = esri.tasks.QueryTask;
+            var Color = esri.Color;
+            var Graphic = esri.graphic;
+            var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.5]));
+            // 初始化查询任务与查询参数
+            var url = "http://60.29.110.104:6080/arcgis/rest/services/外业点位图map20151207/MapServer";
+            var queryTask0 = new QueryTask(url + "/0");
+            var queryTask1 = new QueryTask(url + "/1");
+            var queryTask2 = new QueryTask(url + "/2");
+
+            queryTask2.on("complete", showResult);
+            var query = new esri.tasks.Query();
+            query.returnGeometry = true;
+            query.outFields = ["X", "Y", "UNAME", "FID "];
+            //var graphic = new Graphic();
+            console.log("pointBufferFeature :  " + pointBufferFeature);
+            query.geometry = pointBufferFeature.geometry;
+            queryTask2.execute(query);
+
+            var selectSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 12, new SimpleLineSymbol(SimpleLineSymbol.STYLE_NULL, new Color([0, 0, 255, 0.9]), 1), new Color([0, 0, 255, 0.8]));
+            var evtResult;  //用于临时保存空间查询出来的数据，以便后续二次操作
+            function showResult(evt) {
+                var resultFeatures = evt.featureSet.features;
+                evtResult = resultFeatures;
+                for (var i = 0, il = resultFeatures.length; i < il; i++) {
+                    console.log("resultFeatures[" + i + "]:" + resultFeatures[i]);
+                    var graphic = resultFeatures[i];
+                    //Assign a symbol sized based on populuation
+                    graphic.setSymbol(selectSymbol);
+                    $Map.graphics.add(graphic);
+                }
+                //tb.deactivate();
+                //map.showZoomSlider();
+            }
         }
     }
 };

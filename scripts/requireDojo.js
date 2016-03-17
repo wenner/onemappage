@@ -6,12 +6,14 @@ require([
     "dojo/dom" ,
     "dojo/dom-construct" ,
     "dijit/registry" ,
+    "esri/tasks/query",
+
     "dojo/on" ,
     "dojo/parser" ,
     "dojo/string" ,
     "dijit/layout/BorderContainer" ,
     "dijit/layout/ContentPane" ,
-
+    "dojo/query",
 
     //arcgis lib
     "esri/map" ,
@@ -35,6 +37,8 @@ require([
     "esri/geometry/Polygon",
     "esri/tasks/FindTask" ,
     "esri/tasks/FindParameters" ,
+
+
     "esri/InfoTemplate" ,
     "esri/symbols/CartographicLineSymbol" ,
     "esri/symbols/PictureFillSymbol" ,
@@ -55,12 +59,14 @@ require([
     HeatmapLayer,
     dom ,
     domConstruct ,
-    registry
+    registry,
+    QueryT
 ){
     myInfoWindow = InfoWindow;
     dojoDom = dom;
     dojoDomConstruct = domConstruct;
     dojoRegistry = registry;
     bism = HeatmapLayer;
+    queryT=QueryT;
     createMap();
 });
