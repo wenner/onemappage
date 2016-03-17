@@ -11,7 +11,12 @@ vueExports.modal3 = {
         c1: [],
         c2: [],
         c3: [],
-        c4: []
+        c4: [],
+        docName:"公共影响因素分析结果及处置建议",
+        print:{
+            printFormat:"JPG",
+            printLayout:"A4 Landscape"
+        }
     },
     methods: {
         reset: function () {
@@ -166,6 +171,16 @@ vueExports.modal3 = {
             //riversInfoTemplate = new esri.InfoTemplate("${NAME}", "河流名称：${NAME}<br/><br/>流域名：${SYSTEM}");
             //citiesInfoTemplate = new esri.InfoTemplate("${CITY_NAME}", "城市名：${CITY_NAME}<br/> 州名： ${STATE_NAME}<br />人口：${POP1990}");
             activateTool();
+
+            // 或者 find the divs for buttons
+            //query(".drawing").forEach(function (btn) {
+            //    var button = new Button({
+            //        label: btn.innerHTML,
+            //        onClick: function () {
+            //            activateTool(this.id);
+            //        }
+            //    }, btn);
+            //});
             function activateTool() {
                 var tool = null;
                 console.log("进入activateTool方法");
@@ -214,7 +229,7 @@ vueExports.modal3 = {
             function showResults(featureSet) {
                 console.log("进入显示查询出来的图形，加载到map中");
                 // 清除上一次的高亮显示
-                $Map.graphics.clear();
+                //$Map.graphics.clear();
                 tb.deactivate();
                 var symbol, infoTemplate;
                 symbol = pointSym;
@@ -249,6 +264,38 @@ vueExports.modal3 = {
         },
         modal3delGraphic: function () {
             $Map.graphics.clear();
+        },
+        printDoc:function(){
+            console.log("开始打印", this.docName);
+            var PrintTemplate=esri.tasks.PrintTemplate;
+            var template = new PrintTemplate();
+            template.format = this.print.printFormat;
+            template.layout = this.print.printLayout;
+            console.log(this.print.printFormat,this.print.printLayout);
+            template.layoutOptions = {
+                "titleText": this.docName,
+                "scalebarUnit": "Kilometers",
+                "copyrightText": "",
+                "showAttribution": false,
+                "legendLayers": []
+            };
+            template.preserveScale = true;
+
+            var PrintParameters=esri.tasks.PrintParameters;
+            var params = new PrintParameters();
+            params.map = $Map;
+            params.template = template;
+            var PrintTask=esri.tasks.PrintTask;
+            var printTask = new PrintTask("http://60.29.110.104:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export Web Map Task");
+            printTask.execute(params, printResult, printError);
+            function printResult(result) {
+                window.open(result.url, "_blank");
+                console.log("打印成功");
+            }
+
+            function printError(error) {
+                alert(error);
+            }
         }
     }
 

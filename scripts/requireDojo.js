@@ -42,7 +42,6 @@ require([
     "esri/tasks/FindTask" ,
     "esri/tasks/FindParameters" ,
 
-
     "esri/InfoTemplate" ,
     "esri/symbols/CartographicLineSymbol" ,
     "esri/symbols/PictureFillSymbol" ,
@@ -52,9 +51,9 @@ require([
     "esri/tasks/JobInfo",
     "esri/tasks/FeatureSet",
     "esri/tasks/LinearUnit",
-
-
-
+    "esri/tasks/PrintTask",
+    "esri/tasks/PrintParameters",
+    "esri/tasks/PrintTemplate",
     "dojo/domReady!"
 ] , function(InfoWindow ,HeatmapLayer, dom ,domConstruct , registry,QueryT,color,simpleMarkerSymbol,simpleLineSymbol,simpleFillSymbol,draw
 
