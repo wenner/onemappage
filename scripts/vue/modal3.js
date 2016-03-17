@@ -3,6 +3,7 @@
  */
 var heatLayer;
 var featureLayer;
+var tb;
 vueExports.modal3 = {
     el: '#modal3',
     data: {
@@ -136,6 +137,119 @@ vueExports.modal3 = {
                 //tb.deactivate();
                 //map.showZoomSlider();
             }
+        },
+        draw: function (e) {
+            //同一方法，对应不同按钮，获取此按钮的value 判断得到的是那个按钮事件
+            var btnValue = e.target.value.toLowerCase();
+            console.log(btnValue);
+            // 实例化符号类
+            var pointSym, lineSym, polygonSym;
+            var redColor = new Color([255, 0, 0]);
+            var halfFillYellow = new Color([0,0,204,0.8]);
+
+            pointSym = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_DIAMOND, 10, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, redColor, 1), halfFillYellow);
+            lineSym = new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, redColor, 2);
+            polygonSym = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, redColor, 2), halfFillYellow);
+            tb = new esri.toolbars.Draw($Map);
+            tb.on("draw-end", doQuery);
+
+            // 实例化查询参数类
+            var url = "http://60.29.110.104:6080/arcgis/rest/services/外业点位图map20151207/MapServer";
+            var queryTask0 = new esri.tasks.QueryTask(url + "/0");
+            var queryTask1 = new esri.tasks.QueryTask(url + "/1");
+            var queryTask2 = new esri.tasks.QueryTask(url + "/2");
+            query = new esri.tasks.Query();
+            query.returnGeometry = true;
+
+            // 实例化信息模板类
+            //statesInfoTemplate = new esri.InfoTemplate("${STATE_NAME}", "州名： ${STATE_NAME}<br/> <br />面积：${AREA}");
+            //riversInfoTemplate = new esri.InfoTemplate("${NAME}", "河流名称：${NAME}<br/><br/>流域名：${SYSTEM}");
+            //citiesInfoTemplate = new esri.InfoTemplate("${CITY_NAME}", "城市名：${CITY_NAME}<br/> 州名： ${STATE_NAME}<br />人口：${POP1990}");
+            activateTool();
+            function activateTool() {
+                var tool = null;
+                console.log("进入activateTool方法");
+
+                switch (btnValue) {
+                    case "rectangle":
+                        console.log("进入画矩形case: "+btnValue);
+                        tool = "rectangle";
+                        break;
+                    case "circle":
+                        tool = "circle";
+                        break;
+                    case "polygon":
+                        tool = "polygon";
+                        break;
+                    case "freehandpolygon":
+                        tool = "freehandpolygon";
+                        break;
+                }
+                tb.activate(tool);
+                //$Toolbar.activate("rectangle");
+            }
+
+            function doQuery(evt) {
+                query.geometry = evt.geometry;
+                //var taskName = document.getElementById("task").value;
+                var queryTask;
+                queryTask = queryTask1; //后期可以根据选择的项进行判断查询哪些图层
+                query.returnGeometry = true;
+                query.outFields = ["X", "Y", "UNAME", "FID "];
+                /*if (this.c1 === "statesTask") {
+                 queryTask = statesTask;
+                 query.outFields = ["STATE_NAME", "AREA"];
+                 }
+                 else if (taskName === "riversTask") {
+                 queryTask = riversTask;
+                 query.outFields = ["NAME", "SYSTEM"];
+                 }
+                 else {
+                 queryTask = citiesTask;
+                 query.outFields = ["CITY_NAME", "STATE_NAME", "POP1990"];
+                 }*/
+                queryTask.execute(query, showResults);
+            }
+
+            function showResults(featureSet) {
+                console.log("进入显示查询出来的图形，加载到map中");
+                // 清除上一次的高亮显示
+                $Map.graphics.clear();
+                tb.deactivate();
+                var symbol, infoTemplate;
+                symbol = pointSym;
+                //var taskName = document.getElementById("task").value;
+                //switch (taskName) {
+                //    case "citiesTask":
+                //        symbol = pointSym;
+                //        //infoTemplate = citiesInfoTemplate;
+                //        break;
+                //    case "riversTask":
+                //        symbol = lineSym;
+                //        //infoTemplate = riversInfoTemplate;
+                //        break;
+                //    case "statesTask":
+                //        symbol = polygonSym;
+                //        //infoTemplate = statesInfoTemplate;
+                //        break;
+                //}
+
+                var resultFeatures = featureSet.features;
+                for (var i = 0, il = resultFeatures.length; i < il; i++) {
+                    // 从featureSet中得到当前地理特征
+                    // 地理特征就是一图形对象
+                    var graphic = resultFeatures[i];
+                    graphic.setSymbol(symbol);
+                    // 设置信息模板
+                    //graphic.setInfoTemplate(infoTemplate);
+                    // 在地图的图形图层中增加图形
+                    $Map.graphics.add(graphic);
+                }
+            }
+        },
+        modal3delGraphic: function () {
+            $Map.graphics.clear();
         }
     }
+
 };

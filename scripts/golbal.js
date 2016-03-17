@@ -10,4 +10,7 @@ var bism;  //热度图变量
 var pointBufferFeature;//热度图缓冲区
 var vueExports = {};
 var queryT;
+var Color;
+var SimpleMarkerSymbol,SimpleLineSymbol,SimpleFillSymbol;   //定义样式
+var Draw;
 

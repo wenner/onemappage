@@ -7,7 +7,11 @@ require([
     "dojo/dom-construct" ,
     "dijit/registry" ,
     "esri/tasks/query",
-
+    "esri/Color" ,
+    "esri/symbols/SimpleMarkerSymbol" ,
+    "esri/symbols/SimpleLineSymbol" ,
+    "esri/symbols/SimpleFillSymbol" ,
+    "esri/toolbars/draw" ,
     "dojo/on" ,
     "dojo/parser" ,
     "dojo/string" ,
@@ -27,7 +31,7 @@ require([
     "esri/layers/GraphicsLayer" ,
     "esri/graphic" ,
     "esri/layers/FeatureLayer" ,
-    "esri/toolbars/draw" ,
+
     "esri/SpatialReference" ,
     "esri/layers/ArcGISTiledMapServiceLayer" ,
     "esri/layers/ArcGISDynamicMapServiceLayer" ,
@@ -42,25 +46,18 @@ require([
     "esri/InfoTemplate" ,
     "esri/symbols/CartographicLineSymbol" ,
     "esri/symbols/PictureFillSymbol" ,
-    "esri/symbols/SimpleMarkerSymbol" ,
-    "esri/symbols/SimpleLineSymbol" ,
-    "esri/symbols/SimpleFillSymbol" ,
+
     "esri/renderers/SimpleRenderer" ,
     "esri/tasks/Geoprocessor",
     "esri/tasks/JobInfo",
     "esri/tasks/FeatureSet",
     "esri/tasks/LinearUnit",
 
-    "esri/Color" ,
+
 
     "dojo/domReady!"
-] , function(
-    InfoWindow ,
-    HeatmapLayer,
-    dom ,
-    domConstruct ,
-    registry,
-    QueryT
+] , function(InfoWindow ,HeatmapLayer, dom ,domConstruct , registry,QueryT,color,simpleMarkerSymbol,simpleLineSymbol,simpleFillSymbol,draw
+
 ){
     myInfoWindow = InfoWindow;
     dojoDom = dom;
@@ -68,5 +65,10 @@ require([
     dojoRegistry = registry;
     bism = HeatmapLayer;
     queryT=QueryT;
+    Color=color;
+    SimpleMarkerSymbol=simpleMarkerSymbol;
+    SimpleLineSymbol=simpleLineSymbol;
+    SimpleFillSymbol=simpleFillSymbol;
+    Draw=draw;
     createMap();
 });
