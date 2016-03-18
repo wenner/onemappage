@@ -1,0 +1,107 @@
+
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#modal6a" aria-controls="modal6a" role="tab" data-toggle="tab">形状选择</a>
+        </li>
+        <li role="presentation">
+            <a href="#modal6b" aria-controls="modal6b" role="tab" data-toggle="tab">文本输入</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active tab1" id="modal6a" >
+            <div class="text-center" style="padding:20px">
+                <label class="label label-info control-label">填充颜色</label>
+                <input id="jscolor" class="jscolor" value="ab2567" v-model="jsColor">
+                <button class="btn btn-sm btn-primary"  @click="setFillColor">
+                    <i class="fa fa-question"></i> 轮廓颜色
+                </button>
+                <button class="btn btn-sm btn-primary"  @click="setFillColor">
+                    <i class="fa fa-question"></i> 透明度
+                </button>
+                <input id="ex8" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+            </div>
+            <div class="text-center" style="padding:20px">
+                <button class="btn btn-sm btn-primary" @click="yanweiGraphic">
+                    <i class="fa fa-question"></i> 燕尾
+                </button>
+                <button class="btn btn-sm btn-primary" id="Rectangle" @click="">
+                    <i class="fa fa-question"></i> 自由线
+                </button>
+                <button class="btn btn-sm btn-primary" id="Circle" @click="">
+                    <i class="fa fa-question"></i> 折线
+                </button>
+                <button class="btn btn-sm btn-primary" id="Polygon" @click="">
+                    <i class="fa fa-question"></i> 多边形
+                </button>
+                <button class="btn btn-sm btn-warning" id="FreehandPolygon" @click="">
+                    <i class="fa fa-phone"></i> 手绘
+                </button>
+            </div>
+            <br/>
+            <div>
+                <button class="btn btn-lg btn-warning" @click="clearGraphic">
+                    图形
+                </button>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane tab2" id="modal6b" >
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputMaterial" class="col-sm-4 control-label">泄露物质</label>
+                    <div class="col-sm-8">
+                        <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
+                        <select class="form-control input-sm" id="inputMaterial" >
+                            <option>无水氯</option>
+                            <option>三氧化硼</option>
+                            <option>煤气</option>
+                            <option>氰</option>
+                            <option>氯</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAreal" class="col-sm-4 control-label">泄露面积</label>
+                    <div class="col-sm-8">
+                        <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
+                        <select class="form-control input-sm" id="inputAreal" >
+                            <option>大</option>
+                            <option>小</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputTime" class="col-sm-4 control-label">泄露时间</label>
+                    <div class="col-sm-8">
+                        <select class="form-control input-sm" id="inputTime">
+                            <option>白天</option>
+                            <option>晚上</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">风向偏北</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control input-sm" id="inputEmail3" name="num" placeholder="偏北角度" value="45">
+                    </div>
+                </div>
+            </form>
+            <div class="text-center">
+                <button class="btn btn-sm btn-primary" id="analysePoint" @click="setERGgraphic">
+                    <i class="fa fa-question"></i> 事发点作为泄漏点
+                </button>
+                <button class="btn btn-sm btn-warning">
+                    <i class="fa fa-phone"></i> 选择泄漏点
+                </button>
+                <button class="btn btn-sm btn-warning" id="btnCleanResult">
+                    <i class="fa fa-phone"></i> 清除结果
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+

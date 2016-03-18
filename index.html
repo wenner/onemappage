@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="assets/css/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="assets/css/bootstrap-dialog.min.css" type="text/css">
+
     <link rel="stylesheet" href="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/esri/css/esri.css">
     <link rel="stylesheet" href="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/dijit/themes/claro/claro.css">
 
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="scripts/modules/infoWindow/InfoWindow.css" type="text/css">
 
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/bootstrap-slider.css" type="text/css">
     <style type="text/css">
         #mapDiv {
             min-height: 100px;
@@ -127,6 +129,11 @@
          style="width:400px;height:400px;background:#Fff"
          data-dojo-props="title:'公共影响因素分析',href:'scripts/views/modal3.html',loadingMessage:'Loading dialog content...'"
          id="modal3"></div>
+
+    <div data-dojo-type="dijit/Dialog"
+         style="width:400px;height:400px;background:#Fff"
+         data-dojo-props="title:'态势标绘',href:'scripts/views/modal6.html',loadingMessage:'Loading dialog content...'"
+         id="modal6"></div>
 </div>
 <script>
     var dojoConfig={
@@ -141,13 +148,14 @@
         }]
     };
 </script>
-
+<script type="text/javascript" src="assets/scripts/jscolor.js"></script>
 <script type="text/javascript" src="assets/scripts/vue.js"></script>
 <script type="text/javascript" src="assets/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="assets/scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="assets/scripts/owl.carousel.min.js"></script>
 <script type="text/javascript" src="assets/scripts/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="assets/scripts/bootstrap-dialog.js"></script>
+<script type="text/javascript" src="assets/scripts/bootstrap-slider.min.js"></script>
 
 <script type="text/javascript" src="scripts/golbal.js"></script>
 <script type="text/javascript" src="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/init.js"></script>
@@ -158,9 +166,9 @@
 <script type="text/javascript" src="scripts/vue/modal1.js"></script>
 <script type="text/javascript" src="scripts/vue/modal2.js"></script>
 <script type="text/javascript" src="scripts/vue/modal3.js"></script>
+<script type="text/javascript" src="scripts/vue/modal6.js"></script>
 
 <script src="scripts/init.js"></script>
 <script type="text/javascript" src="scripts/requireDojo.js"></script>
-
 </body>
 </html>

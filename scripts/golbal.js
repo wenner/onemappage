@@ -14,3 +14,14 @@ var Color;
 var SimpleMarkerSymbol,SimpleLineSymbol,SimpleFillSymbol;   //定义样式
 var Draw;
 
+
+
+///颜色十六进制转RGB方法
+String.prototype.toRGB = function(){
+    var sColor = this.toLowerCase();
+    var sColorChange = [];
+    for(var i=1; i<7; i+=2){
+        sColorChange.push(parseInt("0x"+sColor.slice(i,i+2)));
+    }
+    return sColorChange;
+};
