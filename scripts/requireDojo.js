@@ -12,6 +12,10 @@ require([
     "esri/symbols/SimpleLineSymbol" ,
     "esri/symbols/SimpleFillSymbol" ,
     "esri/toolbars/draw" ,
+    "./poltDraw/DrawExt.js",
+
+
+
     "dojo/on" ,
     "dojo/parser" ,
     "dojo/string" ,
@@ -55,7 +59,7 @@ require([
     "esri/tasks/PrintParameters",
     "esri/tasks/PrintTemplate",
     "dojo/domReady!"
-] , function(InfoWindow ,HeatmapLayer, dom ,domConstruct , registry,QueryT,color,simpleMarkerSymbol,simpleLineSymbol,simpleFillSymbol,draw
+] , function(InfoWindow ,HeatmapLayer, dom ,domConstruct , registry,QueryT,color,simpleMarkerSymbol,simpleLineSymbol,simpleFillSymbol,draw,poltDraw
 
 ){
     myInfoWindow = InfoWindow;
