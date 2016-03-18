@@ -3,7 +3,7 @@
  */
 define([
     "dojo/_base/declare",
-    './poltDraw/ext/cn.js'
+    'scripts/modules/poltDraw/ext/cn.js'
 ], function (declare,cn) {
     return declare("plot.ext.AttackArrow", [cn], {
         headHeightFactor : 0.18,

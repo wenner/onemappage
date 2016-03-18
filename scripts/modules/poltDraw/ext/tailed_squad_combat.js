@@ -3,7 +3,7 @@
  */
 define([
     "dojo/_base/declare",
-    './poltDraw/ext/attack_arrow.js'
+    'scripts/modules/poltDraw/ext/attack_arrow.js'
 ], function (declare,AttackArrow) {
     return declare("plot.ext.tailedsquadcombat", [AttackArrow], {
         af:0.1,

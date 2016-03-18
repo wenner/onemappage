@@ -9,9 +9,9 @@ define(
         'esri/layers/GraphicsLayer',
         'esri/geometry/Polygon',
         'esri/geometry/Polyline',
-        './poltDraw/PlotFactory.js',
-        './poltDraw/ext/cs.js',
-        './poltDraw/ext/ct.js'
+        'scripts/modules/poltDraw/PlotFactory.js',
+        'scripts/modules/poltDraw/ext/cs.js',
+        'scripts/modules/poltDraw/ext/ct.js'
     ],
     function (declare, lang,on,domConstruct,Draw,Graphic,GraphicsLayer,
               Polygon,Polyline,PlotFactory,cs,ct){

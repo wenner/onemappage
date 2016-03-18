@@ -11,7 +11,8 @@ var pointBufferFeature;//热度图缓冲区
 var vueExports = {};
 var queryT;
 var Color;
-var SimpleMarkerSymbol,SimpleLineSymbol,SimpleFillSymbol;   //定义样式
+var SimpleMarkerSymbol,SimpleLineSymbol,SimpleFillSymbol,PictureFillSymbol;   //定义样式
+var CartographicLineSymbol;
 var Draw;
 
 

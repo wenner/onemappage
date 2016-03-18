@@ -3,7 +3,7 @@
  */
 define([
     "dojo/_base/declare",
-    './poltDraw/ext/tailed_squad_combat.js'
+    'scripts/modules/poltDraw/ext/tailed_squad_combat.js'
 ], function (declare,
              TailedSquadCombat) {
     return declare("plot.PlotFactory", null, {

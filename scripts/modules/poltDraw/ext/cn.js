@@ -4,8 +4,8 @@
 define([
     "dojo/_base/declare",
     'esri/geometry/Polygon',
-    './poltDraw/ext/cu.js',
-    './poltDraw/ext/comfun.js'
+    'scripts/modules/poltDraw/ext/cu.js',
+    'scripts/modules/poltDraw/ext/comfun.js'
 ], function (declare,Polygon,cu,comfun) {
     return declare("plot.ext.cn", [Polygon,cu], {
         aa:[],

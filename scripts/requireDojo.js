@@ -11,8 +11,10 @@ require([
     "esri/symbols/SimpleMarkerSymbol" ,
     "esri/symbols/SimpleLineSymbol" ,
     "esri/symbols/SimpleFillSymbol" ,
+    "esri/symbols/CartographicLineSymbol" ,
+    "esri/symbols/PictureFillSymbol",
     "esri/toolbars/draw" ,
-    "./poltDraw/DrawExt.js",
+    "scripts/modules/poltDraw/DrawExt.js",
 
 
 
@@ -47,7 +49,7 @@ require([
     "esri/tasks/FindParameters" ,
 
     "esri/InfoTemplate" ,
-    "esri/symbols/CartographicLineSymbol" ,
+
     "esri/symbols/PictureFillSymbol" ,
 
     "esri/renderers/SimpleRenderer" ,
@@ -59,7 +61,8 @@ require([
     "esri/tasks/PrintParameters",
     "esri/tasks/PrintTemplate",
     "dojo/domReady!"
-] , function(InfoWindow ,HeatmapLayer, dom ,domConstruct , registry,QueryT,color,simpleMarkerSymbol,simpleLineSymbol,simpleFillSymbol,draw,poltDraw
+] , function(InfoWindow ,HeatmapLayer, dom ,domConstruct , registry,QueryT,color,simpleMarkerSymbol,simpleLineSymbol,simpleFillSymbol,cartographicLineSymbol,pictureFillSymbol,
+             draw,poltDraw
 
 ){
     myInfoWindow = InfoWindow;
@@ -72,6 +75,8 @@ require([
     SimpleMarkerSymbol=simpleMarkerSymbol;
     SimpleLineSymbol=simpleLineSymbol;
     SimpleFillSymbol=simpleFillSymbol;
+    CartographicLineSymbol=cartographicLineSymbol;
+    PictureFillSymbol=pictureFillSymbol;
     Draw=draw;
     init();
 });
