@@ -18,23 +18,26 @@
                 <label class="label label-info">轮廓颜色</label>
                 <input class="jscolor" value="FF0303" v-model="jsColorOutline">
                 <label class="label label-info" >透明度</label>
-                <input class='bs-slider' data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="1"
-                       data-slider-step="0.01" data-slider-value="0.9"/>
+                <input class='bs-slider' data-slider-id='ex1Slider' id="ex1Slider" type="text" data-slider-min="0" data-slider-max="1"
+                       data-slider-step="0.01" data-slider-value="0.6" v-model="jsColorTransparency">
             </div>
             <div class="text-center" style="padding:20px">
-                <button class="btn btn-sm btn-primary" @click="yanweiGraphic">
+                <button class="btn btn-sm btn-primary" value="ARROW" @click="plotting">
+                    <i class="fa fa-question"></i> 箭头
+                </button>
+                <button class="btn btn-sm btn-primary" value="tailedsquadcombat" @click="plotting">
                     <i class="fa fa-question"></i> 燕尾箭头
                 </button>
-                <button class="btn btn-sm btn-primary" @click="freeLine">
+                <button class="btn btn-sm btn-primary" value="FREEHANDPOLYLINE" @click="plotting">
                     <i class="fa fa-question"></i> 自由线
                 </button>
-                <button class="btn btn-sm btn-primary"  @click="polyLine">
+                <button class="btn btn-sm btn-primary" value="POLYLINE"  @click="plotting">
                     <i class="fa fa-question"></i> 折线
                 </button>
-                <button class="btn btn-sm btn-primary"  @click="polygon">
+                <button class="btn btn-sm btn-primary" value="POLYGON"  @click="plotting">
                     <i class="fa fa-question"></i> 多边形
                 </button>
-                <button class="btn btn-sm btn-warning"  @click="handLine">
+                <button class="btn btn-sm btn-warning" value="FREEHANDPOLYGON"  @click="plotting">
                     <i class="fa fa-phone"></i> 手绘
                 </button>
             </div>

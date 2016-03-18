@@ -14,6 +14,13 @@ var Color;
 var SimpleMarkerSymbol,SimpleLineSymbol,SimpleFillSymbol,PictureFillSymbol;   //定义样式
 var CartographicLineSymbol;
 var Draw;
+var PoltDraw;
+var GraphicsLayer,Graphic,FeatureLayer;
+
+//创建多个图层，便于管理graphic
+var plottingLayer,bufferLayer,alarmLayer;
+
+
 
 
 var bottomBarMenus = [
@@ -26,12 +33,29 @@ var bottomBarMenus = [
 ];
 
 
-///颜色十六进制转RGB方法
+//十六进制颜色值的正则表达式
+
+/*16进制颜色转为RGB格式*/
 String.prototype.toRGB = function(){
+    var ColorReg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
     var sColor = this.toLowerCase();
-    var sColorChange = [];
-    for(var i=1; i<7; i+=2){
-        sColorChange.push(parseInt("0x"+sColor.slice(i,i+2)));
+    if(sColor && ColorReg.test(sColor)){
+        if(sColor.length === 4){
+            var sColorNew = "#";
+            for(var i=1; i<4; i+=1){
+                sColorNew += sColor.slice(i,i+1).concat(sColor.slice(i,i+1));
+            }
+            sColor = sColorNew;
+        }
+        //处理六位的颜色值
+        var sColorChange = [];
+        for(var i=1; i<7; i+=2){
+            sColorChange.push(parseInt("0x"+sColor.slice(i,i+2)));
+            console.log(parseInt("0x"+sColor.slice(i,i+2)));
+        }
+        //return "RGB(" + sColorChange.join(",") + ")";
+        return sColorChange;
+    }else{
+        return "这个是颜色值吗？";
     }
-    return sColorChange;
 };

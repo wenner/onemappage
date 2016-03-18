@@ -33,6 +33,15 @@
             //basemap: "topo"
         });
 
+        //创建图形图层
+        plottingLayer = new GraphicsLayer();
+        //把图层添加到地图上
+        $Map.addLayer(plottingLayer);
+        bufferLayer = new GraphicsLayer();
+        $Map.addLayer(bufferLayer);
+        alarmLayer = new GraphicsLayer();
+        $Map.addLayer(alarmLayer);
+
 		setSymbolStyle();
 
         $Toolbar = new Draw($Map);

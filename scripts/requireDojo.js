@@ -1,58 +1,57 @@
 require([
     //custom lib
-    "myModules/InfoWindow/InfoWindow" ,
+    "myModules/InfoWindow/InfoWindow",
     "bism/bism/HeatmapLayer",
     //dojo lib
-    "dojo/dom" ,
-    "dojo/dom-construct" ,
-    "dijit/registry" ,
+    "dojo/dom",
+    "dojo/dom-construct",
+    "dijit/registry",
     "esri/tasks/query",
-    "esri/Color" ,
-    "esri/symbols/SimpleMarkerSymbol" ,
-    "esri/symbols/SimpleLineSymbol" ,
-    "esri/symbols/SimpleFillSymbol" ,
-    "esri/symbols/CartographicLineSymbol" ,
+    "esri/Color",
+    "esri/symbols/SimpleMarkerSymbol",
+    "esri/symbols/SimpleLineSymbol",
+    "esri/symbols/SimpleFillSymbol",
+    "esri/symbols/CartographicLineSymbol",
     "esri/symbols/PictureFillSymbol",
-    "esri/toolbars/draw" ,
+    "esri/toolbars/draw",
     "scripts/modules/poltDraw/DrawExt.js",
+    "esri/layers/GraphicsLayer",
+    "esri/graphic",
+    "esri/layers/FeatureLayer",
 
-
-
-    "dojo/on" ,
-    "dojo/parser" ,
-    "dojo/string" ,
-    "dijit/layout/BorderContainer" ,
-    "dijit/layout/ContentPane" ,
+    "dojo/on",
+    "dojo/parser",
+    "dojo/string",
+    "dijit/layout/BorderContainer",
+    "dijit/layout/ContentPane",
     "dojo/query",
 
     //arcgis lib
-    "esri/map" ,
-    "esri/basemaps" ,
-    "esri/dijit/Basemap" ,
-    "esri/dijit/BasemapLayer" ,
-    "esri/dijit/BasemapToggle" ,
-    "esri/dijit/BasemapGallery" ,
-    "esri/arcgis/utils" ,
-    "esri/geometry/Extent" ,
-    "esri/layers/GraphicsLayer" ,
-    "esri/graphic" ,
-    "esri/layers/FeatureLayer" ,
+    "esri/map",
+    "esri/basemaps",
+    "esri/dijit/Basemap",
+    "esri/dijit/BasemapLayer",
+    "esri/dijit/BasemapToggle",
+    "esri/dijit/BasemapGallery",
+    "esri/arcgis/utils",
+    "esri/geometry/Extent",
 
-    "esri/SpatialReference" ,
-    "esri/layers/ArcGISTiledMapServiceLayer" ,
-    "esri/layers/ArcGISDynamicMapServiceLayer" ,
-    "esri/layers/ArcGISImageServiceLayer" ,
-    "esri/layers/ImageServiceParameters" ,
-    "esri/geometry/Point" ,
+
+    "esri/SpatialReference",
+    "esri/layers/ArcGISTiledMapServiceLayer",
+    "esri/layers/ArcGISDynamicMapServiceLayer",
+    "esri/layers/ArcGISImageServiceLayer",
+    "esri/layers/ImageServiceParameters",
+    "esri/geometry/Point",
     "esri/geometry/Polygon",
-    "esri/tasks/FindTask" ,
-    "esri/tasks/FindParameters" ,
+    "esri/tasks/FindTask",
+    "esri/tasks/FindParameters",
 
-    "esri/InfoTemplate" ,
+    "esri/InfoTemplate",
 
-    "esri/symbols/PictureFillSymbol" ,
+    "esri/symbols/PictureFillSymbol",
 
-    "esri/renderers/SimpleRenderer" ,
+    "esri/renderers/SimpleRenderer",
     "esri/tasks/Geoprocessor",
     "esri/tasks/JobInfo",
     "esri/tasks/FeatureSet",
@@ -61,22 +60,27 @@ require([
     "esri/tasks/PrintParameters",
     "esri/tasks/PrintTemplate",
     "dojo/domReady!"
-] , function(InfoWindow ,HeatmapLayer, dom ,domConstruct , registry,QueryT,color,simpleMarkerSymbol,simpleLineSymbol,simpleFillSymbol,cartographicLineSymbol,pictureFillSymbol,
-             draw,poltDraw
-
-){
+], function (InfoWindow, HeatmapLayer, dom, domConstruct, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
+             draw, poltDraw, graphicsLayer, graphic, featureLayer) {
     myInfoWindow = InfoWindow;
     dojoDom = dom;
     dojoDomConstruct = domConstruct;
     dojoRegistry = registry;
     bism = HeatmapLayer;
-    queryT=QueryT;
-    Color=color;
-    SimpleMarkerSymbol=simpleMarkerSymbol;
-    SimpleLineSymbol=simpleLineSymbol;
-    SimpleFillSymbol=simpleFillSymbol;
-    CartographicLineSymbol=cartographicLineSymbol;
-    PictureFillSymbol=pictureFillSymbol;
-    Draw=draw;
+    queryT = QueryT;
+    Color = color;
+    SimpleMarkerSymbol = simpleMarkerSymbol;
+    SimpleLineSymbol = simpleLineSymbol;
+    SimpleFillSymbol = simpleFillSymbol;
+    CartographicLineSymbol = cartographicLineSymbol;
+    PictureFillSymbol = pictureFillSymbol;
+    Draw = draw;
+    PoltDraw = poltDraw;
+    GraphicsLayer = graphicsLayer;
+    Graphic = graphic;
+    FeatureLayer = featureLayer;
+
+
+
     init();
 });

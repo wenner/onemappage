@@ -5,14 +5,18 @@ vueExports.modal6 = {
     el: '#modal6',
     data: {
         jsColorFill: "",
-        jsColorOutline: ""
+        jsColorOutline: "",
+        jsColorTransparency:0.9,  //此值实际值为v-model中的
+        mark:""
     },
     methods: {
-        yanweiGraphic: function () {
-            var rgb = this.jsColorFill.toRGB();
-            console.log(rgb[0], rgb[1], rgb[2]);
-
-            // markerSymbol is used for point and multipoint, see http://raphaeljs.com/icons/#talkq for more examples
+        plotting: function (evt) {
+            var rgbFill = ("#"+this.jsColorFill).toRGB();
+            var rgbOutline= ("#"+this.jsColorOutline).toRGB();
+            var rgbaFill=[rgbFill[0], rgbFill[1], rgbFill[2],this.jsColorTransparency];  //透明度 的值没法获取
+            var rgbaOutline=[rgbOutline[0], rgbOutline[1], rgbOutline[2],this.jsColorTransparency];  //透明度 的值没法获取
+            console.log(rgbFill,rgbOutline,rgbaFill);
+            // markerSymbol is used for point and multipoint, see http://raphaeljs.com/icons/#talkq for more examples1
             var markerSymbol = new SimpleMarkerSymbol();
             markerSymbol.setPath("M16,4.938c-7.732,0-14,4.701-14,10.5c0,1.981,0.741,3.833,2.016,5.414L2,25.272l5.613-1.44c2.339,1.316,5.237,2.106,8.387,2.106c7.732,0,14-4.701,14-10.5S23.732,4.938,16,4.938zM16.868,21.375h-1.969v-1.889h1.969V21.375zM16.772,18.094h-1.777l-0.176-8.083h2.113L16.772,18.094z");
             markerSymbol.setColor(new Color("#00FFFF"));
@@ -28,14 +32,18 @@ vueExports.modal6 = {
             // fill symbol used for extent, polygon and freehand polygon, use a picture fill symbol
             // the images folder contains additional fill images, other options: sand.png, swamp.png or stiple.png
             var fillSymbol = new PictureFillSymbol("../onemappage/assets/images/mangrove.png",new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,new Color('#000'),1), 42, 42 );
-
-            tb = new Draw($Map);
+            var sfs=new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,new Color(rgbaOutline),2),new Color(rgbaFill));
+            tb = new PoltDraw($Map);
             tb.on("draw-end", addGraphic);
+            $Map.disableMapNavigation();   //禁用map双击放大事件
 
+            console.log(evt.target.value); //获取到button的value值
+            var toDrawGraphic=evt.target.value.toLowerCase();
+            tb.activate(toDrawGraphic);
             function addGraphic(evt) {
-                //deactivate the toolbar and clear existing graphics
+                //deactivate the toolbar
                 tb.deactivate();
-                $Map.enableMapNavigation();
+                $Map.enableMapNavigation(); //画完之后启用双击放大事件
                 // figure out which symbol to use
                 var symbol;
                 if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
@@ -44,19 +52,22 @@ vueExports.modal6 = {
                     symbol = lineSymbol;
                 }
                 else {
-                    symbol = fillSymbol;
+                    symbol = sfs;
                 }
-                $Map.graphics.add(new Graphic(evt.geometry, symbol));
+                plottingLayer.add(new Graphic(evt.geometry, symbol));
             }
-
+        },
+        clearGraphic:function(){
+            plottingLayer.clear();
         }
-
     },
     created: function () {
         jsc.init();   //注册jsColor.js的初始化事件，jscolor.js中的var jsc变量已改动设为全局变量
         $(".bs-slider").slider({
             tooltip: 'always'
         });
+        //var r = $('#ex1Slider').slider().data('slider');
+        //console.log("$('#ex1Slider').slider().data('slider');    =====  "+r.getValue());
     }
 };
 
