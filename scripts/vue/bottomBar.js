@@ -33,8 +33,7 @@ vueExports.bottomBar = {
             $("#"+menu.modal).tab();
             var modalExports = vueExports[menu.modal];
             setTimeout(function(){
-                jsc.init();   //注册jsColor.js的初始化事件，jscolor.js中的var jsc变量已改动设为全局变量
-                if (modalExports) new Vue(modalExports);
+				if (modalExports) new Vue(modalExports);
             } , 1500)
 
         }
