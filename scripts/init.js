@@ -1,10 +1,14 @@
 (function(){
+	var mapInited = false , modalInited = false;
 
-    new Vue(vueExports.query);
-    new Vue(vueExports.bottomBar);
-    new Vue(vueExports.mainWrap);
+    window.init = function(){
+		loadModalHtml();
+		initVue();
+		createMap();
+    };
 
-    window.createMap = function(){
+	function createMap(){
+	
         var InfoWindow = myInfoWindow ,
             Draw = esri.toolbars.Draw;
 
@@ -41,9 +45,43 @@
         //initmapevent
         initMapEvent();
 
-        $("#pageloader").hide();
+		mapInited = true;
+		hideLoader();
+	}
 
-    };
+	function initVue(){
+	    new Vue(vueExports.query);
+		new Vue(vueExports.bottomBar);
+	    new Vue(vueExports.mainWrap);
+	}
+
+	function loadModalHtml(){
+		var modals = $(".dijitHidden div");
+		var loadedCount = 0;
+		modals.each(function(i , n){
+			var modal = $(n);
+			modalHref = modal.data("modalhref");
+			modal.load(modalHref , function(){
+				var modalExports = vueExports[modal.attr("id")];
+				if (modalExports) new Vue(modalExports);
+				loadedCount ++;
+				if (loadedCount == modals.length){
+					modalInited = true;
+					hideLoader();
+				}
+			});
+		});
+		for(var i = 0 ; i<bottomBarMenus.length ;i++){
+			
+		}
+	}
+
+
+	function hideLoader(){
+		if (mapInited && modalInited){
+			$("#pageloader").hide();
+		}
+	}
 
 	function setSymbolStyle(){		
         var SimpleMarkerSymbol = esri.symbol.SimpleMarkerSymbol ,

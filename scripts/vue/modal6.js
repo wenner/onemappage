@@ -14,7 +14,7 @@ vueExports.modal6 = {
 
     } ,
 	created: function () {
-		jsc.init();   //注册jsColor.js的初始化事件，jscolor.js中的var jsc变量已改动设为全局变量
+		jsc.init();   //娉ㄥ唽jsColor.js鐨勫垵濮嬪寲浜嬩欢锛宩scolor.js涓殑var jsc鍙橀噺宸叉敼鍔ㄨ涓哄叏灞�鍙橀噺
 		//// With JQuery
 		$(".bs-slider").slider({
 			tooltip: 'always'

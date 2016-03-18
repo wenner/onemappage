@@ -69,5 +69,5 @@ require([
     SimpleLineSymbol=simpleLineSymbol;
     SimpleFillSymbol=simpleFillSymbol;
     Draw=draw;
-    createMap();
+    init();
 });

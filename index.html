@@ -117,22 +117,26 @@
     <!-- dialog that gets its content via ajax, uses loading message -->
     <div data-dojo-type="dijit/Dialog"
          style="width:300px;height:300px;background:#Fff"
-         data-dojo-props="title:'事件地点定位',href:'scripts/views/modal1.html',loadingMessage:'Loading dialog content...'"
+		 data-modalhref="scripts/views/modal1.html"
+         data-dojo-props="title:'事件地点定位',href1:'scripts/views/modal1.html',loadingMessage:'Loading dialog content...'"
          id="modal1"></div>
 
     <div data-dojo-type="dijit/Dialog"
-         style="width:400px;height:300px;background:#Fff"
-         data-dojo-props="title:'范围确定',href:'scripts/views/modal2.html',loadingMessage:'Loading dialog content...'"
+         style="width:400px;height:300px;background:#Fff"		 
+		 data-modalhref="scripts/views/modal2.html"
+         data-dojo-props="title:'范围确定',href1:'scripts/views/modal2.html',loadingMessage:'Loading dialog content...'"
          id="modal2"></div>
 
     <div data-dojo-type="dijit/Dialog"
          style="width:400px;height:400px;background:#Fff"
-         data-dojo-props="title:'公共影响因素分析',href:'scripts/views/modal3.html',loadingMessage:'Loading dialog content...'"
+		 data-modalhref="scripts/views/modal3.html"
+         data-dojo-props="title:'公共影响因素分析',href1:'scripts/views/modal3.html',loadingMessage:'Loading dialog content...'"
          id="modal3"></div>
 
     <div data-dojo-type="dijit/Dialog"
+		 data-modalhref="scripts/views/modal6.html"
          style="width:400px;height:400px;background:#Fff"
-         data-dojo-props="title:'态势标绘',href:'scripts/views/modal6.html',loadingMessage:'Loading dialog content...'"
+         data-dojo-props="title:'态势标绘',href1:'scripts/views/modal6.html',loadingMessage:'Loading dialog content...'"
          id="modal6"></div>
 </div>
 <script>
