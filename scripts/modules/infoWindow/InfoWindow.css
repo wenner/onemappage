@@ -1,120 +1,132 @@
 body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div {
-  margin: 0;
-  padding: 0;
-  border: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
+
 .myInfoWindow {
-  position: absolute;
-  z-index: 100;
-  font-family: Arial, "瀹嬩綋", Arial Narrow, serif;
-  font-size: 12px;
+    position: absolute;
+    z-index: 100;
+    font-family: Arial, "瀹嬩綋", Arial Narrow, serif;
+    font-size: 12px;
 }
 
 .dj_ie .myInfoWindow {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 .myInfoWindow .content {
-  position: relative;
-  /*background-color:#00FF99;*/
-  background: url(info_content_bj.png);
-  color:#002F2F;
-  overflow: auto;
-  padding-top:4px;
-  padding-bottom:3px;
-  padding-left:3px;
-  padding-right: 7px;
-  /*padding-right:10px;*/
-}
-.myInfoWindow .xndw_con_bg {
-  background: url(info_content_fj.png) no-repeat;
-  width: 335px;  /*控制文字背景图片的宽度*/
-  height: 250px;
-  margin: 0 auto;
-  margin: 4px 0 0 7px;
-  float: left;
-}
-.myInfoWindow .xndw_info_over {
-  width: 340px;
-  height: 335px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  margin-top: 10px;
-  margin: 0 auto;
-}
-.myInfoWindow .xndw_info_pic {
-  width: 90px;
-  height: 90px;
-  float: left;
-  margin: 0 10px 0 0;
-}
-.myInfoWindow .xndw_info_li {
-  line-height: 32px;
-  border-bottom: 1px solid #b5ccd8;
-}
-.myInfoWindow .xyfg_list_title {
-  float: left;
-  line-height: 32px;
-  color: #FFF;
-  font-weight: bold;
-  font-size: 14px;
-  margin-left: 10px;
-}
-/*手动画出来的arrow*/
-.myInfoWindow .arrow {
-	position: absolute;
-	width: 0px;
-	height: 0px;
-	line-height: 0px;/*为了防止ie下出现题型*/
-	border-top: 60px solid #EFECCA;
-	border-left: 5px solid transparent;
-	border-right: 20px solid transparent;
-	left: 25%;
-	bottom: -60px;
-}
-/*图片作为arrow*/
-.myInfoWindow .xndw_sj000 {
-  background: url(info_arrow.png) no-repeat;
-  width: 34px;
-  height: 44px;
-  float: left;
-  /*margin-top: 300px;*/
-}
-.myInfoWindow .xndw_sj {
-  background: url(info_arrow.png) no-repeat;
-  width: 34px;
-  height: 44px;
-  position: absolute;
-  left:-9%;
-  bottom:30px;
-  /*float: left;*/
-  /*margin-top: 300px;*/
-}
-.myInfoWindow .close {
-  position: absolute; top: 7px; right: 5px;
-  cursor: pointer;
-  background: url(http://serverapi.arcgisonline.com/jsapi/arcgis/2.6/js/dojo/dijit/themes/claro/layout/images/tabClose.png) no-repeat scroll 0 0 transparent;
-  /*background: #ffffff; url(myModules/tabClose.png) no-repeat scroll 0 0 transparent;*/
-  width: 12px; height: 12px;
+    position: relative;
+    /*background-color:#00FF99;*/
+    background: url(info_content_bj.png);
+    color: #002F2F;
+    overflow: auto;
+    padding-top: 4px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    padding-right: 7px;
+    /*padding-right:10px;*/
 }
 
-.myInfoWindow .close:hover  {
-  background-color: #F7FCFF;
+.myInfoWindow .xndw_con_bg {
+    background: url(info_content_fj.png) no-repeat;
+    width: 335px; /*控制文字背景图片的宽度*/
+    height: 250px;
+    margin: 0 auto;
+    margin: 4px 0 0 7px;
+    float: left;
+}
+
+.myInfoWindow .xndw_info_over {
+    width: 340px;
+    height: 335px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-top: 10px;
+    margin: 0 auto;
+}
+
+.myInfoWindow .xndw_info_pic {
+    width: 90px;
+    height: 90px;
+    float: left;
+    margin: 0 10px 0 0;
+}
+
+.myInfoWindow .xndw_info_li {
+    line-height: 32px;
+    border-bottom: 1px solid #b5ccd8;
+}
+
+.myInfoWindow .xyfg_list_title {
+    float: left;
+    line-height: 32px;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+/*手动画出来的arrow*/
+.myInfoWindow .arrow {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    line-height: 0px; /*为了防止ie下出现题型*/
+    border-top: 60px solid #EFECCA;
+    border-left: 5px solid transparent;
+    border-right: 20px solid transparent;
+    left: 25%;
+    bottom: -60px;
+}
+
+/*图片作为arrow*/
+.myInfoWindow .xndw_sj000 {
+    background: url(info_arrow.png) no-repeat;
+    width: 34px;
+    height: 44px;
+    float: left;
+    /*margin-top: 300px;*/
+}
+
+.myInfoWindow .xndw_sj {
+    background: url(info_arrow.png) no-repeat;
+    width: 34px;
+    height: 44px;
+    position: absolute;
+    left: -9%;
+    bottom: 30px;
+    /*float: left;*/
+    /*margin-top: 300px;*/
+}
+
+.myInfoWindow .close {
+    position: absolute;
+    top: 7px;
+    right: 5px;
+    cursor: pointer;
+    background: url(http://serverapi.arcgisonline.com/jsapi/arcgis/2.6/js/dojo/dijit/themes/claro/layout/images/tabClose.png) no-repeat scroll 0 0 transparent;
+    /*background: #ffffff; url(myModules/tabClose.png) no-repeat scroll 0 0 transparent;*/
+    width: 12px;
+    height: 12px;
+}
+
+.myInfoWindow .close:hover {
+    background-color: #F7FCFF;
 }
 
 .myInfoWindow .title {
-  width: auto;
-  height: 32px;
-  background-image: url(infoTopBg.png);
-  font-weight: bold;
-  /*background-color:#00CC33;*/
-  color:#003399;
-  overflow:hidden;
-  /*padding-top:5px;*/
-  /*padding-bottom:5px;*/
-  padding-left:10px;
+    width: auto;
+    height: 32px;
+    background-image: url(infoTopBg.png);
+    font-weight: bold;
+    /*background-color:#00CC33;*/
+    color: #003399;
+    overflow: hidden;
+    /*padding-top:5px;*/
+    /*padding-bottom:5px;*/
+    padding-left: 10px;
 }
-
 
 /*a:link {color:#FF0000;}		!* 未被访问的链接 *!*/
 /*a:visited {color:#777777;}	!* 已被访问的链接 *!*/
@@ -125,44 +137,51 @@ body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div
 /*a:hover {text-decoration:underline;}*/
 /*a:active {text-decoration:underline;}*/
 .xndw_info_li a:hover {
-  color: #F60;
-}
-.xndw_info_li a {
-  color: #363636;
-  font-size: 12px;
-}
-a:hover {
-  text-decoration: none;
-}
-a:hover {
-  color: #000;
-}
-a {
-  text-decoration: none;
-  font-family: Verdana, Geneva, sans-serif;
+    color: #F60;
 }
 
+.xndw_info_li a {
+    color: #363636;
+    font-size: 12px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #000;
+}
+
+a {
+    text-decoration: none;
+    font-family: Verdana, Geneva, sans-serif;
+}
 
 .myInfoWindow .btn_close {
-  background:url(btn_close.png) no-repeat;
-  width:25px;
-  height:25px;
-  display:block;
-  position: absolute; top: 4px; right: 5px;
-  cursor: pointer;
-  /*float:right;*/
-  /*margin:4px 8px 0 0;*/
-}
-/*.myInfoWindow .btn_close a { background:url(btn_close.png) no-repeat; width:25px; height:25px; display:block;}*/
-.myInfoWindow .btn_close:hover {
-  background:url(btn_close_h.png) no-repeat;
-  width:25px;
-  height:25px;
-  display:block;
-  position: absolute; top: 5px; right: 5px;
-  cursor: pointer;
+    background: url(btn_close.png) no-repeat;
+    width: 25px;
+    height: 25px;
+    display: block;
+    position: absolute;
+    top: 4px;
+    right: 5px;
+    cursor: pointer;
+    /*float:right;*/
+    /*margin:4px 8px 0 0;*/
 }
 
+/*.myInfoWindow .btn_close a { background:url(btn_close.png) no-repeat; width:25px; height:25px; display:block;}*/
+.myInfoWindow .btn_close:hover {
+    background: url(btn_close_h.png) no-repeat;
+    width: 25px;
+    height: 25px;
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
 
 /*position: absolute; top: 7px; right: 5px;*/
 /*cursor: pointer;*/

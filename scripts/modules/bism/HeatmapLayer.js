@@ -57,14 +57,14 @@ define(["dojo/_base/declare", "esri/layers/DynamicMapServiceLayer", "esri/geomet
                     child.attr('width', width);
                     child.attr('height', height);
                 }
-                
+
                 var actx = this.heatMap.get("actx");
                 actx.canvas.height = height;
                 actx.canvas.width = width;
                 this.heatMap.set("actx", actx);
                 this.refresh();
             },
-            
+
             storeHeatmapData: function (heatPluginData) {
                 // �����ȶ�ͼ����
                 this.heatMap.store.setDataSet(heatPluginData);
@@ -100,7 +100,7 @@ define(["dojo/_base/declare", "esri/layers/DynamicMapServiceLayer", "esri/geomet
                         }
                     }
                 }
-                
+
                 this.storeHeatmapData(heatPluginData);
             },
             // runs through data and calulates weights and max
@@ -127,7 +127,7 @@ define(["dojo/_base/declare", "esri/layers/DynamicMapServiceLayer", "esri/geomet
                         if (!this.config.useLocalMaximum) {
                             validPoint = true;
                         }
-                            // using local max, make sure point is within extent
+                        // using local max, make sure point is within extent
                         else if (this._map.extent.contains(dataPoint)) {
                             validPoint = true;
                         }

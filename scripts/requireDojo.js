@@ -1,6 +1,7 @@
 require([
     //custom lib
     "myModules/InfoWindow/InfoWindow",
+    "myAppMeasure/measure",
     "bism/bism/HeatmapLayer",
     //dojo lib
     "dojo/dom",
@@ -18,6 +19,8 @@ require([
     "esri/layers/GraphicsLayer",
     "esri/graphic",
     "esri/layers/FeatureLayer",
+    "esri/symbols/TextSymbol",
+
 
     "dojo/on",
     "dojo/parser",
@@ -60,9 +63,11 @@ require([
     "esri/tasks/PrintParameters",
     "esri/tasks/PrintTemplate",
     "dojo/domReady!"
-], function (InfoWindow, HeatmapLayer, dom, domConstruct, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
-             draw, poltDraw, graphicsLayer, graphic, featureLayer) {
+], function (InfoWindow,measure, HeatmapLayer, dom, domConstruct, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
+             draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol
+) {
     myInfoWindow = InfoWindow;
+    Measure=measure;
     dojoDom = dom;
     dojoDomConstruct = domConstruct;
     dojoRegistry = registry;
@@ -79,7 +84,7 @@ require([
     GraphicsLayer = graphicsLayer;
     Graphic = graphic;
     FeatureLayer = featureLayer;
-
+    TextSymbol=textSymbol;
 
 
     init();

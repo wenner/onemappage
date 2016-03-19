@@ -5,8 +5,8 @@ vueExports.modal1 = {
     },
     methods: {
         drawPoint: function(){
-			$Map.graphics.clear();
-            $Map.disableMapNavigation();
+			//$Map.graphics.clear();
+            //$Map.disableMapNavigation();
             $Toolbar.activate("point");
         } ,
         searchAddress: function(){

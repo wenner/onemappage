@@ -18,8 +18,8 @@ var PoltDraw;
 var GraphicsLayer,Graphic,FeatureLayer;
 
 //创建多个图层，便于管理graphic
-var plottingLayer,bufferLayer,alarmLayer;
-
+var alarmLayer, plottingLayer,bufferLayer,labelLayer;
+var Measure,TextSymbol;
 
 
 

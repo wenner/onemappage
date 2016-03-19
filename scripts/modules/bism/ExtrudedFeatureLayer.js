@@ -13,10 +13,10 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
             _featureExt: null,//current feature extent, 1.5 map extent
             _suspendOnPan: false,
 
-            // ¹¹Ôìº¯Êý
+            // ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
             constructor: function (url, opts) {
                 if (!(!!document.createElement('canvas').getContext)) {
-                    throw new Error('µ±Ç°ä¯ÀÀÆ÷²»Ö§³ÖCanvas£¬ÇëÑ¡ÔñÆäËûä¯ÀÀÆ÷¡£');
+                    throw new Error('ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½Canvasï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
                 }
                 this.inherited(arguments);
                 var opts = opts || {};
@@ -26,9 +26,9 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
                 this._extentScaleRatio = opts.extentScaleRatio || 1.5;
                 this._defaultHeight = opts.defaultHeight || 0;
                 this._style = opts.style;
-                
+
                 this._url = url;
-                // µÃµ½Í¼²ãµÄÔªÊý¾Ý
+                // ï¿½Ãµï¿½Í¼ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½
                 new esriRequest({
                     url: this._url,
                     content: {
@@ -46,7 +46,7 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
                 });
                 this._task = new QueryTask(url);
                 this._task.on('complete', lang.hitch(this, this._onQueryComplete));
-                this._task.on('error', esri.config.defaults.io.errorHandler);                
+                this._task.on('error', esri.config.defaults.io.errorHandler);
             },
 
             _initLayer: function (json) {
@@ -81,17 +81,17 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
                 this._element = element;
                 this._canvas = this._osmb.createCanvas(element);
                 this._osmb.setSize(map.width, map.height);
-                // ¼ÆËãÔ­µã
+                // ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½
                 if (map.layerIds.length == 0 || !map.getLayer(map.layerIds[0]).tileInfo) {
-                    throw new Error('ÔÚÔö¼Ó¸ÃÍ¼²ãÖ®Ç°ÇëÈ·±£ÖÁÉÙÌí¼ÓÁËÒ»¸öÇÐÆ¬µØÍ¼Í¼²ã');
+                    throw new Error('ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½Í¼ï¿½ï¿½Ö®Ç°ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Æ¬ï¿½ï¿½Í¼Í¼ï¿½ï¿½');
                 }
                 this._tileInfo = map.getLayer(map.layerIds[0]).tileInfo;
-                this._osmb.setZoom(map.getLevel()); 
+                this._osmb.setZoom(map.getLevel());
                 this._setOrigin();
 
-                // ¼ÓÔØÊý¾Ý
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 this._loadData();
-                // ÊÂ¼þÁ¬½Ó
+                // ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
                 this._connects = [];
                 this._connects.push(map.on("resize", lang.hitch(this, this._onResize)));
                 this._connects.push(map.on("pan", lang.hitch(this, this._onPan)));
@@ -103,13 +103,15 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
             _unsetMap: function (map, container) {
                 this._osmb && this._osmb.destroyCanvas();
                 this._osmb = null;
-                arrayUtils.forEach(this._connects, function (handle) { handle.remove(); });
+                arrayUtils.forEach(this._connects, function (handle) {
+                    handle.remove();
+                });
                 if (this._element) {
                     container.removeChild(this._element);
                 }
                 this._map = null;
                 this._element = null;
-            },            
+            },
             _setOrigin: function (dx, dy) {
                 var resolution = this._tileInfo.lods[this._map.getLevel()].resolution;
                 var topLeft = this._map.toMap(new esri.geometry.Point(0, 0));
@@ -155,7 +157,7 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
                             'isNew': !this._oids[oid]
                         }
                     }
-                    // ÎªÁËÅÅÐòÐèÒªµÃµ½Y×ø±êµÄ·¶Î§
+                    // Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ãµï¿½Yï¿½ï¿½ï¿½ï¿½Ä·ï¿½Î§
                     var minY = maxY = f.geometry.rings[0][0][1];
                     for (var j = 0; j < f.geometry.rings.length; j++) {
                         for (var k = 0; k < f.geometry.rings[j].length; k++) {
@@ -168,7 +170,7 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
                     jfs[i] = gj;
                     oids[oid] = f;
                 }
-                // °´ÕÕ¸ß¶ÈÓëY×ø±êÀ´ÅÅÐò
+                // ï¿½ï¿½ï¿½Õ¸ß¶ï¿½ï¿½ï¿½Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 jfs.sort(function (a, b) {
                     if (a.maxY < b.minY) {
                         return 1;
@@ -191,7 +193,8 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
                 if (this._osmb) {
                     this._osmb.setSize(evt.width, evt.height);
                     this._osmb.render();
-                };
+                }
+                ;
             },
             _onPan: function (evt) {
                 if (this._suspendOnPan) {
@@ -219,7 +222,7 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
                     if (this.isVisibleAtScale(this._map.getScale())) {
                         this._loadData();
                     } else {
-                        // Çå¿Õ»­²¼
+                        // ï¿½ï¿½Õ»ï¿½ï¿½ï¿½
                         this._osmb.geoJSON({
                             features: []
                         });
@@ -228,7 +231,8 @@ define(["dojo/_base/declare", "esri/layers/layer", "esri/tasks/QueryTask", "esri
                     this._osmb.onMoveEnd();
                     if (this._featureExt && !this._featureExt.contains(evt.extent)) {
                         this._loadData();
-                    };
+                    }
+                    ;
                 }
             },
             _onZoomStart: function (evt) {

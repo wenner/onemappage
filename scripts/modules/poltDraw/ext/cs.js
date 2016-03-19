@@ -1,7 +1,7 @@
 /**
  * Created by chenzpa on 2015/10/30.
  */
-define([ "dojo/_base/declare"], function (declare) {
+define(["dojo/_base/declare"], function (declare) {
     return declare("plot.cs", null, {
         constructor: function () {
             console.log("plot.cs");
@@ -10,4 +10,4 @@ define([ "dojo/_base/declare"], function (declare) {
             return null;
         }
     });
-}) ;
+});

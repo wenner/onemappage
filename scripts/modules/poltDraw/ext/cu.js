@@ -1,36 +1,36 @@
-define([ "dojo/_base/declare"], function (declare) {
+define(["dojo/_base/declare"], function (declare) {
     return declare("plot.ext.cu", null, {
         constructor: function () {
             console.log("plot.ext.cu");
         },
-        points:[],
-        fgd:[],
-        setPoints:function(pt){
-            this.points=pt;
+        points: [],
+        fgd: [],
+        setPoints: function (pt) {
+            this.points = pt;
         },
-        getPoints:function(){
+        getPoints: function () {
             return points;
         },
-        getFgb:function(){
+        getFgb: function () {
             return 0;
         },
-        getFgc :function(){
+        getFgc: function () {
             return 0;
         },
-        setFgd:function(fgd){
-            this.fgd=fgd;
+        setFgd: function (fgd) {
+            this.fgd = fgd;
         },
-        getFgd:function(){
+        getFgd: function () {
             return this.fgd;
         },
-        fe :function(MapPoint, int){
+        fe: function (MapPoint, int) {
 
         },
-        ff:function(MapPoint){
+        ff: function (MapPoint) {
 
         },
-        fg:function(){
+        fg: function () {
 
         }
     });
-}) ;
+});

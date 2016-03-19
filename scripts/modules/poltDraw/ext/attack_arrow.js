@@ -4,9 +4,9 @@
 define([
     "dojo/_base/declare",
     'scripts/modules/poltDraw/ext/cn.js'
-], function (declare,cn) {
+], function (declare, cn) {
     return declare("plot.ext.AttackArrow", [cn], {
-        headHeightFactor : 0.18,
+        headHeightFactor: 0.18,
         headWidthFactor: 0.3,
         neckHeightFactor: 0.85,
         neckWidthFactor: 0.15,
@@ -15,22 +15,22 @@ define([
             console.log("plot.ext.cn");
             this.setPoints(pts);
         },
-        getFgc :function(){
+        getFgc: function () {
             return 3;
         },
-        fw:function(){
-            if (this.getFgb() < 2){
+        fw: function () {
+            if (this.getFgb() < 2) {
                 return;
             }
             this.rings = [];
-            if (this.getFgb() == 2){
+            if (this.getFgb() == 2) {
                 this.addRing(this.getPoints());
                 return;
             }
             var pnts = this.getPoints();
             var tailLeft = pnts[0];
             var tailRight = pnts[1];
-            if (this.c0.fi(pnts[0], pnts[1], pnts[2])){
+            if (this.c0.fi(pnts[0], pnts[1], pnts[2])) {
                 tailLeft = pnts[1];
                 tailRight = pnts[0];
             }
@@ -48,17 +48,17 @@ define([
             rightPnts.push(neckRight);
             leftPnts = this.c0.fv(leftPnts);
             rightPnts = this.c0.fv(rightPnts);
-            var pts=leftPnts.concat(headPnts, rightPnts.reverse());
+            var pts = leftPnts.concat(headPnts, rightPnts.reverse());
             pts.push(pts[0]);
             this.addRing(pts);
         },
-        fx:function(points, tailLeft, tailRight){
+        fx: function (points, tailLeft, tailRight) {
             var len = this.c0.fd(points);
             var headHeight = (len * this.headHeightFactor);
             var headPnt = points[(points.length - 1)];
             len = this.c0.fa(headPnt, points[(points.length - 2)]);
             var tailWidth = this.c0.fa(tailLeft, tailRight);
-            if (headHeight > (tailWidth * this.headTailFactor)){
+            if (headHeight > (tailWidth * this.headTailFactor)) {
                 headHeight = (tailWidth * this.headTailFactor);
             }
             var headWidth = (headHeight * this.headWidthFactor);
@@ -73,7 +73,7 @@ define([
             var neckRight = this.c0.fl(headPnt, neckEndPnt, this.c0.HALF_PI, neckWidth, true);
             return ([neckLeft, headLeft, headPnt, headRight, neckRight]);
         },
-        fy:function(points, neckLeft, neckRight, tailWidthFactor){
+        fy: function (points, neckLeft, neckRight, tailWidthFactor) {
             var angle;
             var w;
             var left;
@@ -100,4 +100,4 @@ define([
             return (leftBodyPnts.concat(rightBodyPnts));
         }
     });
-}) ;
+});

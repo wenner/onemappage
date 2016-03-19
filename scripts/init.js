@@ -33,9 +33,12 @@
             //basemap: "topo"
         });
 
+
         //创建图形图层
-        plottingLayer = new GraphicsLayer();
         //把图层添加到地图上
+        labelLayer=new GraphicsLayer();
+        $Map.addLayer(labelLayer);
+        plottingLayer = new GraphicsLayer();
         $Map.addLayer(plottingLayer);
         bufferLayer = new GraphicsLayer();
         $Map.addLayer(bufferLayer);
@@ -209,14 +212,6 @@
     }
 
     function addGraphic(evt) {
-		/*
-        var markerSymbol = esri.symbol.SimpleMarkerSymbol ,
-            lineSymbol = esri.symbol.SimpleLineSymbol ,
-            fillSymbol =esri.symbol.SimpleFillSymbol ,
-			*/
-            var Graphic = esri.Graphic;
-        //deactivate the toolbar and clear existing graphics
-        //console.log(evt)
         $Toolbar.deactivate();
         $Map.enableMapNavigation();
         // figure out which symbol to use
