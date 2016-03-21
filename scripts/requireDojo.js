@@ -20,7 +20,7 @@ require([
     "esri/graphic",
     "esri/layers/FeatureLayer",
     "esri/symbols/TextSymbol",
-
+    "esri/symbols/PictureMarkerSymbol",
 
     "dojo/on",
     "dojo/parser",
@@ -52,7 +52,6 @@ require([
 
     "esri/InfoTemplate",
 
-    "esri/symbols/PictureFillSymbol",
 
     "esri/renderers/SimpleRenderer",
     "esri/tasks/Geoprocessor",
@@ -64,7 +63,7 @@ require([
     "esri/tasks/PrintTemplate",
     "dojo/domReady!"
 ], function (InfoWindow,measure, HeatmapLayer, dom, domConstruct, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
-             draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol
+             draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol,pictureMarkerSymbol
 ) {
     myInfoWindow = InfoWindow;
     Measure=measure;
@@ -79,6 +78,7 @@ require([
     SimpleFillSymbol = simpleFillSymbol;
     CartographicLineSymbol = cartographicLineSymbol;
     PictureFillSymbol = pictureFillSymbol;
+    PictureMarkerSymbol=pictureMarkerSymbol;
     Draw = draw;
     PoltDraw = poltDraw;
     GraphicsLayer = graphicsLayer;

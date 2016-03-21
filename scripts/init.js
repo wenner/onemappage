@@ -36,14 +36,16 @@
 
         //创建图形图层
         //把图层添加到地图上
-        labelLayer=new GraphicsLayer();
-        $Map.addLayer(labelLayer);
+        areaLayer=new GraphicsLayer();
+        $Map.addLayer(areaLayer);
         plottingLayer = new GraphicsLayer();
         $Map.addLayer(plottingLayer);
         bufferLayer = new GraphicsLayer();
         $Map.addLayer(bufferLayer);
         alarmLayer = new GraphicsLayer();
         $Map.addLayer(alarmLayer);
+        labelLayer=new GraphicsLayer();
+        $Map.addLayer(labelLayer);
 
 		setSymbolStyle();
 
@@ -217,7 +219,6 @@
         // figure out which symbol to use
         if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
             $CurrentSymbol = $markerSymbol;
-            //map.on('mouse-click', showPointXY);  //显示地图坐标到制定label没有成功
         } else if ( evt.geometry.type === "line" || evt.geometry.type === "polyline") {
             $CurrentSymbol = $lineSymbol;
         }
@@ -226,7 +227,7 @@
         }
         $CurrentGraphic=new Graphic(evt.geometry , $CurrentSymbol);
         $Map.graphics.add($CurrentGraphic);
-        console.log($CurrentGraphic)
+        //console.log($CurrentGraphic)
     }
 
     function initMapEvent(){

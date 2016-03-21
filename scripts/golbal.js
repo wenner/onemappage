@@ -11,14 +11,14 @@ var pointBufferFeature;//热度图缓冲区
 var vueExports = {};
 var queryT;
 var Color;
-var SimpleMarkerSymbol,SimpleLineSymbol,SimpleFillSymbol,PictureFillSymbol;   //定义样式
+var SimpleMarkerSymbol,SimpleLineSymbol,SimpleFillSymbol,PictureFillSymbol,PictureMarkerSymbol;   //定义样式
 var CartographicLineSymbol;
 var Draw;
 var PoltDraw;
 var GraphicsLayer,Graphic,FeatureLayer;
 
 //创建多个图层，便于管理graphic
-var alarmLayer, plottingLayer,bufferLayer,labelLayer;
+var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer;
 var Measure,TextSymbol;
 
 

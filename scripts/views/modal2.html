@@ -48,7 +48,7 @@
                 <button class="btn btn-sm btn-primary" id="btnBuffer" @click="tab1a">
                     <i class="fa fa-question"></i> 分析
                 </button>
-                <button class="btn btn-sm btn-warning" id="btnCleanBuffer" @click="tab1b">
+                <button class="btn btn-sm btn-warning" id="btnCleanBuffer" @click="clearBuffer">
                     <i class="fa fa-phone"></i> 清除
                 </button>
             </div>
@@ -56,19 +56,20 @@
         </div>
         <div role="tabpanel" class="tab-pane tab2" id="modal2b" >
             <div class="text-center" style="padding:20px">
-                <button class="btn btn-sm btn-primary" @click="setColor">
-                    <i class="fa fa-question"></i> 调色板
-                </button>
-                <button class="btn btn-sm btn-primary" id="Rectangle" @click="drawRectangle">
+                <input class="label label-default">
+                     调色板
+                </input>
+                <input class="jscolor" value="#33FF33" type="text" v-model="tab2.color">
+                <button class="btn btn-sm btn-primary" value="Rectangle" @click="Draw">
                     <i class="fa fa-question"></i> 矩形
                 </button>
-                <button class="btn btn-sm btn-primary" id="Circle" @click="drawCircle">
+                <button class="btn btn-sm btn-primary" value="Circle" @click="Draw">
                     <i class="fa fa-question"></i> 圆形
                 </button>
-                <button class="btn btn-sm btn-primary" id="Polygon" @click="drawPolygon">
+                <button class="btn btn-sm btn-primary" value="Polygon" @click="Draw">
                     <i class="fa fa-question"></i> 多边形
                 </button>
-                <button class="btn btn-sm btn-warning" id="FreehandPolygon" @click="drawFreehandPolygon">
+                <button class="btn btn-sm btn-warning" value="FreehandPolygon" @click="Draw">
                     <i class="fa fa-phone"></i> 手绘
                 </button>
             </div>
@@ -127,7 +128,7 @@
                 <button class="btn btn-sm btn-warning">
                     <i class="fa fa-phone"></i> 选择泄漏点
                 </button>
-                <button class="btn btn-sm btn-warning" id="btnCleanResult">
+                <button class="btn btn-sm btn-warning" @click="btnCleanResult">
                     <i class="fa fa-phone"></i> 清除结果
                 </button>
             </div>
