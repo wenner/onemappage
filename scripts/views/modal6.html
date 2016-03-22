@@ -18,9 +18,9 @@
                 <label class="label label-info">轮廓颜色</label>
                 <input class="jscolor" value="FF0303" v-model="jsColorOutline">
                 <label class="label label-info">透明度</label>
-                <input class='bs-slider' data-slider-id='ex1Slider' id="ex1Slider" type="text" data-slider-min="0"
+                <input class='bs-slider' data-slider-id='ex1Slider1' id="ex1Slider1" type="text" data-slider-min="0"
                        data-slider-max="1"
-                       data-slider-step="0.01" data-slider-value="0.6" v-model="jsColorTransparency">
+                       data-slider-step="0.01" data-slider-value="0.6" v-model="jsColorTransparency"  lazy>
             </div>
             <div class="text-center" style="padding:20px">
                 <button class="btn btn-sm btn-primary" value="ARROW" @click="plotting">
@@ -73,7 +73,7 @@
                 </div>
                 <div class="form-group">
                     <label class="label label-info">大小</label>
-                    <input class='bs-slider' data-slider-id='ex1Slider' id="ex1Slider2" type="text" data-slider-min="3"
+                    <input class='bs-slider' data-slider-id='ex1Slider2' id="ex1Slider2" type="text" data-slider-min="3"
                            data-slider-max="50"
                            data-slider-step="1" data-slider-value="20" v-model="tab2.textSize">
                 </div>

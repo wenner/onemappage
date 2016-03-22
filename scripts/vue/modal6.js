@@ -17,6 +17,8 @@ vueExports.modal6 = {
     },
     methods: {
         plotting: function (evt) {
+			console.log(this.jsColorTransparency)
+			console.log(this.slider.slider("getValue"))
             var rgbFill = ("#" + this.jsColorFill).toRGB();
             var rgbOutline = ("#" + this.jsColorOutline).toRGB();
             var rgbaFill = [rgbFill[0], rgbFill[1], rgbFill[2], this.jsColorTransparency];  //透明度 的值没法获取
@@ -131,7 +133,10 @@ vueExports.modal6 = {
     },
     created: function () {
         jsc.init();   //注册jsColor.js的初始化事件，jscolor.js中的var jsc变量已改动设为全局变量
-        $(".bs-slider").slider({
+        this.slider = $("#ex1Slider1").slider({
+            tooltip: 'always'
+        });
+        this.slider2 = $("#ex1Slider2").slider({
             tooltip: 'always'
         });
         //var r = $('#ex1Slider').slider().data('slider');
