@@ -11,85 +11,62 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active tab1" id="modal5a"  style="padding:5px">
-            <div class="form-horizontal" style="padding:20px">
-                <div class="form-group">
-                    <input type="text" class="form-control" value="2" placeholder="输入时间">
-                    <div class="col-sm-8">
-                        <label class="label label-info control-label">分钟</label>
-                    </div>
+        <div role="tabpanel" class="tab-pane active tab1" id="modal5a" style="padding:5px">
+            <form class="form-inline">
+                <div class="form-group" style="padding: 5px;">
+                    <input type="text" class="form-control" id="m5t1t1" placeholder="Jane Doe" value="2"
+                           v-model="tab1.t1">
+                    <label for="m5t1t1">分钟</label>
                 </div>
-            </div>
-            <div class="text-center" style="padding:20px">
-                <button class="btn btn-sm btn-primary" value="ARROW" @click="plotting">
-                    <i class="fa fa-question"></i> 箭头
-                </button>
-                <button class="btn btn-sm btn-primary" value="tailedsquadcombat" @click="plotting">
-                    <i class="fa fa-question"></i> 燕尾箭头
-                </button>
-                <button class="btn btn-sm btn-primary" value="FREEHANDPOLYLINE" @click="plotting">
-                    <i class="fa fa-question"></i> 自由线
-                </button>
-                <button class="btn btn-sm btn-primary" value="POLYLINE" @click="plotting">
-                    <i class="fa fa-question"></i> 折线
-                </button>
-                <button class="btn btn-sm btn-primary" value="POLYGON" @click="plotting">
-                    <i class="fa fa-question"></i> 多边形
-                </button>
-                <button class="btn btn-sm btn-warning" value="FREEHANDPOLYGON" @click="plotting">
-                    <i class="fa fa-phone"></i> 手绘
-                </button>
-            </div>
-            <br/>
+                <div class="form-group" style="padding: 5px;">
+                    <input type="text" class="form-control" id="m5t1t2" placeholder="Jane Doe" value="5"
+                           v-model="tab1.t2">
+                    <label for="m5t1t2">分钟</label>
+                </div>
+                <div class="form-group" style="padding: 5px;">
+                    <input type="text" class="form-control" id="m5t1t3" placeholder="Jane Doe" value="20"
+                           v-model="tab1.t3">
+                    <label for="m5t1t3">分钟</label>
+                </div>
+            </form>
 
-            <div>
-                <button class="btn btn-lg btn-warning btn-block" @click="clearGraphic">
-                    清除所有标绘图形
+            <div style="padding: 5px;">
+                <button class="btn btn-lg btn-warning" @click="areaService">
+                    疏散分析
+                </button>
+                <button class="btn btn-lg btn-warning" @click="clearAreaGraphics">
+                    清除
                 </button>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane tab2" id="modal5b" style="padding:5px">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <textarea class="form-control" rows="2" placeholder="输入文本" v-model="tab2.text"></textarea>
+            <form class="form-inline">
+                <div class="form-group" style="padding: 5px;">
+                    <label>设置站点</label>
+                    <button type="button" class="btn btn-primary" @click="addStops">增加站点</button>
+                    <button type="button" class="btn btn-primary" @click="clearStops">删除站点</button>
                 </div>
-                <div class="form-group">
-                    <label for="inputBufferNum" class="col-sm-4 control-label">字体</label>
-
-                    <div class="col-sm-8">
-                        <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
-                        <select class="form-control" id="inputBufferNum" v-model="tab2.textFont">
-                            <option value="1">微软雅黑</option>
-                            <option value="2">华文</option>
-                            <option value="3">楷体</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">颜色</label>
-                    <input class="col-sm-4 jscolor" value="FF2929" v-model="tab2.textColor">
-                </div>
-                <div class="form-group">
-                    <label class="label label-info">大小</label>
-                    <input class='bs-slider' data-slider-id='ex1Slider' id="ex1Slider2" type="text" data-slider-min="3"
-                           data-slider-max="50"
-                           data-slider-step="1" data-slider-value="20" v-model="tab2.textSize">
-                </div>
-                <div class="text-center">
-                    <button class="btn btn-sm btn-primary" id="tab2addLabel" @click="addLabel">
-                        点此，再点击地图
+                <div class="form-group" style="padding: 5px;">
+                    <label>设置路障</label>
+                    <button type="button" class="btn btn-success" value="point" @click="addBarriers">点路障</button>
+                    <button type="button" class="btn btn-success" value="freehandpolygon" @click="addBarriers">线路障
                     </button>
-                    <button class="btn btn-sm btn-primary" id="analysePoint" @click="clearLabelLayer">
-                        <i class="fa fa-question"></i> 删除标注
+                    <button type="button" class="btn btn-success" value="freehandpolyline" @click="addBarriers">面路障
                     </button>
-                    <button class="btn btn-sm btn-warning" id="saveLabelLayer">
-                        <i class="fa fa-phone"></i> 保存方案
-                    </button>
+                    <button type="button" class="btn btn-success" @click="clearBarriers">删除路障</button>
                 </div>
             </form>
 
+            <div style="padding: 5px;">
+                <button class="btn btn-lg btn-warning" @click="solveRoute">
+                    路径分析
+                </button>
+                <button class="btn btn-lg btn-warning" @click="clearRoutes">
+                    清除路径
+                </button>
+            </div>
         </div>
     </div>
-
+</div>
 </div>
 

@@ -21,6 +21,10 @@ require([
     "esri/layers/FeatureLayer",
     "esri/symbols/TextSymbol",
     "esri/symbols/PictureMarkerSymbol",
+    "esri/tasks/RouteTask",
+    "esri/tasks/RouteParameters",
+    "esri/tasks/FeatureSet",
+
 
     "dojo/on",
     "dojo/parser",
@@ -56,14 +60,14 @@ require([
     "esri/renderers/SimpleRenderer",
     "esri/tasks/Geoprocessor",
     "esri/tasks/JobInfo",
-    "esri/tasks/FeatureSet",
+
     "esri/tasks/LinearUnit",
     "esri/tasks/PrintTask",
     "esri/tasks/PrintParameters",
     "esri/tasks/PrintTemplate",
     "dojo/domReady!"
 ], function (InfoWindow,measure, HeatmapLayer, dom, domConstruct, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
-             draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol,pictureMarkerSymbol
+             draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol,pictureMarkerSymbol,routeTask, routeParameters,featureSet
 ) {
     myInfoWindow = InfoWindow;
     Measure=measure;
@@ -85,7 +89,9 @@ require([
     Graphic = graphic;
     FeatureLayer = featureLayer;
     TextSymbol=textSymbol;
-
+    RouteTask=routeTask;
+    RouteParameters=routeParameters;
+    FeatureSet=featureSet;
 
     init();
 });

@@ -21,6 +21,10 @@ var GraphicsLayer,Graphic,FeatureLayer;
 var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer;
 var Measure,TextSymbol;
 
+//网络分析变量
+var RouteTask, RouteParameters;
+var FeatureSet;
+
 
 
 var bottomBarMenus = [
