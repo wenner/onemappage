@@ -39,8 +39,12 @@ vueExports.modal1 = {
                 tb.deactivate();
             }
         },
+        clearPoint:function(){
+            alarmLayer.clear();
+        },
         searchAddress: function(){
             console.log("你要查询的地址是： "+this.address);
         }
+
     }
 };

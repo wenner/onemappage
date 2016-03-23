@@ -12,8 +12,12 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active tab1" id="home"  style="padding:10px">
             <div class="text-center" id="info" style="padding: 20px;">
-                <button class="btn btn-lg btn-primary positionPoint" value="point" @click="drawPoint">
+                <button class="btn btn-lg btn-primary positionPoint btn-block" value="point" @click="drawPoint">
                     <i class="fa fa-warning"></i> 屏幕取点
+                    <!--<div id="positionPoint"></div>-->
+                </button>
+                <button class="btn btn-lg btn-warning positionPoint btn-block" value="point" @click="clearPoint">
+                    清除危险源点
                     <!--<div id="positionPoint"></div>-->
                 </button>
             </div>
