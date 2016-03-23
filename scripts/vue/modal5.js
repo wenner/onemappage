@@ -8,14 +8,84 @@ vueExports.modal5 = {
     el: '#modal5',
     data: {
         tab1:{
-            t1:"",
-            t2:"",
-            t3:""
+            t1:2,
+            t2:5,
+            t3:10
         },
         tab2: {
         }
     },
     methods: {
+        areaService:function(){
+            var t1=this.tab1.t1,t2=this.tab1.t2,t3=this.tab1.t3;
+            var serviceAreaTask = new ServiceAreaTask("http://10.1.0.104:6080/arcgis/rest/services/GP/networkAnalyst/NAServer/serverArea");
+            var params = new ServiceAreaParameters();
+            params.defaultBreaks = [1, 2, 3];
+            params.outSpatialReference = $Map.spatialReference;
+            params.returnFacilities = false;
+
+            var handle= $Map.on("click", computeServiceArea);
+
+            function computeServiceArea(evt) {
+                areaLayer.clear();
+                var pointSymbol = new SimpleMarkerSymbol();
+                pointSymbol.setOutline = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                    new Color([255, 0, 0]), 1);
+                pointSymbol.setSize(5);
+                pointSymbol.setColor(new Color([0, 255, 0, 0.25]));
+
+                var graphic = new Graphic(evt.mapPoint, pointSymbol);
+                $Map.graphics.add(graphic);
+
+                params.defaultBreaks = [t1,t2,t3];
+
+                var features = [];
+                features.push(graphic);
+                var featureSet = new FeatureSet();
+                featureSet.features = features;
+                params.facilities = featureSet;
+
+                serviceAreaTask.solve(params, showServiceAreas);
+            }
+
+            function showServiceAreas(solveResult) {
+                var features = solveResult.serviceAreaPolygons;
+                for (var f = 0, fl = features.length; f < fl; f++) {
+                    var feature = features[f];
+                    if (f == 0) {
+                        var polySymbolRed = new SimpleFillSymbol();
+                        polySymbolRed.setOutline(
+                            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                                new Color([0, 0, 0, 0.5]), 1));
+                        polySymbolRed.setColor(new Color([255, 0, 0, 0.7]));
+                        feature.setSymbol(polySymbolRed);
+                    }
+                    else if (f == 1) {
+                        var polySymbolGreen = new SimpleFillSymbol();
+                        polySymbolGreen.setOutline(
+                            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                                new Color([0, 0, 0, 0.5]), 1));
+                        polySymbolGreen.setColor(new Color([0, 255, 0, 0.7]));
+                        feature.setSymbol(polySymbolGreen);
+                    }
+                    else if (f == 2) {
+                        var polySymbolBlue = new SimpleFillSymbol();
+                        polySymbolBlue.setOutline(
+                            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                                new Color([0, 0, 0, 0.5]), 1));
+                        polySymbolBlue.setColor(new Color([0, 0, 255, 0.7]));
+                        feature.setSymbol(polySymbolBlue);
+                    }
+                    areaLayer.add(feature);
+                }
+                handle.remove();  //将map.on click事件移除，达到只触发一次目的
+                console.log("handle.remove()");
+            }
+        },
+        clearAreaGraphics:function(){
+            console.log("clearAreaGraphics");
+            areaLayer.clear();
+        },
         addStops:function(){
             console.log("addStops");
             this.removeEventHandlers();

@@ -18,11 +18,12 @@ var PoltDraw;
 var GraphicsLayer,Graphic,FeatureLayer;
 
 //创建多个图层，便于管理graphic
-var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer;
+var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer,routeLayer;
 var Measure,TextSymbol;
 
 //网络分析变量
 var RouteTask, RouteParameters;
+var ServiceAreaTask, ServiceAreaParameters;
 var FeatureSet;
 
 

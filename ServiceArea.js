@@ -22,7 +22,7 @@
         map.on("click", computeServiceArea);
 
         function computeServiceArea(evt) {
-            map.graphics.clear();
+            areaLayer.clear();
             var pointSymbol = new SimpleMarkerSymbol();
             pointSymbol.setOutline = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
                 new Color([255, 0, 0]), 1);

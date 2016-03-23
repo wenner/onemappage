@@ -24,7 +24,8 @@ require([
     "esri/tasks/RouteTask",
     "esri/tasks/RouteParameters",
     "esri/tasks/FeatureSet",
-
+    "esri/tasks/ServiceAreaTask",
+    "esri/tasks/ServiceAreaParameters",
 
     "dojo/on",
     "dojo/parser",
@@ -67,7 +68,7 @@ require([
     "esri/tasks/PrintTemplate",
     "dojo/domReady!"
 ], function (InfoWindow,measure, HeatmapLayer, dom, domConstruct, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
-             draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol,pictureMarkerSymbol,routeTask, routeParameters,featureSet
+             draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol,pictureMarkerSymbol,routeTask, routeParameters,featureSet,serviceAreaTask, serviceAreaParameters
 ) {
     myInfoWindow = InfoWindow;
     Measure=measure;
@@ -91,6 +92,8 @@ require([
     TextSymbol=textSymbol;
     RouteTask=routeTask;
     RouteParameters=routeParameters;
+    ServiceAreaTask=serviceAreaTask;
+    ServiceAreaParameters=serviceAreaParameters;
     FeatureSet=featureSet;
 
     init();

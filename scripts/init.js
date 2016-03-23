@@ -38,6 +38,8 @@
         //把图层添加到地图上
         areaLayer=new GraphicsLayer();
         $Map.addLayer(areaLayer);
+        routeLayer=new GraphicsLayer();
+        $Map.addLayer(routeLayer);
         plottingLayer = new GraphicsLayer();
         $Map.addLayer(plottingLayer);
         bufferLayer = new GraphicsLayer();
