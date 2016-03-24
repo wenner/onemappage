@@ -104,7 +104,7 @@
 
             <div id="sidecontent" class="mCustomScrollbar" data-mcs-theme="minimal-dark">
                 <div class="list-group" id="contentsContainer">
-                    <a class='list-group-item' v-for="item in result" @click="">{{item.value}}</a>
+                    <a class='list-group-item' v-for="item in result">{{item.value}}</a>
                 </div>
             </div>
 
@@ -113,7 +113,7 @@
 </div>
 
 
-<div class="dijitHidden">
+<div class="dijitHidden" vv-cloak>
     <!-- dialog that gets its content via ajax, uses loading message -->
     <div data-dojo-type="dijit/Dialog"
          style="width:300px;height:300px;background:#Fff"
