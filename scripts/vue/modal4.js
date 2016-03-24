@@ -7,8 +7,13 @@ var tb;
 vueExports.modal4 = {
     el: '#modal4',
     data: {
-        line:[3,4,5,6,7]
+        line:["3","4","5","6","7"]
     },
+	watch: {
+		line: function (val, oldVal) {
+		  console.log('通过watch的事件 , 新的值: %s, 老的值: %s', val, oldVal)
+		}
+	} , 
     methods: {
         switchPipeline:function(){
             console.log(this.line.toString());
