@@ -26,6 +26,9 @@ require([
     "esri/tasks/FeatureSet",
     "esri/tasks/ServiceAreaTask",
     "esri/tasks/ServiceAreaParameters",
+    "esri/layers/ArcGISDynamicMapServiceLayer",
+    "esri/layers/ImageParameters",
+
 
     "dojo/on",
     "dojo/parser",
@@ -47,7 +50,7 @@ require([
 
     "esri/SpatialReference",
     "esri/layers/ArcGISTiledMapServiceLayer",
-    "esri/layers/ArcGISDynamicMapServiceLayer",
+
     "esri/layers/ArcGISImageServiceLayer",
     "esri/layers/ImageServiceParameters",
     "esri/geometry/Point",
@@ -68,7 +71,8 @@ require([
     "esri/tasks/PrintTemplate",
     "dojo/domReady!"
 ], function (InfoWindow,measure, HeatmapLayer, dom, domConstruct, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
-             draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol,pictureMarkerSymbol,routeTask, routeParameters,featureSet,serviceAreaTask, serviceAreaParameters
+             draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol,pictureMarkerSymbol,routeTask, routeParameters,featureSet,serviceAreaTask, serviceAreaParameters,
+             arcGISDynamicMapServiceLayer,imageParameters
 ) {
     myInfoWindow = InfoWindow;
     Measure=measure;
@@ -95,6 +99,7 @@ require([
     ServiceAreaTask=serviceAreaTask;
     ServiceAreaParameters=serviceAreaParameters;
     FeatureSet=featureSet;
-
+    ArcGISDynamicMapServiceLayer=arcGISDynamicMapServiceLayer;
+    ImageParameters=imageParameters;
     init();
 });

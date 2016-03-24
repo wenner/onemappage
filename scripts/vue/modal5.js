@@ -18,7 +18,7 @@ vueExports.modal5 = {
     methods: {
         areaService:function(){
             var t1=this.tab1.t1,t2=this.tab1.t2,t3=this.tab1.t3;
-            var serviceAreaTask = new ServiceAreaTask("http://10.1.0.104:6080/arcgis/rest/services/GP/networkAnalyst/NAServer/serverArea");
+            var serviceAreaTask = new ServiceAreaTask("http://60.29.110.104:6080/arcgis/rest/services/GP/networkAnalyst/NAServer/serverArea");
             var params = new ServiceAreaParameters();
             params.defaultBreaks = [1, 2, 3];
             params.outSpatialReference = $Map.spatialReference;

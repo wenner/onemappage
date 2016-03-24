@@ -19,7 +19,12 @@ var GraphicsLayer,Graphic,FeatureLayer;
 
 //创建多个图层，便于管理graphic
 var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer,routeLayer;
+var pipeLineLayer;
 var Measure,TextSymbol;
+
+
+//底图影像及矢量图层
+var ArcGISDynamicMapServiceLayer,ImageParameters;
 
 //网络分析变量
 var RouteTask, RouteParameters;
