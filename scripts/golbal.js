@@ -69,3 +69,12 @@ String.prototype.toRGB = function(){
         return "这个是颜色值吗？";
     }
 };
+Array.prototype.contains = function(item){
+    return RegExp("\\b"+item+"\\b").test(this);
+};
+Array.prototype.remove = function(val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};

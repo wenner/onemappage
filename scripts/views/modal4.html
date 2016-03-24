@@ -3,78 +3,47 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li role="presentation" class="active">
-            <a href="#topic" aria-controls="topic" role="tab" data-toggle="tab">管线图层</a>
+            <a href="#pipeLineLayer" aria-controls="topic" role="tab" data-toggle="tab">管线图层</a>
         </li>
         <li role="presentation">
-            <a href="#search" aria-controls="search" role="tab" data-toggle="tab">查询</a>
+            <a href="#search4" aria-controls="search" role="tab" data-toggle="tab">查询</a>
         </li>
         <li role="presentation">
-            <a href="#result" aria-controls="result" role="tab" data-toggle="tab">结果</a>
+            <a href="#result4" aria-controls="result" role="tab" data-toggle="tab">结果</a>
         </li>
         <li role="presentation">
-            <a href="#print" aria-controls="print" role="tab" data-toggle="tab">打印</a>
+            <a href="#print4" aria-controls="print" role="tab" data-toggle="tab">打印</a>
         </li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="topic" style="padding:5px">
+        <div role="tabpanel" class="tab-pane active" id="pipeLineLayer" style="padding:5px">
             <div class="text-center" style="padding: 10px;">
                 <label class="label label-info" style="color: #000;font-size:16px;">选择下列地下图层，开关图层</label>
             </div>
             <br/>
+            <input type="checkbox" v-model="allChecked" @click="closeAllPipeline"/>全选{{allChecked}}
 
-            <div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="3" @change="switchPipeline" v-model="line">
-                        供电管线
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="4" @change="switchPipeline" v-model="line">
-                        路灯电缆
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="5" @change="switchPipeline" v-model="line">
-                        燃气管线
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="6" @change="switchPipeline" v-model="line">
-                        污水管线
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="7" @change="switchPipeline" v-model="line">
-                        雨水管线
-                    </label>
-                </div>
-                <span>{{ line }}</span>
-                <div class="text-center">
-                    <button class="btn btn-lg btn-warning" @click="closeAllPipeline">
-                        关闭所有管线图层
-                    </button>
-                </div>
+            <div class="checkbox" v-for="item in list">
+                <label>
+                    <input type="checkbox"  v-model="item.checked" @click="switchPipeline($index)">
+                    {{item.name}}
+                </label>
             </div>
         </div>
 
 
-        <div role="tabpanel" class="tab-pane" id="search">
+        <div role="tabpanel" class="tab-pane" id="search4">
             <div style='padding:15px 0'>
 
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane" id="result">
+        <div role="tabpanel" class="tab-pane" id="result4">
             建设中。。。
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="print">
+        <div role="tabpanel" class="tab-pane" id="print4">
             <form class="form-horizontal" style="padding: 20px;">
                 <label for="docName" class="control-label" style="padding: 10px 0;"><h3>标题 ：</h3></label>
 
@@ -100,7 +69,7 @@
                         <label for="printLayout" class="col-sm-3 control-label" style="padding: 10px 0;">打印大小</label>
 
                         <div class="col-sm-8">
-                            <select class="form-control" id="printLayout" >
+                            <select class="form-control" id="printLayout">
                                 <option value="A4 Landscape">A4 横向</option>
                                 <option value="A4 Portrait">A4 纵向</option>
                                 <option value="A3 Landscape">A3 横向</option>

@@ -1,35 +1,59 @@
 /**
  * Created by wwm on 2016/3/24.
  */
-var heatLayer;
-var featureLayer;
-var tb;
+var _list = [{name:"供电管线",ls:3, checked: false},{name:"路灯电缆",ls:4, checked: false},{name:"燃气管线",ls:5, checked: false},{name:"污水管线",ls:6, checked: false},{name:"雨水管线",ls:7, checked: false}];
 vueExports.modal4 = {
     el: '#modal4',
-    data: {
-        line:["3","4","5","6","7"]
+    computed: {
+        allChecked: {
+            get: function(){
+                return this.checkedCount == this.list.length;
+            },
+            set: function(value){
+                this.list.forEach(function(item){
+                    item.checked = value
+                });
+                return value;
+            }
+        },
+        checkedCount: {
+            get: function(){
+                var i = 0;
+                this.list.forEach(function(item){
+                    if(item.checked == true) i++;
+                });
+                return i;
+            }
+        }
     },
-	watch: {
-		line: function (val, oldVal) {
-		  console.log('通过watch的事件 , 新的值: %s, 老的值: %s', val, oldVal)
-		}
-	} , 
+    data: {
+        layID:[],
+        list: _list
+    },
     methods: {
-        switchPipeline:function(){
-            console.log(this.line.toString());
-
-            for (var j=0, jl=$Map.layerIds.length; j<jl; j++) {
-                var currentLayer = $Map.getLayer($Map.layerIds[j]);
-                console.log("id: " + currentLayer.id);
-                if(currentLayer.id=="pipeLine"){
-                    //$Map.removeLayer(currentLayer);
-                    pipeLineLayer.setVisibleLayers([]);
-                    break;
+        switchPipeline:function(index){
+            console.log(this.list[index].ls);
+            for(var i=0;i<this.list.length;i++){
+                if(this.layID.contains(this.list[index].ls)){
+                    this.layID.remove(this.list[index].ls);
+                    console.log("remove:"+this.list[index].ls);
+                }else{
+                    this.layID.push(this.list[index].ls);
+                    this.layID.sort();
+                    console.log("push"+this.list[index].ls);
                 }
             }
+            //for (var j=0, jl=$Map.layerIds.length; j<jl; j++) {
+            //    var currentLayer = $Map.getLayer($Map.layerIds[j]);
+            //    console.log("id: " + currentLayer.id);
+            //    if(currentLayer.id=="pipeLine"){
+            //        //$Map.removeLayer(currentLayer);
+            //        pipeLineLayer.setVisibleLayers([]);
+            //    }
+            //}
             pipeLineLayer.show();
-            pipeLineLayer.setVisibleLayers(this.line);
-
+            pipeLineLayer.setVisibleLayers(this.layID);
+            console.log(this.layID.toString());
         },
         addPipeLineLayer:function(){
             //使用ImageParameters设置地图服务的图层定义以及显示那些图层
@@ -51,14 +75,26 @@ vueExports.modal4 = {
 
         },
         closeAllPipeline:function(){
-            this.line=[];
+
             //pipeLineLayer.hide();  //隐藏管线图层
             for (var j=0, jl=$Map.layerIds.length; j<jl; j++) {
                 var currentLayer = $Map.getLayer($Map.layerIds[j]);
                 //console.log("id: " + currentLayer.id);
                 if(currentLayer.id=="pipeLine"){
                     //$Map.removeLayer(currentLayer);
-                    currentLayer.hide();
+                    console.log(currentLayer.visible);
+                    if(currentLayer.visible){
+                        currentLayer.hide();
+                        this.layID=[];
+                    }else{
+                        this.layID=[7,6,5,4,3];
+                        $Map.removeLayer(currentLayer);
+                        this.addPipeLineLayer();
+                        pipeLineLayer.show();
+                    }
+                }else{
+                    this.addPipeLineLayer();
+                    pipeLineLayer.show();
                 }
             }
         }
