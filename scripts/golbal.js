@@ -16,7 +16,8 @@ var CartographicLineSymbol;
 var Draw;
 var PoltDraw;
 var GraphicsLayer,Graphic,FeatureLayer;
-
+var InfoTemplate; //infowindow窗口
+var iTip; //infowindow气泡
 //创建多个图层，便于管理graphic
 var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer,routeLayer;
 var pipeLineLayer;

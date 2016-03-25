@@ -33,6 +33,8 @@
             //basemap: "topo"
         });
 
+        //设置自定义infowindow气泡
+        iTip = new InfoTip("i2Div", "infoTip white", map.position, true);
 
         //创建图形图层
         //把图层添加到地图上
@@ -215,22 +217,22 @@
         basemapGallery.startup();
     }
 
-    function addGraphic(evt) {
-        $Toolbar.deactivate();
-        $Map.enableMapNavigation();
-        // figure out which symbol to use
-        if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
-            $CurrentSymbol = $markerSymbol;
-        } else if ( evt.geometry.type === "line" || evt.geometry.type === "polyline") {
-            $CurrentSymbol = $lineSymbol;
-        }
-        else {
-            $CurrentSymbol = $fillSymbol;
-        }
-        $CurrentGraphic=new Graphic(evt.geometry , $CurrentSymbol);
-        $Map.graphics.add($CurrentGraphic);
-        //console.log($CurrentGraphic)
-    }
+    //function addGraphic(evt) {
+    //    $Toolbar.deactivate();
+    //    $Map.enableMapNavigation();
+    //    // figure out which symbol to use
+    //    if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
+    //        $CurrentSymbol = $markerSymbol;
+    //    } else if ( evt.geometry.type === "line" || evt.geometry.type === "polyline") {
+    //        $CurrentSymbol = $lineSymbol;
+    //    }
+    //    else {
+    //        $CurrentSymbol = $fillSymbol;
+    //    }
+    //    $CurrentGraphic=new Graphic(evt.geometry , $CurrentSymbol);
+    //    $Map.graphics.add($CurrentGraphic);
+    //    //console.log($CurrentGraphic)
+    //}
 
     function initMapEvent(){
         $Map.on('mouse-move', showCoordinates);
