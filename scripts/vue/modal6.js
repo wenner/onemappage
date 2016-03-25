@@ -93,7 +93,7 @@ vueExports.modal6 = {
             console.log(text);
             if(text==""|| text==null){
                 console.warn("请输入文本");
-                alert("请输入文本");
+                //alert("请输入文本");
             }
             function addLabel(geometry) {
                 toolbar.deactivate();
