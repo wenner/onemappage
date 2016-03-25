@@ -23,17 +23,43 @@
                 <label class="label label-info" style="color: #000;font-size:16px;">选择下列地下图层，开关图层</label>
             </div>
             <br/>
-            <!--<div class="checkbox">-->
-                <!--<label class="label label-default">-->
-                    <!--<input type="checkbox" v-model="allChecked" @click="closeAllPipeline"/>全选{{allChecked}}-->
-                <!--</label>-->
-            <!--</div>-->
-            <input type="checkbox" v-model="allChecked" @change="closeAllPipeline"/>全选{{allChecked}}
-            <div class="checkbox" v-for="item in list">
-                <label>
-                    <input type="checkbox"  v-model="item.checked" @change="switchPipeline($index)">
-                    {{item.name}}
-                </label>
+            <div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" @change="closeAllPipeline" v-model="switchAll">
+                        全选
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="3" @change="switchPipeline" v-model="line">
+                        供电管线
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="4" @change="switchPipeline" v-model="line">
+                        路灯电缆
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="5" @change="switchPipeline" v-model="line">
+                        燃气管线
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="6" @change="switchPipeline" v-model="line">
+                        污水管线
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="7" @change="switchPipeline" v-model="line">
+                        雨水管线
+                    </label>
+                </div>
             </div>
         </div>
 
