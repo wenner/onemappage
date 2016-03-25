@@ -31,8 +31,10 @@
     </div>
     <div style="text-align:center;margin-top:10%;font-size:50px;color:#fff">空港 一张网地图展示</div>
 </div>
-<div id="outerwrap" style="height:100%">
-    <div id="mainwrap" style="height:100%" {{sidecollapsed}} v-bind:class="{ 'sidecollapsed': sideCollapsed}">
+
+
+<div id="outerwrap" style="height:100%" v-cloak>
+    <div id="mainwrap" style="height:100%" v-bind:class="{ 'sideexpanded': sideExpanded}">
 
         <div id="mapPanel" style="position: relative;height:100%">
             <div id="heatLayer"></div>
@@ -69,18 +71,19 @@
 
                 </div>
                 <div class="tool">
-                    <a href="#" id="sidepanel-togglemenu" @click="toggle"><i class="fa fa-indent"></i></a>
+                    <a href="#" @click="toggleSide"><i class="fa fa-indent"></i></a>
                 </div>
             </div>
-
+            <!--
             <div id="BasemapToggle"></div>
-
-            <div id="XYinfo" style="background-color: transparent; font-weight: normal; font-size: smaller;color:#3C7AFF; position: absolute; padding: 2px; left: 140px; bottom: 65px; z-index: 99;"></div>
+            -->
+            <div id="XYinfo" style="background-color: transparent; font-weight: normal; font-size: smaller;color:#3C7AFF; position: absolute; padding: 2px; left: 10px; bottom: 65px; z-index: 99;"></div>
 
         </div>
         <div id="sidepanel">
-            <div class='bg-primary' style="position:fixed;padding:10px 20px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:300">
 
+            <div class='bg-primary'
+                 style="position:fixed;padding:10px 20px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:88">
                 <div class="input-group">
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default dropdown-toggle"
@@ -100,11 +103,24 @@
                         </button>
                     </span>
                 </div>
+                <div>
+                    <div v-show="sideLoading">查询数据中...</div>
+                    <div v-show="!sideLoading && result.length>0">
+                        <span>返回</span>
+                        <span class="pull-right">{{result.length}}条结果</span>
+                    </div>
+                </div>
+
             </div>
 
             <div id="sidecontent" class="mCustomScrollbar" data-mcs-theme="minimal-dark">
-                <div class="list-group" id="contentsContainer">
-                    <a class='list-group-item' v-for="item in result">{{item.value}}</a>
+                <div v-show="!sideLoading && result" class="list-group" id="contentsContainer">
+                    <a class='list-group-item'
+                       v-for="item in result"
+                       v-bind:class="{ 'active': item == currentItem}"
+                       @click="showResultItem(item)">
+                        {{item.value}}
+                    </a>
                 </div>
             </div>
 
@@ -181,9 +197,11 @@
 <script type="text/javascript" src="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/init.js"></script>
 <!--<script type="text/javascript" src="http://60.29.110.104/arcgis_js_api/library/3.15/3.15/init.js"></script>-->
 <script type="text/javascript" src="scripts/modules/heatmap.js"></script>
-<script type="text/javascript" src="scripts/vue/mainWrap.js"></script>
-<script type="text/javascript" src="scripts/vue/query.js"></script>
+<script type="text/javascript" src="scripts/vue/main.js"></script>
+<!--
+<script type="text/javascript" src="scripts/vue/side.js"></script>
 <script type="text/javascript" src="scripts/vue/bottomBar.js"></script>
+-->
 <script type="text/javascript" src="scripts/vue/modal1.js"></script>
 <script type="text/javascript" src="scripts/vue/modal2.js"></script>
 <script type="text/javascript" src="scripts/vue/modal3.js"></script>

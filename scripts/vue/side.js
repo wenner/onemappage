@@ -1,8 +1,7 @@
-vueExports.query = {
+vueExports.side = {
     el: '#sidepanel',
     data: {
-        keyword: '空港' ,
-        result: []
+
     },
     methods: {
         search: function () {

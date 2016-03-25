@@ -77,19 +77,19 @@ a {cursor: pointer}
 #mapPanel {
     position:relative;
     float:left;
-    width:75%;
+    width:100%;
     -moz-transition: all 0.4s cubic-bezier(0.42, 0, 0.06, 0.99) 0s;
     -webkit-transition: all 0.4s cubic-bezier(0.42, 0, 0.06, 0.99);
     -webkit-transition-delay: 0s;
     transition: all 0.4s cubic-bezier(0.42, 0, 0.06, 0.99) 0s;
 }
 
-.sidecollapsed #mapPanel {
-    width: 100% !important;
+.sideexpanded #mapPanel {
+    width: 75% !important;
 }
 
-.sidecollapsed #sidepanel {
-    width:0 !important;
+.sideexpanded #sidepanel {
+    width:25% !important;
 }
 
 #sidepanel {
@@ -103,7 +103,7 @@ a {cursor: pointer}
     padding1: 10px 20px;
     overflow: hidden;
     float:right;
-    width:25%
+    width:0
 }
 
 #sidecontent {
@@ -126,7 +126,7 @@ a {cursor: pointer}
 }
 
 
-.bmenu {z-index:200;background:#0265dc;border:0;
+.bmenu {z-index:90;background:#0265dc;border:0;
     position:absolute;bottom:0;left:0;width:100%;margin:0;border-radius: 0}
 .bmenu .nav {float:none;display:inline-block;margin-top:-30px}
 .bmenu li>a {color:#fff;background:none;padding-top:0;padding-bottom:0}
@@ -142,7 +142,7 @@ a {cursor: pointer}
 }
 
 #toptools {position:absolute;right:20px;top:10px;
-    z-Index:302;}
+    z-Index:91;}
 #toptools .tool {margin-left:6px;float:left;padding:8px 10px;
     box-shadow: 1px 2px 1px rgba(0,0,0,.15);background:#fff;}
 #toptools a {text-decoration: none}

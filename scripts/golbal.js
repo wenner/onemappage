@@ -31,6 +31,8 @@ var RouteTask, RouteParameters;
 var ServiceAreaTask, ServiceAreaParameters;
 var FeatureSet;
 
+//Vue变量
+var $vmMain;
 
 
 var bottomBarMenus = [

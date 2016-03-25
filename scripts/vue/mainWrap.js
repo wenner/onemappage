@@ -1,11 +1,11 @@
 vueExports.mainWrap = {
     el: '#mainwrap',
     data: {
-        sideCollapsed: true
+        sideExpanded: false
     },
     methods: {
         toggle: function(){
-            this.sideCollapsed = !this.sideCollapsed;
+            this.sideExpanded = !this.sideExpanded;
         }
     }
 };

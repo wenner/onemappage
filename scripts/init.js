@@ -1,9 +1,13 @@
 (function(){
-	var mapInited = false , modalInited = false;
+
+    //开始初始化vue
+    $vmMain = new Vue(vueExports.main);
+
+
+    var mapInited = false , modalInited = false;
 
     window.init = function(){
 		loadModalHtml();
-		initVue();
 		createMap();
     };
 
@@ -15,6 +19,7 @@
         var infoWindow = new InfoWindow({
             domNode: dojoDomConstruct.create("div", null, dojoDom.byId("mapDiv"))
         });
+
         var startExtent = new esri.geometry.Extent(
             13067177.4503, 4743096.0757, 13068617.8449, 4744176.8112,
             new esri.SpatialReference({wkid: 102100})
@@ -27,11 +32,12 @@
         $Map = new esri.Map("mapDiv", {
             extent: startExtent,
             slider: true,  //显示缩放控件
-            //infoWindow: infoWindow,  //此处对应自定义的infoWindow 设置
+            infoWindow: infoWindow,  //此处对应自定义的infoWindow 设置
             logo: false,
             basemap: "kgmap"
             //basemap: "topo"
         });
+        $Map.infoWindow.resize(353, 415);
 
 
         //创建图形图层
@@ -63,12 +69,6 @@
 
 		mapInited = true;
 		hideLoader();
-	}
-
-	function initVue(){
-	    new Vue(vueExports.query);
-		new Vue(vueExports.bottomBar);
-	    new Vue(vueExports.mainWrap);
 	}
 
 	function loadModalHtml(){
@@ -238,9 +238,8 @@
     }
 
     function showCoordinates(evt) {
-
         var mp = evt.mapPoint;
-        dojo.byId("XYinfo").innerHTML = "坐标：" + mp.x.toFixed(4) + " , " + mp.y.toFixed(4);  //toFiex(2) 限制小数点后显示的位数
+        $("#XYinfo").html("坐标：" + mp.x.toFixed(4) + " , " + mp.y.toFixed(4));  //toFiex(2) 限制小数点后显示的位数
     }
 })();
 
