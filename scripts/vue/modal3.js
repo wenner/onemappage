@@ -40,7 +40,7 @@ vueExports.modal3 = {
             $Map.addLayer(heatLayer);
             $Map.resize();
             // 创建一要素图层，从该图层中获取点要素
-            featureLayer = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网企业项目动态图map/MapServer/0", {
+            featureLayer = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/0", {
                 mode: FeatureLayer.MODE_ONDEMAND,
                 visible: false
             });
@@ -54,7 +54,7 @@ vueExports.modal3 = {
             heatLayer = new bism({
                 config: {
                     "useLocalMaximum": true,
-                    "radius": 20,
+                    "radius": 15,
                     "gradient": {
                         0.45: "rgb(000,000,255)",
                         0.55: "rgb(000,255,255)",
@@ -65,7 +65,7 @@ vueExports.modal3 = {
                 },
                 "map": $Map,
                 "domNodeId": "heatLayer",
-                "opacity": 0.85
+                "opacity": 0.75
             })
         },
         getFeatures: function () {

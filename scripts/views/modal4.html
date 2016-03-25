@@ -23,11 +23,15 @@
                 <label class="label label-info" style="color: #000;font-size:16px;">选择下列地下图层，开关图层</label>
             </div>
             <br/>
-            <input type="checkbox" v-model="allChecked" @click="closeAllPipeline"/>全选{{allChecked}}
-
+            <!--<div class="checkbox">-->
+                <!--<label class="label label-default">-->
+                    <!--<input type="checkbox" v-model="allChecked" @click="closeAllPipeline"/>全选{{allChecked}}-->
+                <!--</label>-->
+            <!--</div>-->
+            <input type="checkbox" v-model="allChecked" @change="closeAllPipeline"/>全选{{allChecked}}
             <div class="checkbox" v-for="item in list">
                 <label>
-                    <input type="checkbox"  v-model="item.checked" @click="switchPipeline($index)">
+                    <input type="checkbox"  v-model="item.checked" @change="switchPipeline($index)">
                     {{item.name}}
                 </label>
             </div>
