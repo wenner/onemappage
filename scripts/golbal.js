@@ -20,8 +20,13 @@ var InfoTemplate; //infowindow窗口
 var iTip; ////鼠标悬停变量
 //创建多个图层，便于管理graphic
 var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer,routeLayer;
-var pipeLineLayer,redPointLayer;
+var pipeLineLayer,redPointLayer,redLineCategoryLayer;
 var Measure,TextSymbol;
+var SimpleRenderer;
+var esriLang;
+var number;
+var domStyle;
+var TooltipDialog, dijitPopup,dialog;
 
 
 //底图影像及矢量图层

@@ -7,9 +7,9 @@
 		createMap();
     };
     function createMap() {
-        var InfoWindow = myInfoWindow,
+        //var InfoWindow = myInfoWindow,
             Draw = esri.toolbars.Draw;
-        var infoWindow = new InfoWindow({
+        var infoWindow = new myInfoWindow({
             domNode: dojoDomConstruct.create("div", null, dojoDom.byId("mapDiv"))
         });
 
@@ -28,12 +28,8 @@
             infoWindow: infoWindow,  //此处对应自定义的infoWindow 设置
             logo: false,
             basemap: "kgmap"
-            //basemap: "topo"
         });
-        $Map.infoWindow.resize(353, 415);
-
-        //设置自定义infowindow气泡
-        iTip = new InfoTip("i2Div", "infoTip white", $Map.position, true);
+        $Map.infoWindow.resize(375, 315);  //设置弹窗大小
 
         //创建图形图层
         //把图层添加到地图上
@@ -51,18 +47,17 @@
         $Map.addLayer(alarmLayer);
         labelLayer = new GraphicsLayer();
         $Map.addLayer(labelLayer);
-
-        $Map.on("load", addRedPointGraphics);
+        redLineCategoryLayer=new GraphicsLayer();
+        $Map.addLayer(redLineCategoryLayer);
 
         setSymbolStyle();
-        //$Toolbar = new Draw($Map);
-        //$Toolbar.on("draw-end", addGraphic);
         var baseMaps = getBaseMaps();
         createMapToggle();
         createMapGallery(baseMaps);
         initMapEvent();
         mapInited = true;
         hideLoader();
+        setWithTipsLayerToMap();
     }
 
     function loadModalHtml(){
@@ -86,51 +81,6 @@
         }
     }
 
-    var redPointTask;
-    function addRedPointGraphics() {
-        redPointTask = new esri.tasks.QueryTask("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/1");
-        // 实例化查询参数类
-        query = new esri.tasks.Query();
-        query.returnGeometry = true;
-        // 实例化信息模板类
-        var redPointInfoTemplate = new esri.InfoTemplate("${STATE_NAME}", "州名： ${STATE_NAME}<br/> <br />面积：${AREA}");
-        // 实例化符号类
-        var redColor = new Color([255, 0, 0]);
-        var halfFillYellow = new Color([255, 255, 0, 0.5]);
-        $ptSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_DIAMOND, 10,
-            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, redColor, 1),
-            halfFillYellow);
-        $Map.on("click", doQuery);
-    }
-
-    function doQuery(evt) {
-        query.geometry = evt.geometry;
-        var queryTask = redPointTask;
-        query.outFields = ["UNAME", "分类"];
-        queryTask.execute(query, showResults);
-    }
-
-    function showResults(featureSet) {
-        // 清除上一次的高亮显示
-        map.graphics.clear();
-        var symbol, infoTemplate;
-        symbol = $ptSymbol;
-        infoTemplate = citiesInfoTemplate;
-
-        var resultFeatures = featureSet.features;
-        for (var i = 0, il = resultFeatures.length; i < il; i++) {
-            // 从featureSet中得到当前地理特征
-            // 地理特征就是一图形对象
-            var graphic = resultFeatures[i];
-            graphic.setSymbol(symbol);
-            // 设置信息模板
-            graphic.setInfoTemplate(infoTemplate);
-            // 在地图的图形图层中增加图形
-            map.graphics.add(graphic);
-        }
-    }
-
-	var Color = esri.Color;
     function hideLoader() {
         if (mapInited && modalInited) {
             $("#pageloader").hide();
@@ -186,7 +136,6 @@
 
 
     }
-
 
     function getBaseMaps() {
         var Basemap = esri.dijit.Basemap,
@@ -253,23 +202,6 @@
         basemapGallery.startup();
     }
 
-    function addGraphic(evt) {
-        $Toolbar.deactivate();
-        $Map.enableMapNavigation();
-        // figure out which symbol to use
-        if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
-            $CurrentSymbol = $markerSymbol;
-        } else if ( evt.geometry.type === "line" || evt.geometry.type === "polyline") {
-            $CurrentSymbol = $lineSymbol;
-        }
-        else {
-            $CurrentSymbol = $fillSymbol;
-        }
-        $CurrentGraphic=new Graphic(evt.geometry , $CurrentSymbol);
-        $Map.graphics.add($CurrentGraphic);
-        //console.log($CurrentGraphic)
-    }
-
     function initMapEvent(){
         $Map.on('mouse-move', showCoordinates);
         $Map.on('mouse-drag', showCoordinates);
@@ -287,6 +219,134 @@
         map.centerAt(location);  //将点平移到map正中
     }
 
+    /*
+    * 添加需要在地图上显示的graphics，并且给此graphics附加上tips窗口
+    * */
+    function setWithTipsLayerToMap(){
+        //涉危企业面图层
+        var redLineCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/8", {
+            mode: FeatureLayer.MODE_SNAPSHOT,
+            outFields: ["UNAME", "JZXG", "YDXZ", "QYKK", "BXMMC"]
+        });
+        //涉危企业点图层
+        var redPointCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/1", {
+            mode: FeatureLayer.MODE_SNAPSHOT,
+            outFields: ["UNAME", "XMMC", "JSDW", "单位名称", "分类"]
+        });
+        //redLineCategory.setDefinitionExpression("STATE_NAME = 'South Carolina'");  //可对特定字段进行sql查询,目前没用到
+        var pointSymbol = new SimpleMarkerSymbol({
+            "color": [255,255,100,64],
+            "size": 6,
+            "angle": 0,
+            "xoffset": 0,
+            "yoffset": 0,
+            "type": "esriSMS",
+            "style": "esriSMSCircle",
+            "outline": {
+                "color": [0,0,0,100],
+                "width": 1,
+                "type": "esriSLS",
+                "style": "esriSLSSolid"
+            }
+        });
+        var polySymbol = new SimpleFillSymbol(
+            SimpleFillSymbol.STYLE_SOLID,
+            new SimpleLineSymbol(
+                SimpleLineSymbol.STYLE_SOLID,
+                new Color([255,255,255,0.35]),
+                1
+            ),
+            new Color([125,125,125,0.35])
+        );
+        //redLineCategory.setRenderer(new SimpleRenderer(polySymbol));
+        redPointCategory.setRenderer(new SimpleRenderer(pointSymbol));
+        //$Map.addLayer(redLineCategory);
+        $Map.addLayer(redPointCategory);
+        //$Map.infoWindow.resize(245,125);  //可以设置窗口大小
+
+        dialog = new TooltipDialog({
+            id: "tooltipDialog",
+            style: "position: absolute; width: 250px; font: normal normal normal 10pt Helvetica;z-index:100"
+        });
+        dialog.startup();
+
+        var highlightPolySymbol = new SimpleFillSymbol(
+            SimpleFillSymbol.STYLE_SOLID,
+            new SimpleLineSymbol(
+                SimpleLineSymbol.STYLE_SOLID,
+                new Color([255,0,0]), 3
+            ),
+            new Color([125,125,125,0.35])
+        );
+        var highlightPointSymbol = new SimpleMarkerSymbol({
+            "color": [0,255,255,64],
+            "size": 16,
+            "angle": 0,
+            "xoffset": 0,
+            "yoffset": 0,
+            "type": "esriSMS",
+            "style": "esriSMSCircle",
+            "outline": {
+                "color": [255,0,0,255],
+                "width": 2,
+                "type": "esriSLS",
+                "style": "esriSLSSolid"
+            }
+        });
+        //close the dialog when the mouse leaves the highlight graphic
+        $Map.on("load", function(){
+            redLineCategoryLayer.enableMouseEvents();
+            redLineCategoryLayer.on("mouse-out", closeDialog);
+        });
+        //listen for when the onMouseOver event fires on the countiesGraphicsLayer
+        //when fired, create a new graphic with the geometry from the event.graphic and add it to the maps graphics layer
+        redLineCategory.on("mouse-over", function(evt){
+            var t = "<b>${UNAME}</b><hr><b>项目: </b>${JZXG}<br>"
+                + "<b>用地性质: </b>${YDXZ}<br>"
+                + "<b>企业开口: </b>${QYKK}<br>"
+                + "<b>项目名称: </b>${BXMMC}";
+
+            var content = esriLang.substitute(evt.graphic.attributes,t);
+            var highlightGraphic = new Graphic(evt.graphic.geometry,highlightPolySymbol);
+            //$Map.graphics.add(highlightGraphic);
+            redLineCategoryLayer.add(highlightGraphic);
+            dialog.setContent(content);
+
+            domStyle.set(dialog.domNode, "opacity", 0.85);
+            dijitPopup.open({
+                popup: dialog,
+                x: evt.pageX,
+                y: evt.pageY
+            });
+        });
+
+        redPointCategory.on("mouse-over", function(evt){
+            var t = "<b>${UNAME}</b><hr><b>项目名称: </b>${XMMC}<br>"
+                + "<b>建设单位: </b>${JSDW}<br>"
+                + "<b>单位名称: </b>${单位名称}<br>"
+                + "<b>类别: </b>${分类}";
+
+            var content = esriLang.substitute(evt.graphic.attributes,t);
+            var highlightGraphic = new Graphic(evt.graphic.geometry,highlightPointSymbol);
+            //$Map.graphics.add(highlightGraphic);
+            redLineCategoryLayer.add(highlightGraphic);
+            dialog.setContent(content);
+
+            domStyle.set(dialog.domNode, "opacity", 0.85);
+            dijitPopup.open({
+                popup: dialog,
+                x: evt.pageX,
+                y: evt.pageY
+            });
+        });
+
+        function closeDialog() {
+            //$Map.graphics.clear();
+            redLineCategoryLayer.clear();
+            dijitPopup.close(dialog);
+
+        }
+    }
 })();
 
 

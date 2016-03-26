@@ -17,8 +17,6 @@ vueExports.modal6 = {
     },
     methods: {
         plotting: function (evt) {
-			console.log(this.jsColorTransparency)
-			console.log(this.slider.slider("getValue"))
             var rgbFill = ("#" + this.jsColorFill).toRGB();
             var rgbOutline = ("#" + this.jsColorOutline).toRGB();
             var rgbaFill = [rgbFill[0], rgbFill[1], rgbFill[2], this.jsColorTransparency];  //透明度 的值没法获取
