@@ -176,6 +176,15 @@
             thumbnailUrl: "assets/images/thumbnail-onemap.jpg"
         });
         basemaps.push(satelliteMap);
+        var secFiveDMap=new Basemap({
+            layers:[new BasemapLayer({
+                url: $BaseServiceUrl + "影像服务/25Dkg84/ImageServer"
+            })],
+            id:"25DMap",
+            title:"2.5D空港图",
+            thumbnailUrl:"assets/images/thumbnail-konggang-25D.png"
+        });
+        basemaps.push(secFiveDMap);
         return basemaps;
     }
 
@@ -295,7 +304,7 @@
         });
         //close the dialog when the mouse leaves the highlight graphic
         $Map.on("load", function(){
-            redLineCategoryLayer.enableMouseEvents();
+            redLineCategoryLayer.enableMouseEvents();  //设置启动该图层的鼠标事件
             redLineCategoryLayer.on("mouse-out", closeDialog);
         });
         //listen for when the onMouseOver event fires on the countiesGraphicsLayer
@@ -306,7 +315,7 @@
                 + "<b>企业开口: </b>${QYKK}<br>"
                 + "<b>项目名称: </b>${BXMMC}";
 
-            var content = esriLang.substitute(evt.graphic.attributes,t);
+            var content = esriLang.substitute(evt.graphic.attributes,t); // 将内容变量放置到graphic.attributes中 用到了esriLang.substitute
             var highlightGraphic = new Graphic(evt.graphic.geometry,highlightPolySymbol);
             //$Map.graphics.add(highlightGraphic);
             redLineCategoryLayer.add(highlightGraphic);
@@ -339,7 +348,9 @@
                 y: evt.pageY
             });
         });
-
+        redPointCategory.on("click",function(evt){
+            console.log(evt.graphic.attributes);
+        });
         function closeDialog() {
             //$Map.graphics.clear();
             redLineCategoryLayer.clear();
