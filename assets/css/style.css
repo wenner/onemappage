@@ -106,14 +106,22 @@ a {cursor: pointer}
     width:0
 }
 
-#sidecontent {
-    padding:10px 0px;height:100%;margin-top:50px
+.sidepanel-item {
+    height:100%
 }
 
-#sidecontent .list-group {
+.sidepanel-item .input-group .btn {
+    border-radius: 0 !important;
+}
+
+.sidecontent {
+    height:100%;margin-top1:50px
+}
+
+.sidecontent .list-group {
     border-radius: 0;
 }
-#sidecontent .list-group {
+.sidecontent .list-group {
     border-radius: 0;
 }
 

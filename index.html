@@ -80,6 +80,7 @@
 
         </div>
         <div id="sidepanel">
+<<<<<<< HEAD
             <div class='bg-primary'
                  style="position:fixed;padding:10px 20px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:88">
                 <div class="input-group">
@@ -93,33 +94,67 @@
                             <li role="separator" class="divider"></li>
                             <li><a href="#">其他</a></li>
                         </ul>
+=======
+            <div class="sidepanel-item" v-show="sideState == 'list'">
+                <div class='sideheader bg-primary'
+                     style="padding:10px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:88">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    style="margin-right:-2px"
+                                    aria-expanded="false">
+                                {{currentQueryType.text}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" >
+                                <li v-for="type in queryTypes" @click="currentQueryType = type">
+                                    <a >{{type.text}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control" id="searchText" v-model="keyword">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="findBtn" @click="search">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
                     </div>
-                    <input type="text" class="form-control" id="searchText" v-model="keyword">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" id="findBtn" @click="search">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-                <div>
-                    <div v-show="sideLoading">查询数据中...</div>
-                    <div v-show="!sideLoading && result.length>0">
-                        <span>返回</span>
-                        <span class="pull-right">{{result.length}}条结果</span>
+                    <div style="padding-top:10px">
+                        <div v-show="sideLoading">查询数据中...</div>
+                        <div v-show="!sideLoading && result.length>0">
+                            &nbsp;
+                            <span class="pull-right">{{result.length}}条结果</span>
+                        </div>
+>>>>>>> origin/master
                     </div>
                 </div>
-
+                <div class="sidecontent mCustomScrollbar"
+                     data-mcs-theme="minimal-dark">
+                    <div class="list-group">
+                        <a class='list-group-item'
+                           v-for="item in result"
+                           v-bind:class="{ 'active': item == currentItem}"
+                           @click="showResultItem(item)">
+                            {{item.value}}
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <div id="sidecontent" class="mCustomScrollbar" data-mcs-theme="minimal-dark">
-                <div v-show="!sideLoading && result" class="list-group" id="contentsContainer">
-                    <a class='list-group-item'
-                       v-for="item in result"
-                       v-bind:class="{ 'active': item == currentItem}"
-                       @click="showResultItem(item)">
-                        {{item.value}}
-                    </a>
+            <div v-show="sideState == 'detail'">
+                <div class='sideheader bg-primary'
+                     style="padding:10px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:88">
+                    <button class="btn btn-primary" @click="backToList()">
+                        <i class="fa fa-chevron-circle-left" style="font-size:20px"></i>
+                    </button>
+                    <span style="font-size:18px;">{{currentItem.value}}</span>
                 </div>
+
+                <div class="sidecontent">
+                    名称: {{currentItem.value}}
+                </div>
+
             </div>
 
         </div>

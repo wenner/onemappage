@@ -5,7 +5,18 @@ vueExports.main={
 
         menus:bottomBarMenus ,
         currentModal:null ,
+<<<<<<< HEAD
         menuValue:"关键字查询",
+=======
+
+        sideState:"list" ,
+        currentQueryType: {text:"关键字" , value:"keyword"} ,
+        queryTypes: [
+            {text:"关键字" , value:"keyword"} ,
+            {text:"病害类别" , value:"disease"} ,
+            {text:"危险品" , value:"danger"}
+        ] ,
+>>>>>>> origin/master
         sideLoading: false ,
         keyword:'空港' ,
         result:[] ,
@@ -67,6 +78,7 @@ vueExports.main={
             findTask.execute(findParams , function(result){
                 self.sideLoading = false;
                 self.result=result;
+                self.sideState = "list";
                 self.addResultGraphic();
             });
         } ,
@@ -130,6 +142,10 @@ vueExports.main={
 
 
             this.currentItem = item;
+            this.sideState = "detail";
+            //读取选中的item的内容;
+
+            //companyInfo = json;
 
             var graphic = item.feature ,
                 id = graphic.attributes.FID ,
@@ -159,6 +175,7 @@ vueExports.main={
                 console.log("对应的类型是线或面,范围：" + JSON.stringify(sExtent));  //JSON.stringify(obj)  将obj json对象转换为string
                 var p = map.toScreen(sGrapphic.geometry);
                 var iw = map.infoWindow;
+                iw.show();
                 //iw.setTitle(sGrapphic.getTitle());
                 //iw.setContent(sGrapphic.getContent());
                 //iw.show(p,map.getInfoWindowAnchor(p));
@@ -176,6 +193,10 @@ vueExports.main={
                 //TempLayer.add(gc);
                 //gc.setSymbol(polygonSymbol);
             }
+        } ,
+
+        backToList: function(){
+            this.sideState = "list";
         }
     }
 };
