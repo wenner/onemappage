@@ -35,7 +35,6 @@
 
 <div id="outerwrap" style="height:100%" v-cloak>
     <div id="mainwrap" style="height:100%" v-bind:class="{ 'sideexpanded': sideExpanded}">
-
         <div id="mapPanel" style="position: relative;height:100%">
             <div id="heatLayer"></div>
             <div id="mapDiv" style="height:100%;width:100%"></div>
@@ -86,7 +85,7 @@
                 <div class="input-group">
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default dropdown-toggle"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">关键字查询 <span class="caret"></span></button>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                         <ul class="dropdown-menu" v-model="menuValue">
                             <li><a href="#">关键字查询</a></li>
                             <li><a href="#">病害类别</a></li>

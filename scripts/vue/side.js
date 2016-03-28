@@ -1,7 +1,6 @@
 vueExports.side = {
     el: '#sidepanel',
     data: {
-
     },
     methods: {
         search: function () {

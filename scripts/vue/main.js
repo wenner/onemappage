@@ -5,7 +5,7 @@ vueExports.main={
 
         menus:bottomBarMenus ,
         currentModal:null ,
-
+        menuValue:"关键字查询",
         sideLoading: false ,
         keyword:'空港' ,
         result:[] ,
