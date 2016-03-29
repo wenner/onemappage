@@ -1,46 +1,46 @@
-vueExports.main={
-    el:'#outerwrap' ,
-    data:{
-        sideExpanded:false ,
+vueExports.main = {
+    el: '#outerwrap',
+    data: {
+        sideExpanded: false,
 
-        menus:bottomBarMenus ,
-        currentModal:null ,
+        menus: bottomBarMenus,
+        currentModal: null,
 
 
-        sideState:"list" ,
-        currentQueryType: {text:"关键字" , value:"keyword"} ,
+        sideState: "list",
+        currentQueryType: {text: "关键字", value: "keyword"},
         queryTypes: [
-            {text:"关键字" , value:"keyword"} ,
-            {text:"病害类别" , value:"disease"} ,
-            {text:"危险品" , value:"danger"}
-        ] ,
+            {text: "关键字", value: "keyword"},
+            {text: "病害类别", value: "disease"},
+            {text: "危险品", value: "danger"}
+        ],
 
-        sideLoading: false ,
-        keyword:'空港' ,
-        result:[] ,
+        sideLoading: false,
+        keyword: '空港',
+        result: [],
         currentItem: null
-    } ,
-    methods:{
+    },
+    methods: {
         //打开关闭侧边栏
-        toggleSide:function(){
-            this.sideExpanded= !this.sideExpanded;
-        } ,
-        openSide: function(){
+        toggleSide: function () {
+            this.sideExpanded = !this.sideExpanded;
+        },
+        openSide: function () {
             this.sideExpanded = true;
-        } ,
-        hideSide: function(){
+        },
+        hideSide: function () {
             this.sideExpanded = false;
-        } ,
+        },
 
         //底部菜单打开对应的modal
-        openModal:function(menu){
-            var self=this ,
-                registry=dojoRegistry;
-            if(self.currentModal) self.currentModal.hide();
+        openModal: function (menu) {
+            var self = this,
+                registry = dojoRegistry;
+            if (self.currentModal) self.currentModal.hide();
 
-            var modal=registry.byId(menu.modal);
-            if(!modal) return;
-            self.currentModal=modal;
+            var modal = registry.byId(menu.modal);
+            if (!modal) return;
+            self.currentModal = modal;
             modal.show();
 
             /*
@@ -51,45 +51,47 @@ vueExports.main={
              draggable: true
              });
              */
-            $("#"+menu.modal).tab();
+            $("#" + menu.modal).tab();
 
-        } ,
+        },
 
-        search:function(){
-            var self=this
+        search: function () {
+            var self = this
             self.sideLoading = true;
-            var FindParameters=esri.tasks.FindParameters ,
-                FindTask=esri.tasks.FindTask;
+            var FindParameters = esri.tasks.FindParameters,
+                FindTask = esri.tasks.FindTask;
 
-            var findTask=new FindTask($BaseServiceUrl+"一张网/一张网动态图/MapServer");
+            var findTask = new FindTask($BaseServiceUrl + "一张网/一张网动态图/MapServer");
             // FindTask的参数`
-            var findParams=new FindParameters();
+            var findParams = new FindParameters();
             // 返回Geometry
-            findParams.returnGeometry=true;
+            findParams.returnGeometry = true;
             // 查询的图层id
-            findParams.layerIds=[9];  //Layer: 雨水井 (0)   Layer: 建筑物 (1)   Layer: 项目 (2)
+            findParams.layerIds = [9];  //Layer: 密度点84 (0) 红线84分类点 (1) 企业内部点位 (3) 企业红线84 (9)
             // 查询字段
-            findParams.searchFields=["XMMC" , "UNAME"];
-            if(this.keyword==""){
-                findParams.searchFields="1=1";
-            }else {
-                findParams.searchText=this.keyword;
+            findParams.searchFields = ["XMMC", "UNAME"];
+            if (this.keyword == '') {
+                console.log("this.keyword==''");
+                findParams.searchFields = "天津";
+            } else {
+                console.log("this.keyword==" + this.keyword);
+                findParams.searchText = this.keyword;
             }
-            findTask.execute(findParams , function(result){
+            findTask.execute(findParams, function (result) {
                 self.sideLoading = false;
-                self.result=result;
+                self.result = result;
                 self.sideState = "list";
                 self.addResultGraphic();
             });
-        } ,
-        addResultGraphic: function(){
+        },
+        addResultGraphic: function () {
             $Map.graphics.clear();
 
             var result = this.result;
-            for(var i = 0; i<result.length ;i++){
-                var item = result[i] ,
-                    graphic = item.feature ,
-                    symbol ,
+            for (var i = 0; i < result.length; i++) {
+                var item = result[i],
+                    graphic = item.feature,
+                    symbol,
                     infoTemplate;
                 switch (graphic.geometry.type) {
                     case "point":
@@ -135,20 +137,14 @@ vueExports.main={
                 // 添加到graphics进行高亮显示
                 $Map.graphics.add(graphic);
             }
-        } ,
+        },
 
-        showResultItem: function(item){
+        showResultItem: function (item) {
             //清楚以前的currentItem状态
-
-
             this.currentItem = item;
             this.sideState = "detail";
-            //读取选中的item的内容;
-
-            //companyInfo = json;
-
-            var graphic = item.feature ,
-                id = graphic.attributes.FID ,
+            var graphic = item.feature,
+                id = graphic.attributes.FID,
                 map = $Map;
             var sGrapphic = graphic;
             var sGeometry = sGrapphic.geometry;
@@ -170,12 +166,13 @@ vueExports.main={
             //当点击的名称对应的图形为线或面类型时获取其范围进行放大显示
             else {
                 var sExtent = sGeometry.getExtent();
+                console.log(sExtent);
                 sExtent = sExtent.expand(2);
                 map.setExtent(sExtent);
                 console.log("对应的类型是线或面,范围：" + JSON.stringify(sExtent));  //JSON.stringify(obj)  将obj json对象转换为string
                 var p = map.toScreen(sGrapphic.geometry);
                 var iw = map.infoWindow;
-                iw.show();
+                //iw.show();
                 //iw.setTitle(sGrapphic.getTitle());
                 //iw.setContent(sGrapphic.getContent());
                 //iw.show(p,map.getInfoWindowAnchor(p));
@@ -193,9 +190,36 @@ vueExports.main={
                 //TempLayer.add(gc);
                 //gc.setSymbol(polygonSymbol);
             }
-        } ,
+        },
+        QueryTextFromSQL: function () {
+            console.log("进入ajax查询数据方法");
+            //var name = $('#searchText').val();
+            var name = $('#searchText').val();
+            var source = '/AppWebSite/FMService/chemical';
+            var field = 'ChemicalName,ChemicalNum,Usage,DailyDosage,MaximumStockingCapacity,StorageSite';
+            var data = {
+                Fields: field.split(','),
+                Search: 'EnterpriseName = {0}',
+                Values: [name],
+                OrderFieldName: 'RegistrationTime',
+                OrderType: 'desc'
+            };
+            var arg_map = {
+                data: data,
+                success: this.onSuccess,
+                fail: this.onFail,
+                url: source
+            };
+            tjx.data.safetysearch.getDataTable(arg_map);
+        },
+        onSuccess: function (data) {
+            console.log(data);
+        },
 
-        backToList: function(){
+        onFail: function (data) {
+            console.log(data);
+        },
+        backToList: function () {
             this.sideState = "list";
         }
     }
