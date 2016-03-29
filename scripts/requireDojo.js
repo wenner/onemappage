@@ -4,8 +4,10 @@ require([
     "myAppMeasure/measure",
     "bism/bism/HeatmapLayer",
     //dojo lib
+    "dojo/on",
     "dojo/dom",
     "dojo/dom-construct",
+    "dojo/mouse",
     "dijit/registry",
     "esri/tasks/query",
     "esri/Color",
@@ -35,8 +37,9 @@ require([
     "dojo/dom-style",
     "dijit/TooltipDialog",
     "dijit/popup",
+    "esri/SpatialReference",
 
-    "dojo/on",
+
     "dojo/parser",
     "dojo/string",
     "dijit/layout/BorderContainer",
@@ -54,7 +57,7 @@ require([
     "esri/geometry/Extent",
 
 
-    "esri/SpatialReference",
+
     "esri/layers/ArcGISTiledMapServiceLayer",
 
     "esri/layers/ArcGISImageServiceLayer",
@@ -76,14 +79,16 @@ require([
     "esri/tasks/PrintParameters",
     "esri/tasks/PrintTemplate",
     "dojo/domReady!"
-], function (InfoWindow,measure, HeatmapLayer, dom, domConstruct, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
+], function (InfoWindow,measure, HeatmapLayer,on, dom, domConstruct,Mouse, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
              draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol,pictureMarkerSymbol,routeTask, routeParameters,featureSet,serviceAreaTask, serviceAreaParameters,
-             arcGISDynamicMapServiceLayer,imageParameters,infoTemplate,simpleRenderer,EsriLang,Number,DomStyle,tooltipDialog, DijitPopup
+             arcGISDynamicMapServiceLayer,imageParameters,infoTemplate,simpleRenderer,EsriLang,Number,DomStyle,tooltipDialog, DijitPopup,SpatialReference
 ) {
     myInfoWindow = InfoWindow;
     Measure=measure;
+    dojoOn=on;
     dojoDom = dom;
     dojoDomConstruct = domConstruct;
+    mouse=Mouse;
     dojoRegistry = registry;
     bism = HeatmapLayer;
     queryT = QueryT;
@@ -114,5 +119,6 @@ require([
     domStyle=DomStyle;
     TooltipDialog=tooltipDialog;
     dijitPopup=DijitPopup;
+    spatialReference=SpatialReference;
     init();
 });

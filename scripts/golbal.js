@@ -3,9 +3,10 @@ var $markerSymbol , $lineSymbol , $fillSymbol , $ptSymbol , $polygonSymbol;
 var $BaseServiceUrl = "http://60.29.110.104:6080/arcgis/rest/services/";
 
 //dojo变量
-var dojoDom , dojoDomConstruct , dojoRegistry;
+var dojoOn, dojoDom , dojoDomConstruct , dojoRegistry,mouse;
 //自定义变量
 var myInfoWindow;
+var spatialReference;
 var bism;  //热度图变量
 var pointBufferFeature;//热度图缓冲区
 var vueExports = {};

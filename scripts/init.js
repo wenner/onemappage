@@ -233,7 +233,7 @@
     * */
     function setWithTipsLayerToMap(){
         //涉危企业面图层
-        var redLineCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/8", {
+        var redLineCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9", {
             mode: FeatureLayer.MODE_SNAPSHOT,
             outFields: ["UNAME", "JZXG", "YDXZ", "QYKK", "BXMMC"]
         });
@@ -289,7 +289,7 @@
         );
         var highlightPointSymbol = new SimpleMarkerSymbol({
             "color": [0,255,255,64],
-            "size": 16,
+            "size": 12,
             "angle": 0,
             "xoffset": 0,
             "yoffset": 0,
@@ -307,6 +307,7 @@
             redLineCategoryLayer.enableMouseEvents();  //设置启动该图层的鼠标事件
             redLineCategoryLayer.on("mouse-out", closeDialog);
         });
+
         //listen for when the onMouseOver event fires on the countiesGraphicsLayer
         //when fired, create a new graphic with the geometry from the event.graphic and add it to the maps graphics layer
         redLineCategory.on("mouse-over", function(evt){
@@ -344,18 +345,19 @@
             domStyle.set(dialog.domNode, "opacity", 0.85);
             dijitPopup.open({
                 popup: dialog,
-                x: evt.pageX,
+                x: evt.pageX+8,
                 y: evt.pageY
             });
         });
         redPointCategory.on("click",function(evt){
-            console.log(evt.graphic.attributes);
+            var attr=evt.graphic.attributes;
+            console.log(attr);
+            var aa=attr.FID+attr.JSDW+attr.UNAME+attr.XMMC+attr.分类+attr.单位名称;
+            alert(aa);
         });
         function closeDialog() {
-            //$Map.graphics.clear();
             redLineCategoryLayer.clear();
             dijitPopup.close(dialog);
-
         }
     }
 })();
