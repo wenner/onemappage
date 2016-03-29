@@ -1,7 +1,7 @@
 vueExports.main = {
     el: '#outerwrap',
     data: {
-        sideExpanded: false,
+        sideExpanded: true,
 
         menus: bottomBarMenus,
         currentModal: null,
@@ -16,9 +16,10 @@ vueExports.main = {
         ],
 
         sideLoading: false,
-        keyword: '空港',
+        keyword: '石化',
         result: [],
-        currentItem: null
+        currentItem: null,
+        currentCont:null
     },
     methods: {
         //打开关闭侧边栏
@@ -56,7 +57,7 @@ vueExports.main = {
         },
 
         search: function () {
-            var self = this
+            var self = this;
             self.sideLoading = true;
             var FindParameters = esri.tasks.FindParameters,
                 FindTask = esri.tasks.FindTask;
@@ -142,6 +143,10 @@ vueExports.main = {
         showResultItem: function (item) {
             //清楚以前的currentItem状态
             this.currentItem = item;
+            console.log("显示点击的Geometry");
+            console.log(this.currentItem.feature.attributes.ID);
+            //开始查询SQL危化品
+            this.QueryTextFromSQL();
             this.sideState = "detail";
             var graphic = item.feature,
                 id = graphic.attributes.FID,
@@ -149,6 +154,7 @@ vueExports.main = {
             var sGrapphic = graphic;
             var sGeometry = sGrapphic.geometry;
             // 当点击的名称对应的图形为点类型时进行地图中心定位显示
+
             if (sGeometry.type == "point") {
                 var cPoint = new Point(sGeometry.x, sGeometry.y, new SpatialReference(map.spatialReference));
                 //cPoint.x = sGeometry.x;
@@ -194,7 +200,8 @@ vueExports.main = {
         QueryTextFromSQL: function () {
             console.log("进入ajax查询数据方法");
             //var name = $('#searchText').val();
-            var name = $('#searchText').val();
+            //var name = this.currentItem.value;
+            var name = "中储粮油脂（天津）有限公司";
             var source = '/AppWebSite/FMService/chemical';
             var field = 'ChemicalName,ChemicalNum,Usage,DailyDosage,MaximumStockingCapacity,StorageSite';
             var data = {
@@ -213,7 +220,21 @@ vueExports.main = {
             tjx.data.safetysearch.getDataTable(arg_map);
         },
         onSuccess: function (data) {
-            console.log(data);
+            //this.currentItem=data;
+            //console.log(data);
+            var resultHead=[];
+            var resultCont;
+            for(var i=0;i<data.ChsFields.length;i++){
+                resultHead.push(data.ChsFields[i].title);
+            }
+            console.log(resultHead);  //表头信息
+            resultHead=data.ChsFields;
+            console.log(resultHead);
+            for(var i=0;i<data.DataCount;i++){
+                console.log(data.Data[i]);
+                resultCont+=data.Data[i];
+            }
+            this.currentCont=resultCont; //内容信息
         },
 
         onFail: function (data) {
