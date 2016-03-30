@@ -33,6 +33,10 @@
 
         //创建图形图层
         //把图层添加到地图上
+        hightLightGraphicLayer=new GraphicsLayer();
+        $Map.addLayer(hightLightGraphicLayer);  //将高亮图层放在最下面，防止其他图层失去点击事件
+        searchGraphicsLayer=new GraphicsLayer();
+        $Map.addLayer(searchGraphicsLayer);
         redPointLayer = new GraphicsLayer();
         $Map.addLayer(redPointLayer);  //添加红线点图层，显示infowindow用
         areaLayer = new GraphicsLayer();
@@ -132,7 +136,7 @@
             new Color([0, 255, 0, 0.25])
         );
         var lineSymbol2 = $lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASH, new Color([255, 0, 0]), 1);
-        var polygonSymbol = $polygonSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_NONE, new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, new Color([204, 204, 204]), 2), new Color([255, 204, 204, 0.25]));
+        var polygonSymbol = $polygonSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_NONE, new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, new Color([153,204,204]), 0.5), new Color([153,153,204, 0.25]));
 
 
     }
@@ -268,7 +272,7 @@
             new Color([125,125,125,0.35])
         );
         //redLineCategory.setRenderer(new SimpleRenderer(polySymbol));
-        redPointCategory.setRenderer(new SimpleRenderer(pointSymbol));
+        redPointCategory.setRenderer(new SimpleRenderer(pointSymbol)); //setRenderer设置图层显示的样式，如果是Graphic则用setSymbol
         //$Map.addLayer(redLineCategory);
         $Map.addLayer(redPointCategory);
         //$Map.infoWindow.resize(245,125);  //可以设置窗口大小

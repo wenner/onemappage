@@ -57,6 +57,8 @@ vueExports.main = {
         },
 
         search: function () {
+            //清除以前的图层
+            searchGraphicsLayer.clear();
             var self = this;
             self.sideLoading = true;
             var FindParameters = esri.tasks.FindParameters,
@@ -73,7 +75,7 @@ vueExports.main = {
             findParams.searchFields = ["XMMC", "UNAME"];
             if (this.keyword == '') {
                 console.log("this.keyword==''");
-                findParams.searchFields = "天津";
+                findParams.searchText = "空港";
             } else {
                 console.log("this.keyword==" + this.keyword);
                 findParams.searchText = this.keyword;
@@ -86,29 +88,38 @@ vueExports.main = {
             });
         },
         addResultGraphic: function () {
-            $Map.graphics.clear();
-
+            //$Map.graphics.clear();
+            this.clearGraphics();
+            searchGraphicsLayer.clear();
+            var scSymbol = new SimpleFillSymbol(
+                SimpleFillSymbol.STYLE_SOLID,
+                new SimpleLineSymbol(
+                    SimpleLineSymbol.STYLE_SOLID,
+                    new Color([164,164,164,0.75]),
+                    2
+                ),
+                new Color([196,246,252,0.25])
+            );
             var result = this.result;
             for (var i = 0; i < result.length; i++) {
                 var item = result[i],
                     graphic = item.feature,
                     symbol,
-                    infoTemplate;
+                    infoTemplate=null;
                 switch (graphic.geometry.type) {
                     case "point":
                         symbol = $ptSymbol;
-                        //infoTemplate = new InfoTemplate("${ObjName}", "${*}");
-                        infoTemplate = new esri.InfoTemplate();
-                        infoTemplate.setTitle("<div class='xyfg_list_title'>" + "${ObjName}" + "</div>");
-                        var con = "<div class='xndw_con_bg'>\
-                                    <div class='xndw_info_over'>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>1、名称：${ObjName}</a></p>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>2、所属单位：${DeptName2}</a></p>  \
-                                    <p class='xndw_info_li'><a href='javascript:;'>3、性质分类：${SUBSID}</a></p>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>4、井深：${BOTTOM_H}</a></p>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>5、管顶高：${SURF_H}</a></p>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>6、管底高：${B_DEEP} </a></p>\
-                                    </div></div>";
+                        infoTemplate = new InfoTemplate("${ObjName}", "${*}");
+                        //infoTemplate.setTitle("<div class='xyfg_list_title'>" + "${ObjName}" + "</div>");
+                        //var con = "<div class='xndw_con_bg'>\
+                        //            <div class='xndw_info_over'>\
+                        //            <p class='xndw_info_li'><a href='javascript:;'>1、名称：${ObjName}</a></p>\
+                        //            <p class='xndw_info_li'><a href='javascript:;'>2、所属单位：${DeptName2}</a></p>  \
+                        //            <p class='xndw_info_li'><a href='javascript:;'>3、性质分类：${SUBSID}</a></p>\
+                        //            <p class='xndw_info_li'><a href='javascript:;'>4、井深：${BOTTOM_H}</a></p>\
+                        //            <p class='xndw_info_li'><a href='javascript:;'>5、管顶高：${SURF_H}</a></p>\
+                        //            <p class='xndw_info_li'><a href='javascript:;'>6、管底高：${B_DEEP} </a></p>\
+                        //            </div></div>";
                         infoTemplate.setContent(con);
                         break;
                     case "polyline":
@@ -116,9 +127,13 @@ vueExports.main = {
                         infoTemplate = new esri.InfoTemplate("${ObjName}", "${*}");
                         break;
                     case "polygon":
-                        symbol = $polygonSymbol;
-                        var fill = new SimpleFillSymbol("solid", null, new Color("#A4CE67"));
-                        infoTemplate = new esri.InfoTemplate({fillSymbol: fill});
+                        symbol = scSymbol;
+                        //var fill = new SimpleFillSymbol("solid", null, new Color("#A4CE67"));
+                        var fill = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                                new Color([255, 255, 255, 0.15]), 1),
+                            new Color([153,204,204, 0.25]));
+                        infoTemplate = new InfoTemplate({fillSymbol: fill});
                         infoTemplate.setTitle("<div class='xyfg_list_title'>" + "${UNAME}" + "</div>");
                         var con = "<div class='xndw_con_bg'>\
                                     <div class='xndw_info_over'>\
@@ -136,25 +151,37 @@ vueExports.main = {
                 graphic.setInfoTemplate(infoTemplate);
 
                 // 添加到graphics进行高亮显示
-                $Map.graphics.add(graphic);
+                //$Map.graphics.add(graphic);
+                searchGraphicsLayer.add(graphic);
             }
         },
 
         showResultItem: function (item) {
-            //清楚以前的currentItem状态
+            //this.clearGraphics();
+            hightLightGraphicLayer.clear();
             this.currentItem = item;
-            console.log("显示点击的Geometry");
-            console.log(this.currentItem.feature.attributes.ID);
+            //console.log("显示点击的Geometry");
+            //console.log(this.currentItem.feature.attributes.ID);
+
             //开始查询SQL危化品
-            this.QueryTextFromSQL();
+            //this.QueryTextFromSQL();
             this.sideState = "detail";
             var graphic = item.feature,
                 id = graphic.attributes.FID,
                 map = $Map;
+            var polySymbol = new SimpleFillSymbol(
+                SimpleFillSymbol.STYLE_SOLID,
+                new SimpleLineSymbol(
+                    SimpleLineSymbol.STYLE_SOLID,
+                    new Color([255,0,0,1]),
+                    3
+                ),
+                new Color([204,255,255,1])
+            );
+
             var sGrapphic = graphic;
             var sGeometry = sGrapphic.geometry;
             // 当点击的名称对应的图形为点类型时进行地图中心定位显示
-
             if (sGeometry.type == "point") {
                 var cPoint = new Point(sGeometry.x, sGeometry.y, new SpatialReference(map.spatialReference));
                 //cPoint.x = sGeometry.x;
@@ -162,7 +189,7 @@ vueExports.main = {
                 map.infoWindow.hide();
                 map.centerAt(cPoint);
                 //map.centerAndZoom(cPoint, 10);   //将点平移到map正中 并 缩放到制定map级别
-                console.log("对应的类型是点,X/Y坐标：" + cPoint.x + "   " + cPoint.y);
+                //console.log("对应的类型是点,X/Y坐标：" + cPoint.x + "   " + cPoint.y);
                 var p = map.toScreen(sGrapphic.geometry);
                 var iw = map.infoWindow;
                 iw.setTitle(sGrapphic.getTitle());
@@ -175,26 +202,25 @@ vueExports.main = {
                 console.log(sExtent);
                 sExtent = sExtent.expand(2);
                 map.setExtent(sExtent);
-                console.log("对应的类型是线或面,范围：" + JSON.stringify(sExtent));  //JSON.stringify(obj)  将obj json对象转换为string
-                var p = map.toScreen(sGrapphic.geometry);
-                var iw = map.infoWindow;
+                //console.log("对应的类型是线或面,范围：" + JSON.stringify(sExtent));  //JSON.stringify(obj)  将obj json对象转换为string
+                //var p = map.toScreen(sGrapphic.geometry);
+                //var iw = map.infoWindow;
                 //iw.show();
                 //iw.setTitle(sGrapphic.getTitle());
                 //iw.setContent(sGrapphic.getContent());
                 //iw.show(p,map.getInfoWindowAnchor(p));
-
-                var loc = new esri.geometry.Point(
-                    (sExtent.xmin + sExtent.xmax) / 2,
-                    (sExtent.ymin + sExtent.ymax) / 2,
-                    new esri.SpatialReference(map.spatialReference)
-                );
-                var attr = sGrapphic.attributes;
-                console.log(loc.x + "   " + loc.y + "    其中最小X：" + sExtent.xmin + "   最大X:" + sExtent.xmax)
+                //var loc = new esri.geometry.Point(
+                //    (sExtent.xmin + sExtent.xmax) / 2,
+                //    (sExtent.ymin + sExtent.ymax) / 2,
+                //    new esri.SpatialReference(map.spatialReference)
+                //);
+                //var attr = sGrapphic.attributes;
                 //var infoTemplate = new InfoTemplate("${UNAME}", "${XMMC}", "${企业名}");
                 //var gc = new Graphic(loc, polygonSymbol, attr, infoTemplate);
                 //var gc = new Graphic(loc, polygonSymbol, attr);
-                //TempLayer.add(gc);
-                //gc.setSymbol(polygonSymbol);
+                //graphic.setSymbol(polySymbol);   //这样加入的graphic layer层clear()清除不掉
+                var searGraphic=new Graphic(sGeometry,polySymbol);
+                hightLightGraphicLayer.add(searGraphic);
             }
         },
         QueryTextFromSQL: function () {
@@ -234,14 +260,19 @@ vueExports.main = {
                 console.log(data.Data[i]);
                 resultCont+=data.Data[i];
             }
-            this.currentCont=resultCont; //内容信息
+            this.currentCont=JSON.stringify(data); //内容信息
         },
-
         onFail: function (data) {
             console.log(data);
         },
         backToList: function () {
             this.sideState = "list";
+        },
+        clearGraphics:function(){
+            //清除以前的currentItem状态 以及清除所有高亮的graphic
+            hightLightGraphicLayer.clear();  //为什么不清除图层呢
+            dijitPopup.close(dialog);
+
         }
     }
 };
