@@ -30,7 +30,9 @@
             basemap: "kgmap"
         });
         $Map.infoWindow.resize(375, 315);  //设置弹窗大小
-
+        //添加危险企业动态点位图
+        var dynamicMapSericeLayerAlarmLayer=new ArcGISDynamicMapServiceLayer($BaseServiceUrl+"一张网/危险企业红线点位动态Map/MapServer");
+        $Map.addLayer(dynamicMapSericeLayerAlarmLayer);
         //创建图形图层
         //把图层添加到地图上
         hightLightGraphicLayer=new GraphicsLayer();
