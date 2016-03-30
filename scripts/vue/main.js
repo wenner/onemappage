@@ -14,10 +14,10 @@ vueExports.main = {
             {text: "病害类别", value: "disease"},
             {text: "危险品", value: "danger"}
         ],
-
         sideLoading: false,
         keyword: '石化',
         result: [],
+        resultSort:[],
         currentItem: null,
         currentCont:null
     },
@@ -57,6 +57,7 @@ vueExports.main = {
         },
 
         search: function () {
+            var aa=[];
             //清除以前的图层
             searchGraphicsLayer.clear();
             var self = this;
@@ -85,7 +86,11 @@ vueExports.main = {
                 self.result = result;
                 self.sideState = "list";
                 self.addResultGraphic();
+                for(var i=0;i<self.result.length;i++){
+                    aa.push(i);
+                }
             });
+            this.resultSort=aa;
         },
         addResultGraphic: function () {
             //$Map.graphics.clear();
@@ -145,8 +150,21 @@ vueExports.main = {
                                     <p class='xndw_info_li'><a href='javascript:;'>6、性质分类：${Zlbmc} </a></p>\
                                     </div></div>";
                         infoTemplate.setContent(con);
+
+
                         break;
                 }
+
+                //添加标注ABCmark图标
+                var sExtent = graphic.geometry.getExtent();
+                var pt = new esri.geometry.Point(
+                    (sExtent.xmin + sExtent.xmax) / 2,
+                    (sExtent.ymin + sExtent.ymax) / 2,
+                    new esri.SpatialReference($Map.spatialReference)
+                );
+                var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/0.PNG",30,40);
+                var gImg = new Graphic(pt,pms);
+                markLayer.add(gImg);
                 graphic.setSymbol(symbol);
                 graphic.setInfoTemplate(infoTemplate);
 

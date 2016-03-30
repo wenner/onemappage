@@ -55,6 +55,8 @@
         $Map.addLayer(labelLayer);
         redLineCategoryLayer=new GraphicsLayer();
         $Map.addLayer(redLineCategoryLayer);
+        markLayer=new GraphicsLayer();
+        $Map.addLayer(markLayer);
 
         setSymbolStyle();
         var baseMaps = getBaseMaps();

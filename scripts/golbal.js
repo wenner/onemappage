@@ -20,7 +20,7 @@ var GraphicsLayer,Graphic,FeatureLayer;
 var InfoTemplate; //infowindow窗口
 var iTip; ////鼠标悬停变量
 //创建多个图层，便于管理graphic
-var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer,routeLayer,hightLightGraphicLayer,searchGraphicsLayer;
+var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer,routeLayer,hightLightGraphicLayer,searchGraphicsLayer,markLayer;
 var pipeLineLayer,redPointLayer,redLineCategoryLayer;
 var Measure,TextSymbol;
 var SimpleRenderer;

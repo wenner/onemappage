@@ -35,7 +35,7 @@ define([
 
 
         constructor: function () {
-            console.log("plot.PlotFactory");
+            //console.log("plot.PlotFactory");
         },
         createPlot: function (type, points) {
             switch (type) {

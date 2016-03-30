@@ -1,7 +1,7 @@
 define(["dojo/_base/declare", "esri/geometry/Point"], function (a, b) {
     return a("plot.comfun", null, {
         constructor: function () {
-            console.log("plot.comfun")
+            //console.log("plot.comfun")
         },
         TWO_PI: 6.28318530717959,
         HALF_PI: 1.5707963267949,

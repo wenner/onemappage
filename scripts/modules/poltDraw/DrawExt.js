@@ -33,7 +33,7 @@ define(
             an: null,
             tipDiv: null,
             activate: function (geometryType, options) {
-                console.log(geometryType);
+                //console.log(geometryType);
                 if (this.extGeometryType.indexOf(geometryType) >= 0) {
                     this.tipDiv = domConstruct.create("div", {class: "tooltip", style: "position: fixed;display:none"});
                     this.tipDiv.innerHTML = "单击开绘制图形";
