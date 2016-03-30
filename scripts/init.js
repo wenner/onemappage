@@ -253,7 +253,7 @@
         //redLineCategory.setDefinitionExpression("STATE_NAME = 'South Carolina'");  //可对特定字段进行sql查询,目前没用到
         var pointSymbol = new SimpleMarkerSymbol({
             "color": [255,255,100,64],
-            "size": 6,
+            "size": 4,
             "angle": 0,
             "xoffset": 0,
             "yoffset": 0,
@@ -297,7 +297,7 @@
         );
         var highlightPointSymbol = new SimpleMarkerSymbol({
             "color": [0,255,255,64],
-            "size": 12,
+            "size": 6,
             "angle": 0,
             "xoffset": 0,
             "yoffset": 0,
@@ -314,11 +314,13 @@
         $Map.on("load", function(){
             redLineCategoryLayer.enableMouseEvents();  //设置启动该图层的鼠标事件
             redLineCategoryLayer.on("mouse-out", closeDialog);
+            //$Map.on('mouse-move', closeDialog);
         });
 
         //listen for when the onMouseOver event fires on the countiesGraphicsLayer
         //when fired, create a new graphic with the geometry from the event.graphic and add it to the maps graphics layer
         redLineCategory.on("mouse-over", function(evt){
+            //$Map.setMapCursor("pointer");//设置鼠标样式
             var t = "<b>${UNAME}</b><hr><b>项目: </b>${JZXG}<br>"
                 + "<b>用地性质: </b>${YDXZ}<br>"
                 + "<b>企业开口: </b>${QYKK}<br>"
@@ -366,6 +368,7 @@
         function closeDialog() {
             redLineCategoryLayer.clear();
             dijitPopup.close(dialog);
+            //$Map.setMapCursor("default");
         }
     }
 })();

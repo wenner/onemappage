@@ -60,6 +60,7 @@ vueExports.main = {
             var aa=[];
             //清除以前的图层
             searchGraphicsLayer.clear();
+            markLayer.clear();
             var self = this;
             self.sideLoading = true;
             var FindParameters = esri.tasks.FindParameters,
@@ -150,21 +151,21 @@ vueExports.main = {
                                     <p class='xndw_info_li'><a href='javascript:;'>6、性质分类：${Zlbmc} </a></p>\
                                     </div></div>";
                         infoTemplate.setContent(con);
-
+                        //添加标注ABCmark图标
+                        var sExtent = graphic.geometry.getExtent();
+                        var pt = new esri.geometry.Point(
+                            (sExtent.xmin + sExtent.xmax) / 2,
+                            (sExtent.ymin + sExtent.ymax) / 2,
+                            new esri.SpatialReference($Map.spatialReference)
+                        );
+                        var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/0.PNG",30,40);
+                        var gImg = new Graphic(pt,pms);
+                        markLayer.add(gImg);
 
                         break;
                 }
 
-                //添加标注ABCmark图标
-                var sExtent = graphic.geometry.getExtent();
-                var pt = new esri.geometry.Point(
-                    (sExtent.xmin + sExtent.xmax) / 2,
-                    (sExtent.ymin + sExtent.ymax) / 2,
-                    new esri.SpatialReference($Map.spatialReference)
-                );
-                var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/0.PNG",30,40);
-                var gImg = new Graphic(pt,pms);
-                markLayer.add(gImg);
+
                 graphic.setSymbol(symbol);
                 graphic.setInfoTemplate(infoTemplate);
 
