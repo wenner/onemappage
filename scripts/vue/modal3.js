@@ -159,10 +159,12 @@ vueExports.modal3 = {
             tb.on("draw-end", doQuery);
 
             // 实例化查询参数类
-            var url = "http://60.29.110.104:6080/arcgis/rest/services/外业点位图map20151207/MapServer";
-            var queryTask0 = new esri.tasks.QueryTask(url + "/0");
-            var queryTask1 = new esri.tasks.QueryTask(url + "/1");
-            var queryTask2 = new esri.tasks.QueryTask(url + "/2");
+            //var url = "http://60.29.110.104:6080/arcgis/rest/services/外业点位图map20151207/MapServer";
+            var url = "http://10.1.0.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer";
+            var queryTask0 = new esri.tasks.QueryTask(url + "/0"); //密度点84 (0)
+            var queryTask1 = new esri.tasks.QueryTask(url + "/1");//红线84分类点 (1)
+            var queryTask2 = new esri.tasks.QueryTask(url + "/2");//泵站84 (2)
+            var queryTask3 = new esri.tasks.QueryTask(url + "/3");//企业内部点位 (3)
             query = new esri.tasks.Query();
             query.returnGeometry = true;
 

@@ -362,7 +362,8 @@
         redPointCategory.on("click",function(evt){
             var attr=evt.graphic.attributes;
             console.log(attr);
-            var aa=attr.FID+attr.JSDW+attr.UNAME+attr.XMMC+attr.分类+attr.单位名称;
+            closeDialog();
+            var aa=attr.FID+"  "+attr.JSDW+"  "+attr.UNAME+"  "+attr.XMMC+"  "+attr.分类+"  "+attr.单位名称;
             alert(aa);
         });
         function closeDialog() {

@@ -11,8 +11,8 @@ vueExports.main = {
         currentQueryType: {text: "关键字", value: "keyword"},
         queryTypes: [
             {text: "关键字", value: "keyword"},
-            {text: "病害类别", value: "disease"},
-            {text: "危险品", value: "danger"}
+            {text: "危险化学品", value: "danger"},
+            {text: "排放口点位", value: "outfall"}
         ],
         sideLoading: false,
         keyword: '石化',
@@ -158,7 +158,8 @@ vueExports.main = {
                             (sExtent.ymin + sExtent.ymax) / 2,
                             new esri.SpatialReference($Map.spatialReference)
                         );
-                        var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/0.PNG",30,40);
+                        var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/"+i+".PNG",30,40);
+                        console.log(i);
                         var gImg = new Graphic(pt,pms);
                         markLayer.add(gImg);
 
