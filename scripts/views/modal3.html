@@ -132,12 +132,14 @@
                         <div v-show="picked=='4'">
                             危险源
                             <br/>
-                            <input type="checkbox" id="m3-tb2-v4-1" value="化学工厂" v-model="c4">
-                            <label for="m3-tb2-v4-1">化学工厂</label>
-                            <input type="checkbox" id="m3-tb2-v4-2" value="危险品仓库" v-model="c4">
-                            <label for="m3-tb2-v4-2">危险品仓库</label>
-                            <input type="checkbox" id="m3-tb2-v4-3" value="石油化工品" v-model="c4">
-                            <label for="m3-tb2-v4-3">石油化工品</label>
+                            <input type="checkbox" id="m3-tb2-v4-1" value="化学品类" v-model="c4">
+                            <label for="m3-tb2-v4-1">化学品类</label>
+                            <input type="checkbox" id="m3-tb2-v4-2" value="易制爆类" v-model="c4">
+                            <label for="m3-tb2-v4-2">易制爆类</label>
+                            <input type="checkbox" id="m3-tb2-v4-3" value="油管类" v-model="c4">
+                            <label for="m3-tb2-v4-3">油管类</label>
+                            <input type="checkbox" id="m3-tb2-v4-4" value="加油站" v-model="c4">
+                            <label for="m3-tb2-v4-4">加油站</label>
                             <br>
                             <span>选择的值: {{ c4 }}</span>
                         </div>

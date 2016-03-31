@@ -19,10 +19,24 @@ vueExports.main={
         resultSort:[] ,
         currentItem: {} ,
         currentCont: {} ,
-
         contentSelectedItem: null
     } ,
     methods:{
+        sideState: "list",
+        currentQueryType: {text: "关键字", value: "keyword"},
+        queryTypes: [
+            {text: "关键字", value: "keyword"},
+            {text: "危险化学品", value: "danger"},
+            {text: "排放口点位", value: "outfall"}
+        ],
+        sideLoading: false,
+        keyword: '石化',
+        result: [],
+        resultSort:[],
+        currentItem: null,
+        currentCont:null
+    },
+    methods: {
         //打开关闭侧边栏
         toggleSide:function(){
             this.sideExpanded= !this.sideExpanded;
@@ -161,6 +175,9 @@ vueExports.main={
                         );
                         var pms=new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/0.PNG" , 30 , 40);
                         var gImg=new Graphic(pt , pms);
+                        var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/"+i+".PNG",30,40);
+                        console.log(i);
+                        var gImg = new Graphic(pt,pms);
                         markLayer.add(gImg);
 
                         break;

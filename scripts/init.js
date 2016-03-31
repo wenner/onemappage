@@ -315,6 +315,7 @@
             redLineCategoryLayer.enableMouseEvents();  //设置启动该图层的鼠标事件
             redLineCategoryLayer.on("mouse-out", closeDialog);
             //$Map.on('mouse-move', closeDialog);
+            $Map.on("extent-change", closeDialog); 
         });
 
         //listen for when the onMouseOver event fires on the countiesGraphicsLayer
@@ -362,7 +363,8 @@
         redPointCategory.on("click",function(evt){
             var attr=evt.graphic.attributes;
             console.log(attr);
-            var aa=attr.FID+attr.JSDW+attr.UNAME+attr.XMMC+attr.分类+attr.单位名称;
+            closeDialog();
+            var aa=attr.FID+"  "+attr.JSDW+"  "+attr.UNAME+"  "+attr.XMMC+"  "+attr.分类+"  "+attr.单位名称;
             alert(aa);
         });
         function closeDialog() {
