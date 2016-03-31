@@ -212,7 +212,7 @@ vueExports.modal3 = {
                 var queryTask;
                 queryTask = queryTask1; //后期可以根据选择的项进行判断查询哪些图层
                 query.returnGeometry = true;
-                query.outFields = ["X", "Y", "UNAME", "FID "];
+                query.outFields = ["XMMC", "分类", "UNAME", "FID"];
                 /*if (this.c1 === "statesTask") {
                  queryTask = statesTask;
                  query.outFields = ["STATE_NAME", "AREA"];
