@@ -2,7 +2,7 @@
     display: none;
 }
 body {
-    font-family: "Microsoft YaHei","Roboto",sans-serif;
+    font-family: "Microsoft YaHei","Roboto",sans-serif !important;
     overflow: hidden;
 }
 
@@ -107,24 +107,135 @@ a {cursor: pointer}
 }
 
 .sidepanel-item {
-    height:100%
+    height:100%;
+    position:relative;
+
+    animation-duration: .5s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+
 }
 
 .sidepanel-item .input-group .btn {
     border-radius: 0 !important;
 }
 
+.sideheader {
+    box-shadow: 0px 3px 2px rgba(0,0,0,.3);
+    width:100%;
+    background-color:#0265dc;
+    position:absolute;
+    z-index:15;
+    top:0;
+    padding:10px;
+}
+
+
+
 .sidecontent {
-    height:100%;margin-top1:50px
+    width:100%;
+    overflow:auto;
+    position:absolute;
+    z-index:10;
+}
+
+.sidefooter {
+    width:100%;
+    position:absolute;
+    z-index:15;
+    bottom:0;
 }
 
 .sidecontent .list-group {
     border-radius: 0;
 }
-.sidecontent .list-group {
+.sidecontent .list-group , .sidecontent .list-group-item:first-child {
     border-radius: 0;
 }
 
+.sidecontent .list-group-item.active,
+.sidecontent .list-group-item.active:focus,
+.sidecontent .list-group-item.active:hover {
+    z-index:0;
+    color:#000;
+    background-color: #ffcc00;
+    border-color: #ffcc00;
+}
+
+
+.search .sideheader {
+    height:80px;
+}
+.search .sidecontent {
+    top:80px;
+    bottom:0;
+}
+.detail .sideheader {
+    height:56px;
+    background:#0265dc;
+    color:#fff
+}
+.detail .sidefooter {
+    background-color:#eee;
+    border-top:#ccc solid 1px;
+    height:136px;
+}
+.detail .sidecontent {
+    top:56px;
+    bottom:136px;
+}
+
+.detail .btn-back {
+    background:none;
+    border:none;
+    font-size:22px;
+    padding:0;
+    line-height:36px;
+    color:#fff;
+}
+
+.detail .sidefooter a {
+    color:#0265dc;
+    padding:5px 0;display:block;border-radius:5px;margin-bottom:10px;
+    text-decoration: none;
+}
+
+.detail .sidefooter a:hover {
+    background:#0265dc;color:#fff
+}
+.detail .sidefooter a.active {
+    background:#ff6600;color:#fff
+}
+.detail .sidefooter a.disabled {
+    pointer-events: none;
+    color:#999;
+}
+
+
+.sidepanelitem-transition{
+    transition: all .3s ease;
+    overflow: hidden;
+}
+.sidepanelitem-enter, .sidepanelitem-leave {
+    height:0;
+    opacity: 0;
+}
+.sidepanelitem-transition .sidefooter{
+    transition: all .2s ease .1s;
+    overflow: hidden;
+}
+.sidepanelitem-enter .sidefooter, .sidepanelitem-leave .sidefooter {
+    height:0;
+    opacity: 0;
+}
+
+.detail-transition{
+    opacity: 1;
+    transition: all .2s ease;
+}
+.detail-enter, .detail-leave {
+    opacity: 0;
+}
 
 #XYinfo {
     position:absolute;

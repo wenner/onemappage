@@ -7,6 +7,8 @@ vueExports.main={
         currentModal:null ,
 
         sideState:"list" ,
+        showList: true ,
+        showDetail: false ,
         currentQueryType:{text:"关键字" , value:"keyword"} ,
         queryTypes:[
             {text:"关键字" , value:"keyword"} ,
@@ -17,25 +19,32 @@ vueExports.main={
         keyword:'石化' ,
         result:[] ,
         resultSort:[] ,
-        currentItem: {} ,
+        currentSelectedCompany: {} ,
+
         currentCont: {} ,
-        contentSelectedItem: null
+        contentSelectedItem: null ,
+
+        detailMenus: [
+            {text:"基本信息" , code:"info" , icon:"fa-info-circle"} ,
+            {text:"危险品" , code:"danger" , icon:"fa-bomb"} ,
+            {text:"排放检测" , code:"discharge" , icon:"fa-pagelines"} ,
+            {text:"生产工艺" , code:"processing" , icon:"fa-sun-o" , disabled:true} ,
+            {text:"安全设施" , code:"safe" , icon:"fa-yelp" , disabled:true} ,
+            {text:"其他1" , code:"other" , icon:"fa-empire" , disabled:true}
+        ] ,
+        currentDetailMenu: {}
     } ,
-    methods:{
-        sideState: "list",
-        currentQueryType: {text: "关键字", value: "keyword"},
-        queryTypes: [
-            {text: "关键字", value: "keyword"},
-            {text: "危险化学品", value: "danger"},
-            {text: "排放口点位", value: "outfall"}
-        ],
-        sideLoading: false,
-        keyword: '石化',
-        result: [],
-        resultSort:[],
-        currentItem: null,
-        currentCont:null
-    },
+    watch: {
+        currentDetailMenu: function(detailMenu){
+            if (!this.currentSelectedCompany) return false;
+            var code = detailMenu.code;
+            code = code.substring(0,1).toUpperCase()+code.substring(1);
+            console.log(code)
+            if (this["get"+code+"Detail"]){
+                this["get"+code+"Detail"].call(this , this.currentSelectedCompany);
+            }
+        }
+    } ,
     methods: {
         //打开关闭侧边栏
         toggleSide:function(){
@@ -193,15 +202,22 @@ vueExports.main={
         } ,
 
         showResultItem:function(item){
+            var self = this;
             //this.clearGraphics();
             hightLightGraphicLayer.clear();
-            this.currentItem=item;
+            this.currentSelectedCompany=item;
             //console.log("显示点击的Geometry");
-            //console.log(this.currentItem.feature.attributes.ID);
+            //console.log(this.currentSelectedCompany.feature.attributes.ID);
 
             //开始查询SQL危化品
-            this.QueryTextFromSQL();
-            this.sideState="detail";
+            //this.QueryTextFromSQL();
+
+            self.showList = false;
+            self.showDetail= true;
+
+            this.currentDetailMenu = this.detailMenus[0];
+
+
             var graphic=item.feature ,
                 id=graphic.attributes.FID ,
                 map=$Map;
@@ -316,7 +332,7 @@ vueExports.main={
 
             console.log("进入ajax查询数据方法");
             //var name = $('#searchText').val();
-            //var name = this.currentItem.value;
+            //var name = this.currentSelectedCompany.value;
             var name="中储粮油脂（天津）有限公司";
             var source='/AppWebSite/FMService/chemical';
             var field='ChemicalName,ChemicalNum,Usage,DailyDosage,MaximumStockingCapacity,StorageSite';
@@ -343,7 +359,7 @@ vueExports.main={
             console.log(r , this.currentCont.selectedItem , r == this.currentCont.selectedItem)
         } ,
         onSuccess:function(data){
-            //this.currentItem=data;
+            //this.currentSelectedCompany=data;
             //console.log(data);
             var resultHead=[];
             var resultCont;
@@ -363,10 +379,27 @@ vueExports.main={
             console.log(data);
         } ,
         backToList:function(){
-            this.sideState="list";
+            var self = this;
+            //self.sideAction = "toList";
+            self.sideState="list";
+            self.showDetail= false;
+            self.showList = true;
         } ,
+        switchDetail: function(detailMenu){
+            this.currentDetailMenu = detailMenu;
+        } ,
+        getInfoDetail: function(company){
+            console.log(company)
+        } ,
+        getDangerDetail: function(company){
+            this.QueryTextFromSQL();
+        } ,
+        getDischargeDetail: function(company){
+
+        } ,
+
         clearGraphics:function(){
-            //清除以前的currentItem状态 以及清除所有高亮的graphic
+            //清除以前的currentSelectedCompany状态 以及清除所有高亮的graphic
             hightLightGraphicLayer.clear();  //为什么不清除图层呢
             dijitPopup.close(dialog);
 

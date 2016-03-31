@@ -5,7 +5,7 @@
     <title>一张网地图展示</title>
     <link rel="stylesheet" href="assets/css/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/bootstrap-dialog.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/animate.css" type="text/css">
     <link rel="stylesheet" href="assets/css/bootstrap-slider.css" type="text/css">
 
     <link rel="stylesheet" href="http://60.29.110.104/arcgis_js_api/library/3.15/3.15compact/esri/css/esri.css">
@@ -80,10 +80,10 @@
 
         </div>
         <div id="sidepanel">
-
-            <div class="sidepanel-item" v-show="sideState == 'list'">
-                <div class='sideheader bg-primary'
-                     style="padding:10px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:88">
+            <div class="sidepanel-item search"
+                 transition="sidepanelitem"
+                 v-show="showList">
+                <div class='sideheader'>
                     <div class="input-group">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default dropdown-toggle"
@@ -116,10 +116,10 @@
                 </div>
                 <div class="sidecontent mCustomScrollbar"
                      data-mcs-theme="minimal-dark">
-                    <div class="list-group">
+                    <div class="list-group" style="margin:0">
                         <a class='list-group-item'
                            v-for="item in result"
-                           v-bind:class="{ 'active': item == currentItem}"
+                           v-bind:class="{ 'active': item == currentSelectedCompany}"
                            @click="showResultItem(item)">
                             <sapn><img v-bind:src="../onemappage/assets/images/location_icon/{{$index}}.PNG" alt="img"></sapn>{{item.value}}
                         </a>
@@ -127,47 +127,117 @@
                 </div>
             </div>
 
-            <div class="sidepanel-item"  v-show="sideState == 'detail'">
-                <div class='sideheader bg-primary'
-                     style="padding:10px;box-shadow: 1px 1px 1px rgba(0,0,0,.15);z-index:88">
-                    <button class="btn btn-primary" @click="backToList()">
-                        <i class="fa fa-chevron-circle-left" style="font-size:20px"></i>
-                    </button>
-                    <span style="font-size:18px;">{{currentItem.value}}</span>
-                </div>
+            <div class="sidepanel-item detail"
+                 transition="sidepanelitem"
+                 v-show="showDetail">
+                <div class='sideheader'>
+                    <div class="row">
+                        <div @click="backToList()" class="col-md-1" style="padding-right:0;width:42px !important;">
+                            <a class="btn-back" >
+                                <i class="fa fa-arrow-left"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-10"
+                             style="font-weight:bold;padding-left:10px;line-height:36px;font-size:18px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;">
+                            {{currentSelectedCompany.value}}
+                        </div>
+                    </div>
 
-                <div class="sidecontent mCustomScrollbar">
-                    <table class="table table-hover table-condensed">
-                        <tr>
-                            <th style="width:20px"></th>
-                            <th v-for="filed in currentCont.columns | filterBy myCustomFilterFunction">{{filed.text}}</th>
-                        </tr>
-                        <template v-for="r in currentCont.store">
-                            <tr v-bind:class="{'info' : contentSelectedItem == r}"
-                                @click="contentSelectedItem = (contentSelectedItem == r ? null : r)"
+                </div>
+                <div class="sidecontent mCustomScrollbar"
+                     data-mcs-theme="minimal-dark">
+                    <div v-show="currentDetailMenu.code == 'info'"
+                         transition="detail">
+assdfa
+                    </div>
+                    <div v-show="currentDetailMenu.code == 'danger'"
+                         transition="detail">
+                        <table class="table table-hover table-condensed">
+                            <tr>
+                                <th style="width:20px"></th>
+                                <th v-for="filed in currentCont.columns | filterBy myCustomFilterFunction">{{filed.text}}</th>
+                            </tr>
+                            <template v-for="r in currentCont.store">
+                                <tr v-bind:class="{'info' : contentSelectedItem == r}"
+                                    @click="contentSelectedItem = (contentSelectedItem == r ? null : r)"
                                 >
-                                <td>{{$index+1}}</td>
-                                <td v-for="f in currentCont.columns | filterBy myCustomFilterFunction">
-                                    {{r[f.code]}}
-                                </td>
-                            </tr>
-                            <tr v-show="contentSelectedItem == r">
-                                <td colspan="{{currentCont.firstShowFields.length+1}}" style="padding:0">
-                                    <table class="table" style="margin:0;background-color:#f7f7f7">
-                                        <tr v-for="c in currentCont.columns">
-                                            <td style="border1:0;width:120px;text-align:right">{{c.text}}:</td>
-                                            <td style="border1:0">{{r[c.code]}}</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </template>
-                    </table>
-
-
-
+                                    <td>{{$index+1}}</td>
+                                    <td v-for="f in currentCont.columns | filterBy myCustomFilterFunction">
+                                        {{r[f.code]}}
+                                    </td>
+                                </tr>
+                                <tr v-show="contentSelectedItem == r">
+                                    <td colspan="{{currentCont.firstShowFields.length+1}}" style="padding:0">
+                                        <table class="table" style="margin:0;background-color:#f7f7f7">
+                                            <tr v-for="c in currentCont.columns">
+                                                <td style="border1:0;width:120px;text-align:right">{{c.text}}:</td>
+                                                <td style="border1:0">{{r[c.code]}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </template>
+                        </table>
+                    </div>
+                    <div v-show="currentDetailMenu.code == 'discharge'"
+                         transition="detail">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Collapsible Group Item #1
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Collapsible Group Item #2
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingThree">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Collapsible Group Item #3
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                    <div class="panel-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
+                <div class="sidefooter">
+                    <div class="row text-center" style="padding:10px 10px 0 10px;">
+                        <div class="col-md-4" v-for="item in detailMenus">
+                            <a @click='switchDetail(item)'
+                               :class="{'active' : currentDetailMenu == item , 'disabled' : item.disabled}">
+                                <i class="fa {{item.icon || 'fa-arrow-left'}}" style="font-size:22px"></i>
+                                <div>{{item.text}}</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
