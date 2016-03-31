@@ -315,7 +315,7 @@
             redLineCategoryLayer.enableMouseEvents();  //设置启动该图层的鼠标事件
             redLineCategoryLayer.on("mouse-out", closeDialog);
             //$Map.on('mouse-move', closeDialog);
-            $Map.on("extent-change", closeDialog); 
+            $Map.on("extent-change", closeDialog);
         });
 
         //listen for when the onMouseOver event fires on the countiesGraphicsLayer

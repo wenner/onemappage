@@ -96,7 +96,14 @@ vueExports.main={
             // 返回Geometry
             findParams.returnGeometry=true;
             // 查询的图层id
+<<<<<<< HEAD
+            //Layer: 密度点84 (0) 红线84分类点 (1) 泵站84 (2) 企业内部点位 (3) 供电管线84 (4) 路灯电缆84 (5) 燃气管线84 (6)
+            // 污水管线84 (7) 雨水管线84 (8) 企业红线84 (9) 企业内部建筑物84 (10) 企业内部绿地84 (11)
+            findParams.layerIds = [9];
+
+=======
             findParams.layerIds=[9];  //Layer: 密度点84 (0) 红线84分类点 (1) 企业内部点位 (3) 企业红线84 (9)
+>>>>>>> origin/master
             // 查询字段
             findParams.searchFields=["XMMC" , "UNAME"];
             if(this.keyword==''){
@@ -185,13 +192,14 @@ vueExports.main={
                         var pms=new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/0.PNG" , 30 , 40);
                         var gImg=new Graphic(pt , pms);
                         var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/"+i+".PNG",30,40);
-                        console.log(i);
                         var gImg = new Graphic(pt,pms);
                         markLayer.add(gImg);
-
                         break;
                 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master
                 graphic.setSymbol(symbol);
                 graphic.setInfoTemplate(infoTemplate);
 
