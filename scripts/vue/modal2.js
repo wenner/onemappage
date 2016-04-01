@@ -181,12 +181,20 @@ vueExports.modal2 = {
             //1.大小的确定
             var weight = 500;
             var height = 700;
+            // var rings = [
+            //     [-500, -500],
+            //     [500, -500],
+            //     [500, 500],
+            //     [-500, 500],
+            //     [-500, -500]     //poly面需要闭合，故首尾坐标一致
+            // ];
+
             var rings = [
-                [-500, -500],
-                [500, -500],
-                [500, 500],
-                [-500, 500],
-                [-500, -500]     //poly面需要闭合，故首尾坐标一致
+                [0, 0],
+                [1000, 0],
+                [1000, 1000],
+                [0, 1000],
+                [0, 0]     //poly面需要闭合，故首尾坐标一致
             ];
             rings[0][0] = -(weight / 2);
             rings[0][1] = -(height / 2);
@@ -206,13 +214,13 @@ vueExports.modal2 = {
             var arc = rate * 0.017453293; //将角度转换成弧度
             //rings[0][0] =rings[0][0]+Math.abs(rings[0][0])*Math.cos(ra)-Math.abs(rings[0][0])*Math.cos(ra+arc);
             rings[0][0] = -Math.abs(rings[0][0]) * Math.cos(ra + arc);
-            rings[0][1] = -Math.abs(rings[0][1]) * Math.sin(ra + arc);
-            rings[1][0] = Math.abs(rings[1][0]) * Math.cos(ra - arc);
+            rings[0][1] = -Math.abs(rings[0][1]) * Math.sin(ra - arc);
+            rings[1][0] = Math.abs(rings[1][0]) * Math.cos(ra + arc);
             rings[1][1] = -Math.abs(rings[1][1]) * Math.sin(ra - arc);
-            rings[2][0] = Math.abs(rings[2][0]) * Math.cos(ra + arc);
+            rings[2][0] = Math.abs(rings[2][0]) * Math.cos(ra - arc);
             rings[2][1] = Math.abs(rings[2][1]) * Math.sin(ra + arc);
             rings[3][0] = -Math.abs(rings[3][0]) * Math.cos(ra - arc);
-            rings[3][1] = Math.abs(rings[3][1]) * Math.sin(ra - arc);
+            rings[3][1] = Math.abs(rings[3][1]) * Math.sin(ra + arc);
             rings[4][0] = rings[0][0];
             rings[4][1] = rings[0][1];
             for (var i = 0; i < 4; i++) {
