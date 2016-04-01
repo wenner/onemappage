@@ -121,7 +121,7 @@
                            v-for="item in result"
                            v-bind:class="{ 'active': item == currentSelectedCompany}"
                            @click="showResultItem(item)">
-                            <sapn><img src="../onemappage/assets/images/location_icon/{{$index}}.PNG" alt="img"></sapn>{{item.value}}
+                            <sapn><img v-bind:src="../onemappage/assets/images/location_icon/{{$index}}.PNG" alt="img"></sapn>{{item.value}}
                         </a>
                     </div>
                 </div>
