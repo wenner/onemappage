@@ -21,14 +21,14 @@ var InfoTemplate; //infowindow窗口
 var iTip; ////鼠标悬停变量
 //创建多个图层，便于管理graphic
 var alarmLayer, plottingLayer,bufferLayer,labelLayer,areaLayer,routeLayer,hightLightGraphicLayer,searchGraphicsLayer,markLayer;
-var pipeLineLayer,redPointLayer,redLineCategoryLayer,searchBuildingGraphicsLayer;
+var pipeLineLayer,redPointLayer,redLineCategoryLayer,searchBuildingGraphicsLayer,outWasteLayer;
 var Measure,TextSymbol;
 var SimpleRenderer;
 var esriLang;
 var number;
 var domStyle;
 var TooltipDialog, dijitPopup,dialog;
-
+var Point;
 
 //底图影像及矢量图层
 var ArcGISDynamicMapServiceLayer,ImageParameters;

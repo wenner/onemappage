@@ -16,7 +16,7 @@ vueExports.main={
             {text: "排放口点位", value: "outfall"}
         ],
         sideLoading:false ,
-        keyword:'石化' ,
+        keyword:'捷尔杰' ,
         result:[] ,
         resultBulding:[],
         resultSort:[] ,
@@ -43,7 +43,6 @@ vueExports.main={
             if (!this.currentSelectedCompany || !this.currentDetailMenu) return false;
             var code = detailMenu.code;
             code = code.substring(0,1).toUpperCase()+code.substring(1);
-            console.log(code)
             if (this["get"+code+"Detail"]){
                 this["get"+code+"Detail"].call(this , this.currentSelectedCompany);
             }
@@ -88,6 +87,7 @@ vueExports.main={
             var aa=[];
             //清除以前的图层
             searchGraphicsLayer.clear();
+            outWasteLayer.clear();
             // searchBuildingGraphicsLayer.clear();
             markLayer.clear();
             var self=this;
@@ -123,22 +123,6 @@ vueExports.main={
                 }
             });
             this.resultSort=aa;
-
-            // findParams.layerIds=[10];
-            // findParams.searchFields=["XMMC" , "UNAME"];
-            // if(this.keyword==''){
-            //     console.log("this.keyword==''");
-            //     findParams.searchText="空港";
-            // }else{
-            //     console.log("this.keyword=="+this.keyword);
-            //     findParams.searchText=this.keyword;
-            // }
-            // findTask.execute(findParams , function(resultBulding){
-            //     //self.sideLoading=false;
-            //     self.resultBulding=resultBulding;
-                //self.sideState="list";
-                // self.addResultGraphicBuilding();
-            // });
         } ,
         addResultGraphic:function(){
             //$Map.graphics.clear();
@@ -148,10 +132,10 @@ vueExports.main={
                 SimpleFillSymbol.STYLE_SOLID ,
                 new SimpleLineSymbol(
                     SimpleLineSymbol.STYLE_SOLID ,
-                    new Color([164 , 164 , 164 , 0.75]) ,
-                    2
+                    new Color([102 , 102 , 255 , 0.55]) ,
+                    1
                 ) ,
-                new Color([196 , 246 , 252 , 0.05])
+                new Color([255 , 102 , 102 , 0.35])
             );
             var result=this.result;
             for(var i=0; i<result.length; i++){
@@ -205,9 +189,7 @@ vueExports.main={
                             (sExtent.ymin+sExtent.ymax)/2 ,
                             new esri.SpatialReference($Map.spatialReference)
                         );
-                        var pms=new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/0.PNG" , 30 , 40);
-                        var gImg=new Graphic(pt , pms);
-                        var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/"+i+".PNG",30,40);
+                        var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_"+i+".PNG",30,80);
                         var gImg = new Graphic(pt,pms);
                         markLayer.add(gImg);
                         break;
@@ -218,59 +200,11 @@ vueExports.main={
                 searchGraphicsLayer.add(graphic);
             }
         } ,
-/*        addResultGraphicBuilding:function(){
-            //$Map.graphics.clear();
-            //this.clearGraphics();
-            //searchGraphicsLayer.clear();
-            var scSymbol=new SimpleFillSymbol(
-                SimpleFillSymbol.STYLE_SOLID ,
-                new SimpleLineSymbol(
-                    SimpleLineSymbol.STYLE_SOLID ,
-                    new Color([102 , 0 , 255 , 0.95]) ,
-                    2
-                ) ,
-                new Color([119 , 119 , 119 , 0.85])
-            );
-            var result=this.resultBulding;
-            for(var i=0; i<result.length; i++){
-                console.log(" var result=this.resultBulding; "+i);
-                var item=result[i] ,
-                    graphic=item.feature ,
-                    symbol ,
-                    infoTemplate=null;
-                switch(graphic.geometry.type){
-                    case "polygon":
-                        symbol=scSymbol;
-                        //var fill = new SimpleFillSymbol("solid", null, new Color("#A4CE67"));
-                        var fill=new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID ,
-                            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID ,
-                                new Color([255 , 255 , 255 , 0.15]) , 1) ,
-                            new Color([153 , 204 , 204 , 0.25]));
-                        infoTemplate=new InfoTemplate({fillSymbol:fill});
-                        infoTemplate.setTitle("<div class='xyfg_list_title'>"+"${UNAME}"+"</div>");
-                        var con="<div class='xndw_con_bg'>\
-                                    <div class='xndw_info_over'>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>1、企业名称：${UNAME}</a></p>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>2、项目名称：${XMMC}</a></p>  \
-                                    <p class='xndw_info_li'><a href='javascript:;'>3、规划状态：${GHZT}</a></p>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>4、性质：${XZ}</a></p>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>5、企业名：${企业名}</a></p>\
-                                    <p class='xndw_info_li'><a href='javascript:;'>6、性质分类：${Zlbmc} </a></p>\
-                                    </div></div>";
-                        infoTemplate.setContent(con);
-                        break;
-                }
-                graphic.setSymbol(symbol);
-                graphic.setInfoTemplate(infoTemplate);
-                // 添加到graphics进行高亮显示
-                //$Map.graphics.add(graphic);
-                searchBuildingGraphicsLayer.add(graphic);
-            }
-        } ,*/
         showResultItem:function(item){
             var self = this;
             //this.clearGraphics();
             hightLightGraphicLayer.clear();
+            outWasteLayer.clear();
             this.currentSelectedCompany=item;
             //console.log("显示点击的Geometry");
             //console.log(this.currentSelectedCompany.feature.attributes.ID);
@@ -294,7 +228,7 @@ vueExports.main={
                     new Color([255 , 0 , 0 , 1]) ,
                     3
                 ) ,
-                new Color([204 , 255 , 255 , 1])
+                new Color([204 , 255 , 255 , 0.05])
             );
 
             var sGrapphic=graphic;
@@ -395,7 +329,7 @@ vueExports.main={
 
             return false;
 
-            console.log("进入ajax查询数据方法");
+            // console.log("进入ajax查询数据方法");
             //var name = $('#searchText').val();
             //var name = this.currentSelectedCompany.value;
             var name="中储粮油脂（天津）有限公司";
@@ -445,11 +379,14 @@ vueExports.main={
             self.sideState="list";
             self.showDetail= false;
             self.showList = true;
-            self.currentDetailMenu = null;
+            self.currentDetailMenu=null;
+
         } ,
         switchDetail: function(detailMenu){
             this.currentDetailMenu = detailMenu;
         } ,
+        
+        
         getInfoDetail: function(company){
             console.log(company)
         } ,
@@ -547,10 +484,9 @@ vueExports.main={
                 {FID:'130' , companyName:'爱思开能源润滑油（天津）有限公司' , sn:'3' , pfk:'GF-BS062' , name:'危险废物暂存点' , location:'厂区添加剂罐区西侧' , fqp:'' , xx:'13109377.714295' , yy:'4721261.44205' , group:'固废监测点位'},
                 {FID:'130' , companyName:'爱思开能源润滑油（天津）有限公司' , sn:'4' , pfk:'GF-BS063' , name:'一般固废暂存点' , location:'厂区添加剂罐区西侧' , fqp:'' , xx:'13109384.598491' , yy:'4721275.053983' , group:'固废监测点位'}
             ];
-            console.log(company.feature.attributes.FID)
             var groups = _.transform(
                 _.groupBy(
-                    _.filter(data, {'FID':'58'}) , //company.feature.attributes.FID}) ,
+                    _.filter(data, {'FID': company.feature.attributes.FID}) ,
                     'group'
                 ),
                 function(result, value, key) {
@@ -558,12 +494,52 @@ vueExports.main={
                 },
                 []
             );
-            console.log(groups);
             setTimeout(function(){
                 self.companyDischargeData = groups;
                 $('[data-toggle="tooltip"]').tooltip()
             } , 500);
+            var outWasteContent={};
+            outWasteContent.push=function(o){
+                //如果o是object
+                if(typeof(o)=='object') for(var p in o) this[p]=o[p];
+            };
+            for(var i=0;i<groups.length;i++){
+                var item=groups[i];
+                // console.log(item.children);
+                for(var j=0;j<item.children.length;j++){
+                    var itemChildren=item.children[i];
+                    console.log(itemChildren);
+                    outWasteContent.push([itemChildren.FID,itemChildren.sn,itemChildren.pfk,itemChildren.name,itemChildren.location,itemChildren.fqp,itemChildren.xx,itemChildren.yy]);
+                    var pt=new Point(itemChildren.xx,itemChildren.yy,{"wkid":102100});
+                    var pms;
+                    switch(itemChildren.group){
+                        case "固废监测点位":
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/gf.png",35,35);
+                            break;
+                        case "废水监测点位":
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/fs.png",35,35);
+                            break;
+                        case "雨水排放点位":
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/rains.png",35,35);
+                            break;
+                        case "废气排放点位":
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/fq.png",35,35);
+                            break;
+                        default:
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/point2.png",30,30);
+                    }
+                    console.log(itemChildren.group);
+                    // var pms=new PictureMarkerSymbol("../onemappage/assets/images/point2.png",30,30);
+                    var gImg=new Graphic(pt,pms,item);
+                    outWasteLayer.add(gImg);
+                }
+            }
+            // console.log(JSON.stringify(outWasteContent));
 
+
+            outWasteLayer.on("click",function(evt){
+                console.log(evt.graphic);
+            });
         } ,
 
         showDischargeChart: function(child){
@@ -750,7 +726,7 @@ vueExports.main={
             //清除以前的currentSelectedCompany状态 以及清除所有高亮的graphic
             hightLightGraphicLayer.clear();  //为什么不清除图层呢
             dijitPopup.close(dialog);
-
+            outWasteLayer.clear();
         }
     }
 };

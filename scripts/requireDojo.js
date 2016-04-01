@@ -38,7 +38,7 @@ require([
     "dijit/TooltipDialog",
     "dijit/popup",
     "esri/SpatialReference",
-
+    "esri/geometry/Point",
 
     "dojo/parser",
     "dojo/string",
@@ -62,7 +62,7 @@ require([
 
     "esri/layers/ArcGISImageServiceLayer",
     "esri/layers/ImageServiceParameters",
-    "esri/geometry/Point",
+
     "esri/geometry/Polygon",
     "esri/tasks/FindTask",
     "esri/tasks/FindParameters",
@@ -81,7 +81,7 @@ require([
     "dojo/domReady!"
 ], function (InfoWindow,measure, HeatmapLayer,on, dom, domConstruct,Mouse, registry, QueryT, color, simpleMarkerSymbol, simpleLineSymbol, simpleFillSymbol, cartographicLineSymbol, pictureFillSymbol,
              draw, poltDraw, graphicsLayer, graphic, featureLayer,textSymbol,pictureMarkerSymbol,routeTask, routeParameters,featureSet,serviceAreaTask, serviceAreaParameters,
-             arcGISDynamicMapServiceLayer,imageParameters,infoTemplate,simpleRenderer,EsriLang,Number,DomStyle,tooltipDialog, DijitPopup,SpatialReference
+             arcGISDynamicMapServiceLayer,imageParameters,infoTemplate,simpleRenderer,EsriLang,Number,DomStyle,tooltipDialog, DijitPopup,SpatialReference,point
 ) {
     myInfoWindow = InfoWindow;
     Measure=measure;
@@ -120,5 +120,6 @@ require([
     TooltipDialog=tooltipDialog;
     dijitPopup=DijitPopup;
     spatialReference=SpatialReference;
+    Point=point;
     init();
 });
