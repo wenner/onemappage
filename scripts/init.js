@@ -18,7 +18,7 @@
             new esri.SpatialReference({wkid: 102100})
         );
         esri.basemaps.kgmap = {
-            baseMapLayers: [{url: $BaseServiceUrl + "kgmap/MapServer"}],
+            baseMapLayers: [{url: $BaseServiceUrl + "一张网/一张网底图/MapServer"}],
             thumbnailUrl: "assets/images/thumbnail-onemap.jpg",
             title: "空港图"
         };
@@ -172,7 +172,7 @@
         basemaps.push(streetMap);
         var waterBasemap = new Basemap({
             layers: [new BasemapLayer({
-                url: $BaseServiceUrl + "kgmap/MapServer"
+                url: $BaseServiceUrl + "一张网/一张网底图/MapServer"
             })],
             title: "空港矢量图",
             thumbnailUrl: "assets/images/thumbnail-water.png"

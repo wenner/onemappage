@@ -85,7 +85,7 @@ vueExports.main={
             var aa=[];
             //清除以前的图层
             searchGraphicsLayer.clear();
-            searchBuildingGraphicsLayer.clear();
+            // searchBuildingGraphicsLayer.clear();
             markLayer.clear();
             var self=this;
             self.sideLoading=true;
@@ -122,21 +122,21 @@ vueExports.main={
             });
             this.resultSort=aa;
 
-            findParams.layerIds=[10];
-            findParams.searchFields=["XMMC" , "UNAME"];
-            if(this.keyword==''){
-                console.log("this.keyword==''");
-                findParams.searchText="空港";
-            }else{
-                console.log("this.keyword=="+this.keyword);
-                findParams.searchText=this.keyword;
-            }
-            findTask.execute(findParams , function(resultBulding){
-                //self.sideLoading=false;
-                self.resultBulding=resultBulding;
+            // findParams.layerIds=[10];
+            // findParams.searchFields=["XMMC" , "UNAME"];
+            // if(this.keyword==''){
+            //     console.log("this.keyword==''");
+            //     findParams.searchText="空港";
+            // }else{
+            //     console.log("this.keyword=="+this.keyword);
+            //     findParams.searchText=this.keyword;
+            // }
+            // findTask.execute(findParams , function(resultBulding){
+            //     //self.sideLoading=false;
+            //     self.resultBulding=resultBulding;
                 //self.sideState="list";
-                self.addResultGraphicBuilding();
-            });
+                // self.addResultGraphicBuilding();
+            // });
         } ,
         addResultGraphic:function(){
             //$Map.graphics.clear();
