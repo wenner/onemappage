@@ -148,7 +148,31 @@
                      data-mcs-theme="minimal-dark">
                     <div v-show="currentDetailMenu.code == 'info'"
                          transition="detail">
-assdfa
+                        <table class="table">
+                            <tr>
+                                <td colspan="2" style="font-weight:bold">{{currentSelectedCompany.value}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width:100px">项目名称</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>规划状态</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>性质</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>企业名</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>性质分类</td>
+                                <td></td>
+                            </tr>
+                        </table>
                     </div>
                     <div v-show="currentDetailMenu.code == 'danger'"
                          transition="detail">
@@ -179,17 +203,27 @@ assdfa
                             </template>
                         </table>
                     </div>
-                    <div v-show="currentDetailMenu.code == 'discharge'"
+                    <div class='discharge' v-show="currentDetailMenu.code == 'discharge'"
                          transition="detail">
-                        <table class="table">
-                            <template v-for="item in companyDischargeData">
+                        <table class="table table-hover table-condensed">
+                            <tbody v-for="item in companyDischargeData">
                                 <tr>
-                                    <td>{{item.name}}</td>
+                                    <td colspan="3" style="font-weight:bold;background:#ccc">
+                                        {{item.name}} ({{item.children.length}})
+                                    </td>
                                 </tr>
-                                <tr v-for="child in item.children">
-                                    <td>{{$}}</td><td>{{child.name}}</td>
+                                <tr style="cursor:pointer"
+                                    data-toggle="tooltip" title="adfasdfsadfsadf"
+                                    :class="{'info' : companyDischargeSelectedItem == child}"
+                                    v-for="child in item.children"
+                                    @click="showDischargeMap(child)">
+                                    <td style="width:30px;text-align:center">{{child.sn}}</td>
+                                    <td>{{child.pfk}} - {{child.name}}</td>
+                                    <td>
+                                        <a @click="showDischargeChart(child)">数据</a>
+                                    </td>
                                 </tr>
-                            </template>
+                            </tbody>
 
                         </table>
                     </div>
@@ -209,8 +243,24 @@ assdfa
 
         </div>
     </div>
-</div>
 
+    <!-- discharge chart Modal -->
+    <div class="modal fade" id="dischargeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="dischargeChart" style="height:450px;width:100%">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <div class="dijitHidden" v-cloak>
     <!-- dialog that gets its content via ajax, uses loading message -->
@@ -273,9 +323,8 @@ assdfa
 <script type="text/javascript" src="assets/scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="assets/scripts/owl.carousel.min.js"></script>
 <script type="text/javascript" src="assets/scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-<script type="text/javascript" src="assets/scripts/bootstrap-dialog.js"></script>
 <script type="text/javascript" src="assets/scripts/bootstrap-slider.js"></script>
-
+<script type="text/javascript" src="assets/scripts/echarts.common.min.js"></script>
 
 <script type="text/javascript" src="scripts/golbal.js"></script>
 <!--正式发布用compact版-->

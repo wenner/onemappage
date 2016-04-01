@@ -211,6 +211,9 @@ a {cursor: pointer}
     color:#999;
 }
 
+.detail .discharge tr a {display:none}
+.detail .discharge tr:hover a ,
+.detail .discharge tr.info a{display:inline-block !important}
 
 .sidepanelitem-transition{
     transition: all .3s ease;
@@ -236,6 +239,10 @@ a {cursor: pointer}
 .detail-enter, .detail-leave {
     opacity: 0;
 }
+
+
+
+
 
 #XYinfo {
     position:absolute;
