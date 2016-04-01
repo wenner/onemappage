@@ -60,6 +60,8 @@
         $Map.addLayer(searchBuildingGraphicsLayer);
         markLayer=new GraphicsLayer();
         $Map.addLayer(markLayer);
+        outWasteLayer=new GraphicsLayer();
+        $Map.addLayer(outWasteLayer);
 
         setSymbolStyle();
         var baseMaps = getBaseMaps();
@@ -319,8 +321,15 @@
             redLineCategoryLayer.on("mouse-out", closeDialog);
             //$Map.on('mouse-move', closeDialog);
             $Map.on("extent-change", closeDialog);
-        });
 
+            //启用废弃物图层的鼠标事件
+            outWasteLayer.enableMouseEvents();
+
+        });
+        //废弃物排放点位图层点击事件
+        // outWasteLayer.on("click",function(evt){
+        //    console.log(evt.graphic);
+        // });
         //listen for when the onMouseOver event fires on the countiesGraphicsLayer
         //when fired, create a new graphic with the geometry from the event.graphic and add it to the maps graphics layer
         redLineCategory.on("mouse-over", function(evt){

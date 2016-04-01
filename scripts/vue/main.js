@@ -16,7 +16,7 @@ vueExports.main={
             {text: "排放口点位", value: "outfall"}
         ],
         sideLoading:false ,
-        keyword:'石化' ,
+        keyword:'捷尔杰' ,
         result:[] ,
         resultBulding:[],
         resultSort:[] ,
@@ -86,6 +86,7 @@ vueExports.main={
             var aa=[];
             //清除以前的图层
             searchGraphicsLayer.clear();
+            outWasteLayer.clear();
             // searchBuildingGraphicsLayer.clear();
             markLayer.clear();
             var self=this;
@@ -202,6 +203,7 @@ vueExports.main={
             var self = this;
             //this.clearGraphics();
             hightLightGraphicLayer.clear();
+            outWasteLayer.clear();
             this.currentSelectedCompany=item;
             //console.log("显示点击的Geometry");
             //console.log(this.currentSelectedCompany.feature.attributes.ID);
@@ -376,11 +378,8 @@ vueExports.main={
             self.sideState="list";
             self.showDetail= false;
             self.showList = true;
-<<<<<<< HEAD
             self.currentDetailMenu=null;
-=======
-            self.currentDetailMenu = null;
->>>>>>> origin/master
+
         } ,
         switchDetail: function(detailMenu){
             this.currentDetailMenu = detailMenu;
@@ -495,19 +494,60 @@ vueExports.main={
                 },
                 []
             );
-            console.log(groups)
+            // console.log(groups)
 
             setTimeout(function(){
                 self.companyDischargeData = groups;
             } , 500);
+            var outWasteContent={};
+            outWasteContent.push=function(o){
+                //如果o是object
+                if(typeof(o)=='object') for(var p in o) this[p]=o[p];
+            };
+            for(var i=0;i<groups.length;i++){
+                var item=groups[i];
+                // console.log(item.children);
+                for(var j=0;j<item.children.length;j++){
+                    var itemChildren=item.children[i];
+                    console.log(itemChildren);
+                    outWasteContent.push([itemChildren.FID,itemChildren.sn,itemChildren.pfk,itemChildren.name,itemChildren.location,itemChildren.fqp,itemChildren.xx,itemChildren.yy]);
+                    var pt=new Point(itemChildren.xx,itemChildren.yy,{"wkid":102100});
+                    var pms;
+                    switch(itemChildren.group){
+                        case "固废监测点位":
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/gf.png",35,35);
+                            break;
+                        case "废水监测点位":
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/fs.png",35,35);
+                            break;
+                        case "雨水排放点位":
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/rains.png",35,35);
+                            break;
+                        case "废气排放点位":
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/fq.png",35,35);
+                            break;
+                        default:
+                            pms=new PictureMarkerSymbol("../onemappage/assets/images/point2.png",30,30);
+                    }
+                    console.log(itemChildren.group);
+                    // var pms=new PictureMarkerSymbol("../onemappage/assets/images/point2.png",30,30);
+                    var gImg=new Graphic(pt,pms,item);
+                    outWasteLayer.add(gImg);
+                }
+            }
+            // console.log(JSON.stringify(outWasteContent));
 
+
+            outWasteLayer.on("click",function(evt){
+                console.log(evt.graphic);
+            });
         } ,
 
         clearGraphics:function(){
             //清除以前的currentSelectedCompany状态 以及清除所有高亮的graphic
             hightLightGraphicLayer.clear();  //为什么不清除图层呢
             dijitPopup.close(dialog);
-
+            outWasteLayer.clear();
         }
     }
 };
