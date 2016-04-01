@@ -155,21 +155,21 @@ assdfa
                         <table class="table table-hover table-condensed">
                             <tr>
                                 <th style="width:20px"></th>
-                                <th v-for="filed in currentCont.columns | filterBy myCustomFilterFunction">{{filed.text}}</th>
+                                <th v-for="filed in companyDangerData.columns | filterBy myCustomFilterFunction">{{filed.text}}</th>
                             </tr>
-                            <template v-for="r in currentCont.store">
-                                <tr v-bind:class="{'info' : contentSelectedItem == r}"
-                                    @click="contentSelectedItem = (contentSelectedItem == r ? null : r)"
+                            <template v-for="r in companyDangerData.store">
+                                <tr v-bind:class="{'info' : companyDangerSelectedItem == r}"
+                                    @click="companyDangerSelectedItem = (companyDangerSelectedItem == r ? null : r)"
                                 >
                                     <td>{{$index+1}}</td>
-                                    <td v-for="f in currentCont.columns | filterBy myCustomFilterFunction">
+                                    <td v-for="f in companyDangerData.columns | filterBy myCustomFilterFunction">
                                         {{r[f.code]}}
                                     </td>
                                 </tr>
-                                <tr v-show="contentSelectedItem == r">
-                                    <td colspan="{{currentCont.firstShowFields.length+1}}" style="padding:0">
+                                <tr v-show="companyDangerSelectedItem == r">
+                                    <td colspan="{{companyDangerData.firstShowFields.length+1}}" style="padding:0">
                                         <table class="table" style="margin:0;background-color:#f7f7f7">
-                                            <tr v-for="c in currentCont.columns">
+                                            <tr v-for="c in companyDangerData.columns">
                                                 <td style="border1:0;width:120px;text-align:right">{{c.text}}:</td>
                                                 <td style="border1:0">{{r[c.code]}}</td>
                                             </tr>
@@ -181,50 +181,17 @@ assdfa
                     </div>
                     <div v-show="currentDetailMenu.code == 'discharge'"
                          transition="detail">
-                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                    <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Collapsible Group Item #1
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                    <div class="panel-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingTwo">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Collapsible Group Item #2
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                    <div class="panel-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingThree">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Collapsible Group Item #3
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                    <div class="panel-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <table class="table">
+                            <template v-for="item in companyDischargeData">
+                                <tr>
+                                    <td>{{item.name}}</td>
+                                </tr>
+                                <tr v-for="child in item.children">
+                                    <td>{{$}}</td><td>{{child.name}}</td>
+                                </tr>
+                            </template>
+
+                        </table>
                     </div>
                 </div>
                 <div class="sidefooter">
@@ -299,7 +266,7 @@ assdfa
         }]
     };
 </script>
-<script type="text/javascript" src="assets/scripts/lodash.core.js"></script>
+<script type="text/javascript" src="assets/scripts/lodash.js"></script>
 <script type="text/javascript" src="assets/scripts/jscolor.js"></script>
 <script type="text/javascript" src="assets/scripts/vue.js"></script>
 <script type="text/javascript" src="assets/scripts/jquery.min.js"></script>
