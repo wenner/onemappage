@@ -10,14 +10,15 @@ vueExports.main={
         showList: true ,
         showDetail: false ,
         currentQueryType:{text:"关键字" , value:"keyword"} ,
-        queryTypes:[
-            {text:"关键字" , value:"keyword"} ,
-            {text:"病害类别" , value:"disease"} ,
-            {text:"危险品" , value:"danger"}
-        ] ,
+        queryTypes: [
+            {text: "关键字", value: "keyword"},
+            {text: "危险化学品", value: "danger"},
+            {text: "排放口点位", value: "outfall"}
+        ],
         sideLoading:false ,
         keyword:'石化' ,
         result:[] ,
+        resultBulding:[],
         resultSort:[] ,
         currentSelectedCompany: {} ,
 
@@ -84,6 +85,7 @@ vueExports.main={
             var aa=[];
             //清除以前的图层
             searchGraphicsLayer.clear();
+            searchBuildingGraphicsLayer.clear();
             markLayer.clear();
             var self=this;
             self.sideLoading=true;
@@ -96,14 +98,10 @@ vueExports.main={
             // 返回Geometry
             findParams.returnGeometry=true;
             // 查询的图层id
-<<<<<<< HEAD
             //Layer: 密度点84 (0) 红线84分类点 (1) 泵站84 (2) 企业内部点位 (3) 供电管线84 (4) 路灯电缆84 (5) 燃气管线84 (6)
             // 污水管线84 (7) 雨水管线84 (8) 企业红线84 (9) 企业内部建筑物84 (10) 企业内部绿地84 (11)
             findParams.layerIds = [9];
 
-=======
-            findParams.layerIds=[9];  //Layer: 密度点84 (0) 红线84分类点 (1) 企业内部点位 (3) 企业红线84 (9)
->>>>>>> origin/master
             // 查询字段
             findParams.searchFields=["XMMC" , "UNAME"];
             if(this.keyword==''){
@@ -123,6 +121,22 @@ vueExports.main={
                 }
             });
             this.resultSort=aa;
+
+            findParams.layerIds=[10];
+            findParams.searchFields=["XMMC" , "UNAME"];
+            if(this.keyword==''){
+                console.log("this.keyword==''");
+                findParams.searchText="空港";
+            }else{
+                console.log("this.keyword=="+this.keyword);
+                findParams.searchText=this.keyword;
+            }
+            findTask.execute(findParams , function(resultBulding){
+                //self.sideLoading=false;
+                self.resultBulding=resultBulding;
+                //self.sideState="list";
+                self.addResultGraphicBuilding();
+            });
         } ,
         addResultGraphic:function(){
             //$Map.graphics.clear();
@@ -135,7 +149,7 @@ vueExports.main={
                     new Color([164 , 164 , 164 , 0.75]) ,
                     2
                 ) ,
-                new Color([196 , 246 , 252 , 0.25])
+                new Color([196 , 246 , 252 , 0.05])
             );
             var result=this.result;
             for(var i=0; i<result.length; i++){
@@ -196,19 +210,62 @@ vueExports.main={
                         markLayer.add(gImg);
                         break;
                 }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
                 graphic.setSymbol(symbol);
                 graphic.setInfoTemplate(infoTemplate);
-
                 // 添加到graphics进行高亮显示
                 //$Map.graphics.add(graphic);
                 searchGraphicsLayer.add(graphic);
             }
         } ,
-
+/*        addResultGraphicBuilding:function(){
+            //$Map.graphics.clear();
+            //this.clearGraphics();
+            //searchGraphicsLayer.clear();
+            var scSymbol=new SimpleFillSymbol(
+                SimpleFillSymbol.STYLE_SOLID ,
+                new SimpleLineSymbol(
+                    SimpleLineSymbol.STYLE_SOLID ,
+                    new Color([102 , 0 , 255 , 0.95]) ,
+                    2
+                ) ,
+                new Color([119 , 119 , 119 , 0.85])
+            );
+            var result=this.resultBulding;
+            for(var i=0; i<result.length; i++){
+                console.log(" var result=this.resultBulding; "+i);
+                var item=result[i] ,
+                    graphic=item.feature ,
+                    symbol ,
+                    infoTemplate=null;
+                switch(graphic.geometry.type){
+                    case "polygon":
+                        symbol=scSymbol;
+                        //var fill = new SimpleFillSymbol("solid", null, new Color("#A4CE67"));
+                        var fill=new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID ,
+                            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID ,
+                                new Color([255 , 255 , 255 , 0.15]) , 1) ,
+                            new Color([153 , 204 , 204 , 0.25]));
+                        infoTemplate=new InfoTemplate({fillSymbol:fill});
+                        infoTemplate.setTitle("<div class='xyfg_list_title'>"+"${UNAME}"+"</div>");
+                        var con="<div class='xndw_con_bg'>\
+                                    <div class='xndw_info_over'>\
+                                    <p class='xndw_info_li'><a href='javascript:;'>1、企业名称：${UNAME}</a></p>\
+                                    <p class='xndw_info_li'><a href='javascript:;'>2、项目名称：${XMMC}</a></p>  \
+                                    <p class='xndw_info_li'><a href='javascript:;'>3、规划状态：${GHZT}</a></p>\
+                                    <p class='xndw_info_li'><a href='javascript:;'>4、性质：${XZ}</a></p>\
+                                    <p class='xndw_info_li'><a href='javascript:;'>5、企业名：${企业名}</a></p>\
+                                    <p class='xndw_info_li'><a href='javascript:;'>6、性质分类：${Zlbmc} </a></p>\
+                                    </div></div>";
+                        infoTemplate.setContent(con);
+                        break;
+                }
+                graphic.setSymbol(symbol);
+                graphic.setInfoTemplate(infoTemplate);
+                // 添加到graphics进行高亮显示
+                //$Map.graphics.add(graphic);
+                searchBuildingGraphicsLayer.add(graphic);
+            }
+        } ,*/
         showResultItem:function(item){
             var self = this;
             //this.clearGraphics();

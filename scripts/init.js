@@ -55,6 +55,9 @@
         $Map.addLayer(labelLayer);
         redLineCategoryLayer=new GraphicsLayer();
         $Map.addLayer(redLineCategoryLayer);
+
+        searchBuildingGraphicsLayer=new GraphicsLayer();
+        $Map.addLayer(searchBuildingGraphicsLayer);
         markLayer=new GraphicsLayer();
         $Map.addLayer(markLayer);
 
