@@ -260,6 +260,7 @@ vueExports.main={
             hightLightGraphicLayer.clear();
             outWasteLayer.clear();
             this.currentSelectedCompany=item;
+            console.log(item);
             //console.log("显示点击的Geometry");
             //console.log(this.currentSelectedCompany.feature.attributes.ID);
 
