@@ -87,3 +87,7 @@ Array.prototype.remove = function(val) {
         this.splice(index, 1);
     }
 };
+// Object.prototype.push=function(o){
+//     //如果o是object
+//     if(typeof(o)=='object') for(var p in o) this[p]=o[p];
+// };

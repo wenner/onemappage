@@ -16,7 +16,7 @@ vueExports.main={
             {text: "排放口点位", value: "outfall"}
         ],
         sideLoading:false ,
-        keyword:'捷尔杰' ,
+        keyword:'天津' ,
         result:[] ,
         resultBulding:[],
         resultSort:[] ,
@@ -105,7 +105,7 @@ vueExports.main={
             // 污水管线84 (7) 雨水管线84 (8) 企业红线84 (9) 企业内部建筑物84 (10) 企业内部绿地84 (11)
             findParams.layerIds = [9];
             // 查询字段
-            findParams.searchFields=["XMMC" , "UNAME"];
+            findParams.searchFields=["XMMC" , "UNAME","BXMMC","YDXZ"];
             if(this.keyword==''){
                 console.log("this.keyword==''");
                 findParams.searchText="空港";
@@ -189,7 +189,13 @@ vueExports.main={
                             (sExtent.ymin+sExtent.ymax)/2 ,
                             new esri.SpatialReference($Map.spatialReference)
                         );
-                        var pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_"+i+".PNG",30,80);
+                        var pms;
+                        if(i<9){
+                            pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_"+i+".PNG",30,80);
+                        }else{
+                            pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_.PNG",10,30);
+                        }
+
                         var gImg = new Graphic(pt,pms);
                         markLayer.add(gImg);
                         break;
