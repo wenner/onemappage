@@ -13,7 +13,10 @@ vueExports.main={
         queryTypes: [
             {text: "关键字", value: "keyword"},
             {text: "危险化学品", value: "danger"},
-            {text: "排放口点位", value: "outfall"}
+            {text: "易制爆类", value: "bomb"},
+            {text: "油罐类", value: "oil"},
+            {text: "加油站", value: "gasStation"}
+            // {text: "排放监测", value: "outfall"}
         ],
         sideLoading:false ,
         keyword:'天津' ,
@@ -80,7 +83,6 @@ vueExports.main={
              });
              */
             $("#"+menu.modal).tab();
-
         } ,
 
         search:function(){
@@ -104,7 +106,7 @@ vueExports.main={
             //Layer: 密度点84 (0) 红线84分类点 (1) 泵站84 (2) 企业内部点位 (3) 供电管线84 (4) 路灯电缆84 (5) 燃气管线84 (6)
             // 污水管线84 (7) 雨水管线84 (8) 企业红线84 (9) 企业内部建筑物84 (10) 企业内部绿地84 (11)
             findParams.layerIds = [9];
-            // 查询字段
+
             findParams.searchFields=["XMMC" , "UNAME","BXMMC","YDXZ"];
             if(this.keyword==''){
                 console.log("this.keyword==''");
@@ -125,6 +127,7 @@ vueExports.main={
             this.resultSort=aa;
         } ,
         addResultGraphic:function(){
+            var selft=this;
             //$Map.graphics.clear();
             this.clearGraphics();
             searchGraphicsLayer.clear();
@@ -138,41 +141,81 @@ vueExports.main={
                 new Color([255 , 102 , 102 , 0.35])
             );
             var result=this.result;
+            var filterResult=[];
             for(var i=0; i<result.length; i++){
-                var item=result[i] ,
-                    graphic=item.feature ,
-                    symbol ,
-                    infoTemplate=null;
-                switch(graphic.geometry.type){
-                    case "point":
-                        symbol=$ptSymbol;
-                        infoTemplate=new InfoTemplate("${ObjName}" , "${*}");
-                        //infoTemplate.setTitle("<div class='xyfg_list_title'>" + "${ObjName}" + "</div>");
-                        //var con = "<div class='xndw_con_bg'>\
-                        //            <div class='xndw_info_over'>\
-                        //            <p class='xndw_info_li'><a href='javascript:;'>1、名称：${ObjName}</a></p>\
-                        //            <p class='xndw_info_li'><a href='javascript:;'>2、所属单位：${DeptName2}</a></p>  \
-                        //            <p class='xndw_info_li'><a href='javascript:;'>3、性质分类：${SUBSID}</a></p>\
-                        //            <p class='xndw_info_li'><a href='javascript:;'>4、井深：${BOTTOM_H}</a></p>\
-                        //            <p class='xndw_info_li'><a href='javascript:;'>5、管顶高：${SURF_H}</a></p>\
-                        //            <p class='xndw_info_li'><a href='javascript:;'>6、管底高：${B_DEEP} </a></p>\
-                        //            </div></div>";
-                        infoTemplate.setContent(con);
+                console.log(i);
+                var item=result[i] , graphic=item.feature , symbol ,infoTemplate=null;
+                // 查询字段  根据选择的分类，分类加载graphic
+                switch (this.currentQueryType.value)
+                {
+                    case "keyword":
+                        console.log("关键字");
+                        addGraphicToMarkLayer(graphic);
                         break;
-                    case "polyline":
-                        symbol=$lineSymbol;
-                        infoTemplate=new esri.InfoTemplate("${ObjName}" , "${*}");
+                    case "danger":
+                        if(graphic.attributes.分类=="化学品类"){
+                            console.log("化学品类");
+                            filterResult.push(item);
+                            addGraphicToMarkLayer(graphic);
+                        }
                         break;
-                    case "polygon":
-                        symbol=scSymbol;
-                        //var fill = new SimpleFillSymbol("solid", null, new Color("#A4CE67"));
-                        var fill=new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID ,
-                            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID ,
-                                new Color([255 , 255 , 255 , 0.15]) , 1) ,
-                            new Color([153 , 204 , 204 , 0.25]));
-                        infoTemplate=new InfoTemplate({fillSymbol:fill});
-                        infoTemplate.setTitle("<div class='xyfg_list_title'>"+"${UNAME}"+"</div>");
-                        var con="<div class='xndw_con_bg'>\
+                    case "bomb":
+                        if(graphic.attributes.分类=="易制爆类"){
+                            console.log("易制爆类");
+                            filterResult.push(item);
+                            addGraphicToMarkLayer(graphic);
+                        }
+                        break;
+                    case "oil":
+                        if(graphic.attributes.分类=="油罐类"){
+                            console.log("油罐类");
+                            filterResult.push(item);
+                            addGraphicToMarkLayer(graphic);
+                        }
+                        break;
+                    case "gasStation":
+                        if(graphic.attributes.分类=="加油站"){
+                            console.log("加油站");
+                            filterResult.push(item);
+                            addGraphicToMarkLayer(graphic);
+                        }
+                        break;
+                    default:
+                        console.log("请选择一个类别");
+                        break;
+                }
+
+                function addGraphicToMarkLayer(graphic){
+                    switch(graphic.geometry.type){
+                        case "point":
+                            symbol=$ptSymbol;
+                            infoTemplate=new InfoTemplate("${ObjName}" , "${*}");
+                            //infoTemplate.setTitle("<div class='xyfg_list_title'>" + "${ObjName}" + "</div>");
+                            //var con = "<div class='xndw_con_bg'>\
+                            //            <div class='xndw_info_over'>\
+                            //            <p class='xndw_info_li'><a href='javascript:;'>1、名称：${ObjName}</a></p>\
+                            //            <p class='xndw_info_li'><a href='javascript:;'>2、所属单位：${DeptName2}</a></p>  \
+                            //            <p class='xndw_info_li'><a href='javascript:;'>3、性质分类：${SUBSID}</a></p>\
+                            //            <p class='xndw_info_li'><a href='javascript:;'>4、井深：${BOTTOM_H}</a></p>\
+                            //            <p class='xndw_info_li'><a href='javascript:;'>5、管顶高：${SURF_H}</a></p>\
+                            //            <p class='xndw_info_li'><a href='javascript:;'>6、管底高：${B_DEEP} </a></p>\
+                            //            </div></div>";
+                            infoTemplate.setContent(con);
+                            break;
+                        case "polyline":
+                            symbol=$lineSymbol;
+                            infoTemplate=new esri.InfoTemplate("${ObjName}" , "${*}");
+                            break;
+                        case "polygon":
+                            symbol=scSymbol;
+                            //var fill = new SimpleFillSymbol("solid", null, new Color("#A4CE67"));
+                            var fill=new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID ,
+                                new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID ,
+                                    new Color([255 , 255 , 255 , 0.15]) , 1) ,
+                                new Color([153 , 204 , 204 , 0.25]));
+                            infoTemplate=new InfoTemplate({fillSymbol:fill});
+                            infoTemplate.setTitle("<div class='xyfg_list_title'>"+"${UNAME}"+"</div>");
+                            var con="<div class='xndw_con_bg'>\
                                     <div class='xndw_info_over'>\
                                     <p class='xndw_info_li'><a href='javascript:;'>1、企业名称：${UNAME}</a></p>\
                                     <p class='xndw_info_li'><a href='javascript:;'>2、项目名称：${XMMC}</a></p>  \
@@ -181,30 +224,35 @@ vueExports.main={
                                     <p class='xndw_info_li'><a href='javascript:;'>5、企业名：${企业名}</a></p>\
                                     <p class='xndw_info_li'><a href='javascript:;'>6、性质分类：${Zlbmc} </a></p>\
                                     </div></div>";
-                        infoTemplate.setContent(con);
-                        //添加标注ABCmark图标
-                        var sExtent=graphic.geometry.getExtent();
-                        var pt=new esri.geometry.Point(
-                            (sExtent.xmin+sExtent.xmax)/2 ,
-                            (sExtent.ymin+sExtent.ymax)/2 ,
-                            new esri.SpatialReference($Map.spatialReference)
-                        );
-                        var pms;
-                        if(i<9){
-                            pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_"+i+".PNG",30,80);
-                        }else{
-                            pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_.PNG",10,30);
-                        }
+                            infoTemplate.setContent(con);
+                            //添加标注ABCmark图标
+                            var sExtent=graphic.geometry.getExtent();
+                            var pt=new esri.geometry.Point(
+                                (sExtent.xmin+sExtent.xmax)/2 ,
+                                (sExtent.ymin+sExtent.ymax)/2 ,
+                                new esri.SpatialReference($Map.spatialReference)
+                            );
+                            var pms;
+                            if(i<9){
+                                pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_"+i+".PNG",30,80);
+                            }else{
+                                pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_.PNG",10,30);
+                            }
 
-                        var gImg = new Graphic(pt,pms);
-                        markLayer.add(gImg);
-                        break;
-                }                graphic.setSymbol(symbol);
-                graphic.setInfoTemplate(infoTemplate);
-                // 添加到graphics进行高亮显示
-                //$Map.graphics.add(graphic);
-                searchGraphicsLayer.add(graphic);
+                            var gImg = new Graphic(pt,pms);
+                            markLayer.add(gImg);
+                            break;
+                    }
+
+                    graphic.setSymbol(symbol);
+                    graphic.setInfoTemplate(infoTemplate);
+                    // 添加到graphics进行高亮显示
+                    //$Map.graphics.add(graphic);
+                    searchGraphicsLayer.add(graphic);
+                }
             }
+            //将过滤后的结果重新组合后再把结果赋到result公共变量中
+            this.result=filterResult;
         } ,
         showResultItem:function(item){
             var self = this;
