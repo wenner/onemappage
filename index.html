@@ -122,7 +122,7 @@
                            v-bind:class="{ 'active': item == currentSelectedCompany}"
                            @click="showResultItem(item)">
                             <!--此处的img src 加v-bind:src=... 之后图片就显示不出来，不加时，在页面初次加载时会出错，如何解决-->
-                            <sapn><img src="../onemappage/assets/images/location_icon/{{$index}}.PNG" alt="img" onerror="this.src='../onemappage/assets/images/location_icon/_.PNG'"></sapn>{{item.value}}
+                            <sapn><img src="../onemappage/assets/images/location_icon/{{$index}}.PNG" alt="img"  onerror="nofind();"></sapn>{{item.value}}
                         </a>
                     </div>
                 </div>
@@ -359,5 +359,13 @@
 <script type="text/javascript" src="scripts/requireDojo.js"></script>
 <script type="text/javascript" src="assets/scripts/InfoTip.js"></script>
 
+<script type="text/javascript">
+    function nofind() {
+        var img = event.srcElement;
+        img.src = "../onemappage/assets/images/location_icon/_oneerror.png";
+        img.onerror = null;
+        // 控制不要一直跳动
+    }
+</script>
 </body>
 </html>

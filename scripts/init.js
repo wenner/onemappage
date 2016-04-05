@@ -1,14 +1,14 @@
-(function(){
+(function () {
     //开始初始化vue
     $vmMain = new Vue(vueExports.main);
-    var mapInited = false , modalInited = false;
-    window.init = function(){
-		loadModalHtml();
-		createMap();
+    var mapInited = false, modalInited = false;
+    window.init = function () {
+        loadModalHtml();
+        createMap();
     };
     function createMap() {
         //var InfoWindow = myInfoWindow,
-            Draw = esri.toolbars.Draw;
+        Draw = esri.toolbars.Draw;
         var infoWindow = new myInfoWindow({
             domNode: dojoDomConstruct.create("div", null, dojoDom.byId("mapDiv"))
         });
@@ -31,13 +31,13 @@
         });
         $Map.infoWindow.resize(375, 315);  //设置弹窗大小
         //添加危险企业动态点位图
-        var dynamicMapSericeLayerAlarmLayer=new ArcGISDynamicMapServiceLayer($BaseServiceUrl+"一张网/危险企业红线点位动态Map/MapServer");
+        var dynamicMapSericeLayerAlarmLayer = new ArcGISDynamicMapServiceLayer($BaseServiceUrl + "一张网/危险企业红线点位动态Map/MapServer");
         $Map.addLayer(dynamicMapSericeLayerAlarmLayer);
         //创建图形图层
         //把图层添加到地图上
-        hightLightGraphicLayer=new GraphicsLayer();
+        hightLightGraphicLayer = new GraphicsLayer();
         $Map.addLayer(hightLightGraphicLayer);  //将高亮图层放在最下面，防止其他图层失去点击事件
-        searchGraphicsLayer=new GraphicsLayer();
+        searchGraphicsLayer = new GraphicsLayer();
         $Map.addLayer(searchGraphicsLayer);
         redPointLayer = new GraphicsLayer();
         $Map.addLayer(redPointLayer);  //添加红线点图层，显示infowindow用
@@ -53,14 +53,14 @@
         $Map.addLayer(alarmLayer);
         labelLayer = new GraphicsLayer();
         $Map.addLayer(labelLayer);
-        redLineCategoryLayer=new GraphicsLayer();
+        redLineCategoryLayer = new GraphicsLayer();
         $Map.addLayer(redLineCategoryLayer);
 
-        searchBuildingGraphicsLayer=new GraphicsLayer();
+        searchBuildingGraphicsLayer = new GraphicsLayer();
         $Map.addLayer(searchBuildingGraphicsLayer);
-        markLayer=new GraphicsLayer();
+        markLayer = new GraphicsLayer();
         $Map.addLayer(markLayer);
-        outWasteLayer=new GraphicsLayer();
+        outWasteLayer = new GraphicsLayer();
         $Map.addLayer(outWasteLayer);
 
         setSymbolStyle();
@@ -73,23 +73,23 @@
         setWithTipsLayerToMap();
     }
 
-    function loadModalHtml(){
+    function loadModalHtml() {
         var modals = $(".dijitHidden div");
         var loadedCount = 0;
-        modals.each(function(i , n){
+        modals.each(function (i, n) {
             var modal = $(n);
             modalHref = modal.data("modalhref");
-            modal.load(modalHref , function(){
+            modal.load(modalHref, function () {
                 var modalExports = vueExports[modal.attr("id")];
                 if (modalExports) new Vue(modalExports);
-                loadedCount ++;
-                if (loadedCount == modals.length){
+                loadedCount++;
+                if (loadedCount == modals.length) {
                     modalInited = true;
                     hideLoader();
                 }
             });
         });
-        for(var i = 0 ; i<bottomBarMenus.length ;i++){
+        for (var i = 0; i < bottomBarMenus.length; i++) {
 
         }
     }
@@ -145,7 +145,7 @@
             new Color([0, 255, 0, 0.25])
         );
         var lineSymbol2 = $lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASH, new Color([255, 0, 0]), 1);
-        var polygonSymbol = $polygonSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_NONE, new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, new Color([153,204,204]), 0.5), new Color([153,153,204, 0.25]));
+        var polygonSymbol = $polygonSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_NONE, new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, new Color([153, 204, 204]), 0.5), new Color([153, 153, 204, 0.25]));
 
 
     }
@@ -189,13 +189,13 @@
             thumbnailUrl: "assets/images/thumbnail-onemap.jpg"
         });
         basemaps.push(satelliteMap);
-        var secFiveDMap=new Basemap({
-            layers:[new BasemapLayer({
+        var secFiveDMap = new Basemap({
+            layers: [new BasemapLayer({
                 url: $BaseServiceUrl + "影像服务/25Dkg84/ImageServer"
             })],
-            id:"25DMap",
-            title:"2.5D空港图",
-            thumbnailUrl:"assets/images/thumbnail-konggang-25D.png"
+            id: "25DMap",
+            title: "2.5D空港图",
+            thumbnailUrl: "assets/images/thumbnail-konggang-25D.png"
         });
         basemaps.push(secFiveDMap);
         return basemaps;
@@ -214,7 +214,7 @@
         toggle.startup();
     }
 
-    function createMapGallery(baseMaps){
+    function createMapGallery(baseMaps) {
         var BasemapGallery = esri.dijit.BasemapGallery;
         var basemapGallery = new BasemapGallery({
             showArcGISBasemaps: false,  //是否显示ArcGIS自带basemap
@@ -224,7 +224,7 @@
         basemapGallery.startup();
     }
 
-    function initMapEvent(){
+    function initMapEvent() {
         $Map.on('mouse-move', showCoordinates);
         $Map.on('mouse-drag', showCoordinates);
     }
@@ -242,9 +242,9 @@
     }
 
     /*
-    * 添加需要在地图上显示的graphics，并且给此graphics附加上tips窗口
-    * */
-    function setWithTipsLayerToMap(){
+     * 添加需要在地图上显示的graphics，并且给此graphics附加上tips窗口
+     * */
+    function setWithTipsLayerToMap() {
         //涉危企业面图层
         var redLineCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9", {
             mode: FeatureLayer.MODE_SNAPSHOT,
@@ -257,7 +257,7 @@
         });
         //redLineCategory.setDefinitionExpression("STATE_NAME = 'South Carolina'");  //可对特定字段进行sql查询,目前没用到
         var pointSymbol = new SimpleMarkerSymbol({
-            "color": [255,255,100,64],
+            "color": [255, 255, 100, 64],
             "size": 4,
             "angle": 0,
             "xoffset": 0,
@@ -265,7 +265,7 @@
             "type": "esriSMS",
             "style": "esriSMSCircle",
             "outline": {
-                "color": [0,0,0,100],
+                "color": [0, 0, 0, 100],
                 "width": 1,
                 "type": "esriSLS",
                 "style": "esriSLSSolid"
@@ -275,10 +275,10 @@
             SimpleFillSymbol.STYLE_SOLID,
             new SimpleLineSymbol(
                 SimpleLineSymbol.STYLE_SOLID,
-                new Color([255,255,255,0.35]),
+                new Color([255, 255, 255, 0.35]),
                 1
             ),
-            new Color([125,125,125,0.35])
+            new Color([125, 125, 125, 0.35])
         );
         //redLineCategory.setRenderer(new SimpleRenderer(polySymbol));
         redPointCategory.setRenderer(new SimpleRenderer(pointSymbol)); //setRenderer设置图层显示的样式，如果是Graphic则用setSymbol
@@ -296,12 +296,12 @@
             SimpleFillSymbol.STYLE_SOLID,
             new SimpleLineSymbol(
                 SimpleLineSymbol.STYLE_SOLID,
-                new Color([255,0,0]), 3
+                new Color([255, 0, 0]), 3
             ),
-            new Color([125,125,125,0.35])
+            new Color([125, 125, 125, 0.35])
         );
         var highlightPointSymbol = new SimpleMarkerSymbol({
-            "color": [0,255,255,64],
+            "color": [0, 255, 255, 64],
             "size": 6,
             "angle": 0,
             "xoffset": 0,
@@ -309,14 +309,14 @@
             "type": "esriSMS",
             "style": "esriSMSCircle",
             "outline": {
-                "color": [255,0,0,255],
+                "color": [255, 0, 0, 255],
                 "width": 2,
                 "type": "esriSLS",
                 "style": "esriSLSSolid"
             }
         });
         //close the dialog when the mouse leaves the highlight graphic
-        $Map.on("load", function(){
+        $Map.on("load", function () {
             redLineCategoryLayer.enableMouseEvents();  //设置启动该图层的鼠标事件
             redLineCategoryLayer.on("mouse-out", closeDialog);
             //$Map.on('mouse-move', closeDialog);
@@ -332,15 +332,15 @@
         // });
         //listen for when the onMouseOver event fires on the countiesGraphicsLayer
         //when fired, create a new graphic with the geometry from the event.graphic and add it to the maps graphics layer
-        redLineCategory.on("mouse-over", function(evt){
+        redLineCategory.on("mouse-over", function (evt) {
             //$Map.setMapCursor("pointer");//设置鼠标样式
             var t = "<b>${UNAME}</b><hr><b>项目: </b>${JZXG}<br>"
                 + "<b>用地性质: </b>${YDXZ}<br>"
                 + "<b>企业开口: </b>${QYKK}<br>"
                 + "<b>项目名称: </b>${BXMMC}";
 
-            var content = esriLang.substitute(evt.graphic.attributes,t); // 将内容变量放置到graphic.attributes中 用到了esriLang.substitute
-            var highlightGraphic = new Graphic(evt.graphic.geometry,highlightPolySymbol);
+            var content = esriLang.substitute(evt.graphic.attributes, t); // 将内容变量放置到graphic.attributes中 用到了esriLang.substitute
+            var highlightGraphic = new Graphic(evt.graphic.geometry, highlightPolySymbol);
             //$Map.graphics.add(highlightGraphic);
             redLineCategoryLayer.add(highlightGraphic);
             dialog.setContent(content);
@@ -353,14 +353,14 @@
             });
         });
 
-        redPointCategory.on("mouse-over", function(evt){
+        redPointCategory.on("mouse-over", function (evt) {
             var t = "<b>${UNAME}</b><hr><b>项目名称: </b>${XMMC}<br>"
                 + "<b>建设单位: </b>${JSDW}<br>"
                 + "<b>单位名称: </b>${单位名称}<br>"
                 + "<b>类别: </b>${分类}";
 
-            var content = esriLang.substitute(evt.graphic.attributes,t);
-            var highlightGraphic = new Graphic(evt.graphic.geometry,highlightPointSymbol);
+            var content = esriLang.substitute(evt.graphic.attributes, t);
+            var highlightGraphic = new Graphic(evt.graphic.geometry, highlightPointSymbol);
             //$Map.graphics.add(highlightGraphic);
             redLineCategoryLayer.add(highlightGraphic);
             dialog.setContent(content);
@@ -368,15 +368,15 @@
             domStyle.set(dialog.domNode, "opacity", 0.85);
             dijitPopup.open({
                 popup: dialog,
-                x: evt.pageX+8,
+                x: evt.pageX + 8,
                 y: evt.pageY
             });
         });
-        redPointCategory.on("click",function(evt){
-            var attr=evt.graphic.attributes;
+        redPointCategory.on("click", function (evt) {
+            var attr = evt.graphic.attributes;
             console.log(attr);
             closeDialog();
-            var aa=attr.FID+"  "+attr.JSDW+"  "+attr.UNAME+"  "+attr.XMMC+"  "+attr.分类+"  "+attr.单位名称;
+            var aa = attr.FID + "  " + attr.JSDW + "  " + attr.UNAME + "  " + attr.XMMC + "  " + attr.分类 + "  " + attr.单位名称;
             alert(aa);
         });
         function closeDialog() {
@@ -385,6 +385,9 @@
             //$Map.setMapCursor("default");
         }
     }
+
+
+
 })();
 
 
