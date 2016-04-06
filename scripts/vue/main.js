@@ -19,7 +19,7 @@ vueExports.main={
             // {text: "排放监测", value: "outfall"}
         ],
         sideLoading:false ,
-        keyword:'天津' ,
+        keyword:'天津大无缝铜材有限公司' ,
         result:[] ,
         resultBulding:[],
         resultSort:[] ,
@@ -142,7 +142,7 @@ vueExports.main={
             );
             var result=this.result;
             var filterResult=[];
-            var filterNum=-1;
+            var filterNum=-1; //定义地图abcMark标志显示的个数
             for(var i=0; i<result.length; i++){
                 console.log(i);
                 var item=result[i] , graphic=item.feature , symbol ,infoTemplate=null;
@@ -152,6 +152,7 @@ vueExports.main={
                     case "keyword":
                         filterNum+=1;
                         console.log("关键字");
+                        filterResult.push(item);
                         addGraphicToMarkLayer(graphic);
                         break;
                     case "danger":
@@ -270,9 +271,6 @@ vueExports.main={
             //console.log("显示点击的Geometry");
             //console.log(this.currentSelectedCompany.feature.attributes.ID);
 
-            //开始查询SQL危化品
-            //this.QueryTextFromSQL();
-
             self.showList = false;
             self.showDetail= true;
 
@@ -336,9 +334,57 @@ vueExports.main={
             }
         } ,
         QueryTextFromSQL:function(companyName){
+            // return false;
+            // console.log("进入ajax查询数据方法");
+            //var name = $('#searchText').val();
+            //var name = this.currentSelectedCompany.value;
+            var name=companyName;
+            var source='/AppWebSite/FMService/chemical';
+            var field='ChemicalName,ChemicalNum,Usage,DailyDosage,MaximumStockingCapacity,StorageSite';
+            var data={
+                Fields:field.split(',') ,
+                Search:'EnterpriseName = {0}' ,
+                Values:[name] ,
+                OrderFieldName:'RegistrationTime' ,
+                OrderType:'desc'
+            };
+            var arg_map={
+                data:data ,
+                success:this.onSuccess ,
+                fail:this.onFail ,
+                url:source
+            };
+            tjx.data.safetysearch.getDataTable(arg_map);
+
+
+        } ,
+        myCustomFilterFunction: function(current , index , all){
+           return $.inArray(current.code, this.companyDangerData.firstShowFields) >-1
+        } ,
+        onSuccess:function(data){
+            //this.currentSelectedCompany=data;
+            //console.log(data);
+            var resultHead=[];
+            var resultCont;
+            for(var i=0; i<data.ChsFields.length; i++){
+                resultHead.push(data.ChsFields[i].title);
+            }
+            console.log(resultHead);  //表头信息
+            resultHead=data.ChsFields;
+            console.log(resultHead);
+            for(var i=0; i<data.DataCount; i++){
+                // console.log(data.Data[i]);
+                resultCont+=data.Data[i];
+            }
+            //this.currentCont=JSON.stringify(data); //内容信息
+
+            //对返回的数据解析成json格式
             var self=this;
             setTimeout(function(){
-                var rs = {
+                console.log("服务器返回数据成功，开始进行解析");
+                console.log(JSON.stringify(data));
+                //模拟数据
+                /*var rs = {
                     "ChsFields":[
                         {"title":"中文名称"} , {"title":"危险货物编号"} , {"title":"用途"} ,
                         {"title":"日常用量"} , {"title":"最大储存量"} , {"title":"储存位置"}
@@ -365,7 +411,9 @@ vueExports.main={
                         {"title":"MaximumStockingCapacity"} ,
                         {"title":"StorageSite"}
                     ] , "KeyField":null
-                };
+                };*/
+                //真实数据
+                var rs=data;
                 //self.currentCont= rs;
                 //将表格数据格式解析成json格式
                 var columns = [] ,
@@ -388,52 +436,10 @@ vueExports.main={
                     ]
                 };
             } , 200);
-
-            // return false;
-
-            // console.log("进入ajax查询数据方法");
-            //var name = $('#searchText').val();
-            //var name = this.currentSelectedCompany.value;
-            var name=companyName;
-            var source='/AppWebSite/FMService/chemical';
-            var field='ChemicalName,ChemicalNum,Usage,DailyDosage,MaximumStockingCapacity,StorageSite';
-            var data={
-                Fields:field.split(',') ,
-                Search:'EnterpriseName = {0}' ,
-                Values:[name] ,
-                OrderFieldName:'RegistrationTime' ,
-                OrderType:'desc'
-            };
-            var arg_map={
-                data:data ,
-                success:this.onSuccess ,
-                fail:this.onFail ,
-                url:source
-            };
-            tjx.data.safetysearch.getDataTable(arg_map);
-        } ,
-        myCustomFilterFunction: function(current , index , all){
-           return $.inArray(current.code, this.companyDangerData.firstShowFields) >-1
-        } ,
-        onSuccess:function(data){
-            //this.currentSelectedCompany=data;
-            //console.log(data);
-            var resultHead=[];
-            var resultCont;
-            for(var i=0; i<data.ChsFields.length; i++){
-                resultHead.push(data.ChsFields[i].title);
-            }
-            console.log(resultHead);  //表头信息
-            resultHead=data.ChsFields;
-            console.log(resultHead);
-            for(var i=0; i<data.DataCount; i++){
-                console.log(data.Data[i]);
-                resultCont+=data.Data[i];
-            }
-            this.currentCont=JSON.stringify(data); //内容信息
         } ,
         onFail:function(data){
-            console.log(data);
+            console.log("没有查到数据,具体信息见下方");
+            console.warn(data);
         } ,
         backToList:function(){
             var self = this;
