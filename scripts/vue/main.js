@@ -142,6 +142,7 @@ vueExports.main={
             );
             var result=this.result;
             var filterResult=[];
+            var filterNum=-1;
             for(var i=0; i<result.length; i++){
                 console.log(i);
                 var item=result[i] , graphic=item.feature , symbol ,infoTemplate=null;
@@ -149,11 +150,13 @@ vueExports.main={
                 switch (this.currentQueryType.value)
                 {
                     case "keyword":
+                        filterNum+=1;
                         console.log("关键字");
                         addGraphicToMarkLayer(graphic);
                         break;
                     case "danger":
                         if(graphic.attributes.分类=="化学品类"){
+                            filterNum+=1;
                             console.log("化学品类");
                             filterResult.push(item);
                             addGraphicToMarkLayer(graphic);
@@ -161,6 +164,7 @@ vueExports.main={
                         break;
                     case "bomb":
                         if(graphic.attributes.分类=="易制爆类"){
+                            filterNum+=1;
                             console.log("易制爆类");
                             filterResult.push(item);
                             addGraphicToMarkLayer(graphic);
@@ -168,6 +172,7 @@ vueExports.main={
                         break;
                     case "oil":
                         if(graphic.attributes.分类=="油罐类"){
+                            filterNum+=1;
                             console.log("油罐类");
                             filterResult.push(item);
                             addGraphicToMarkLayer(graphic);
@@ -175,6 +180,7 @@ vueExports.main={
                         break;
                     case "gasStation":
                         if(graphic.attributes.分类=="加油站"){
+                            filterNum+=1;
                             console.log("加油站");
                             filterResult.push(item);
                             addGraphicToMarkLayer(graphic);
@@ -233,8 +239,8 @@ vueExports.main={
                                 new esri.SpatialReference($Map.spatialReference)
                             );
                             var pms;
-                            if(i<9){
-                                pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_"+i+".PNG",30,80);
+                            if(filterNum<10){
+                                pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_"+filterNum+".PNG",30,80);
                             }else{
                                 pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_.PNG",10,30);
                             }
@@ -329,7 +335,7 @@ vueExports.main={
                 hightLightGraphicLayer.add(searGraphic);
             }
         } ,
-        QueryTextFromSQL:function(){
+        QueryTextFromSQL:function(companyName){
             var self=this;
             setTimeout(function(){
                 var rs = {
@@ -361,6 +367,7 @@ vueExports.main={
                     ] , "KeyField":null
                 };
                 //self.currentCont= rs;
+                //将表格数据格式解析成json格式
                 var columns = [] ,
                     store = [];
                 for(var i = 0 ; i<rs.EngFields.length ; i++){
@@ -382,12 +389,12 @@ vueExports.main={
                 };
             } , 200);
 
-            return false;
+            // return false;
 
             // console.log("进入ajax查询数据方法");
             //var name = $('#searchText').val();
             //var name = this.currentSelectedCompany.value;
-            var name="中储粮油脂（天津）有限公司";
+            var name=companyName;
             var source='/AppWebSite/FMService/chemical';
             var field='ChemicalName,ChemicalNum,Usage,DailyDosage,MaximumStockingCapacity,StorageSite';
             var data={
@@ -446,7 +453,8 @@ vueExports.main={
             console.log(company)
         } ,
         getDangerDetail: function(company){
-            this.QueryTextFromSQL();
+            var companyName=company.feature.attributes.UNAME;
+            this.QueryTextFromSQL(companyName);
         } ,
         getDischargeDetail: function(company){
             var self = this;
