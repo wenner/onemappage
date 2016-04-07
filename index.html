@@ -225,7 +225,49 @@
                                     </td>
                                 </tr>
                             </tbody>
-
+                        </table>
+                    </div>
+                    <div class='discharge' v-show="currentDetailMenu.code == 'processing'"
+                         transition="detail">
+                        <table class="table table-hover table-condensed">
+                            <tr>
+                                <th style="width:20px"></th>
+                                <!--<th v-for="filed in processData">{{filed.type}}</th>-->
+                                <th></th>
+                            </tr>
+                            <template v-for="r in processData">
+                                <tr v-bind:class="{'info' : processData == r}"
+                                    @click="processData = (processData == r ? null : r)"
+                                >
+                                    <td>{{$index+1}}</td>
+                                    <td v-for="f in processData">
+                                        <a href="http://ajhb.tjxrs.cn/{{f}}" title="生产工艺" target="_blank">生产工艺流程图</a>
+                                    </td>
+                                </tr>
+                            </template>
+                        </table>
+                    </div>
+                    <div class='discharge' v-show="currentDetailMenu.code == 'safe'"
+                         transition="detail">
+                        <table class="table table-hover table-condensed">
+                            <tbody v-for="item in safeData">
+                            <tr>
+                                <td colspan="3" style="font-weight:bold;background:#ccc">
+                                    {{item.name}} ({{item.children.length}})
+                                </td>
+                            </tr>
+                            <tr style="cursor:pointer"
+                                data-toggle="tooltip" title="adfasdfsadfsadf"
+                                :class="{'info' : companyDischargeSelectedItem == child}"
+                                v-for="child in item.children"
+                                @click="showDischargeMap(child)">
+                                <td style="width:30px;text-align:center">{{child.sn}}</td>
+                                <td>{{child.pfk}} - {{child.name}}</td>
+                                <td>
+                                    <a @click="showDischargeChart(child)">数据</a>
+                                </td>
+                            </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -358,6 +400,7 @@
 
 <script type="text/javascript" src="scripts/requireDojo.js"></script>
 <script type="text/javascript" src="assets/scripts/InfoTip.js"></script>
+<script type="text/javascript" src="assets/scripts/pdfobject.js"></script>
 
 <script type="text/javascript">
     function nofind() {

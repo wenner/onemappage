@@ -26,9 +26,9 @@ vueExports.modal4 = {
             //imageParameters.layerDefinitions=layerDefs;
             //只显示序号为1,2,3的图层
 
-            imageParameters.layerIds = [0];  //为了安全考虑，目前不把管线数据展示出来
-            //imageParameters.layerIds = [7, 6, 5, 4, 3];
-            //imageParameters.visibleLayers=[7,6,5,4,3];
+            // imageParameters.layerIds = [0];  //为了安全考虑，目前不把管线数据展示出来
+            imageParameters.layerIds = [7, 6, 5, 4, 3];
+            imageParameters.visibleLayers=[7,6,5,4,3];
             imageParameters.layerOption = ImageParameters.LAYER_OPTION_SHOW;
             imageParameters.transparent = true;
             //使用上面的参数构造ArcGISDynamicMapServiceLayer类的实例
@@ -41,7 +41,7 @@ vueExports.modal4 = {
         },
         closeAllPipeline: function () {
             if(this.switchAll){
-                //this.line=["7", "6", "5", "4", "3"];
+                this.line=["7", "6", "5", "4", "3"];
                 //pipeLineLayer.setVisibleLayers(this.line);
                 pipeLineLayer.show();
             }else{
