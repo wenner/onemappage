@@ -247,27 +247,33 @@
                             </template>
                         </table>
                     </div>
-                    <div class='discharge' v-show="currentDetailMenu.code == 'safe'"
+                    <div v-show="currentDetailMenu.code == 'safe'"
                          transition="detail">
                         <table class="table table-hover table-condensed">
-                            <tbody v-for="item in safeData">
                             <tr>
-                                <td colspan="3" style="font-weight:bold;background:#ccc">
-                                    {{item.name}} ({{item.children.length}})
-                                </td>
+                                <th style="width:20px"></th>
+                                <th v-for="filed in safeData.columns | filterBy myCustomFilterFunctionSafe">{{filed.text}}</th>
                             </tr>
-                            <tr style="cursor:pointer"
-                                data-toggle="tooltip" title="adfasdfsadfsadf"
-                                :class="{'info' : companyDischargeSelectedItem == child}"
-                                v-for="child in item.children"
-                                @click="showDischargeMap(child)">
-                                <td style="width:30px;text-align:center">{{child.sn}}</td>
-                                <td>{{child.pfk}} - {{child.name}}</td>
-                                <td>
-                                    <a @click="showDischargeChart(child)">数据</a>
-                                </td>
-                            </tr>
-                            </tbody>
+                            <template v-for="r in safeData.store">
+                                <tr v-bind:class="{'info' : safeDataDetailData == r}"
+                                    @click="safeDataDetailSelectedItem = (safeDataDetailSelectedItem == r ? null : r)"
+                                >
+                                    <td>{{$index+1}}</td>
+                                    <td v-for="f in safeData.columns | filterBy myCustomFilterFunctionSafe">
+                                        {{r[f.code]}}
+                                    </td>
+                                </tr>
+                                <tr v-show="safeDataDetailSelectedItem == r">
+                                    <td colspan="{{safeData.firstShowFields.length+1}}" style="padding:0">
+                                        <table class="table" style="margin:0;background-color:#f7f7f7">
+                                            <tr v-for="c in safeData.columns">
+                                                <td style="border1:0;width:120px;text-align:right">{{c.text}}:</td>
+                                                <td style="border1:0">{{r[c.code]}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </template>
                         </table>
                     </div>
                 </div>
