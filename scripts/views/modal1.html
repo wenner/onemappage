@@ -11,6 +11,10 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active tab1" id="home"  style="padding:10px">
+            <div class="text-center" style="padding: 5px;">
+                <div v-show=""></div>
+                <h4> <label class="lable">{{pointResult[0].feature.attributes.UNAME}}</label></h4>
+            </div>
             <div class="text-center" id="info" style="padding:30px;">
                 <button class="btn btn-lg btn-primary positionPoint btn-block" value="point" @click="drawPoint">
                     <i class="fa fa-warning"></i> 屏幕取点

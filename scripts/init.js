@@ -32,7 +32,7 @@
         $Map.infoWindow.resize(375, 315);  //设置弹窗大小
         //添加危险企业动态点位图
         var dynamicMapSericeLayerAlarmLayer = new ArcGISDynamicMapServiceLayer($BaseServiceUrl + "一张网/危险企业红线点位动态Map/MapServer");
-        // $Map.addLayer(dynamicMapSericeLayerAlarmLayer);
+        $Map.addLayer(dynamicMapSericeLayerAlarmLayer);
         //创建图形图层
         //把图层添加到地图上
         hightLightGraphicLayer = new GraphicsLayer();
@@ -162,7 +162,7 @@
             title: "空港影像图",
             thumbnailUrl: "assets/images/thumbnail-konggang.png"
         });
-        basemaps.push(konggangMap);
+
         var streetMap = new Basemap({
             layers: [new BasemapLayer({
                 url: $BaseServiceUrl + "20160301_海港/ImageServer"
@@ -171,7 +171,7 @@
             title: "海港影像图",
             thumbnailUrl: "assets/images/thumbnail-haigang.png"
         });
-        basemaps.push(streetMap);
+
         var waterBasemap = new Basemap({
             layers: [new BasemapLayer({
                 url: $BaseServiceUrl + "一张网/一张网底图/MapServer"
@@ -179,7 +179,7 @@
             title: "空港矢量图",
             thumbnailUrl: "assets/images/thumbnail-water.png"
         });
-        basemaps.push(waterBasemap);
+
         var satelliteMap = new Basemap({
             layers: [new BasemapLayer({
                 url: $BaseServiceUrl + "一张网/一张网企业项目动态图map/MapServer"
@@ -188,7 +188,7 @@
             title: "清色图",
             thumbnailUrl: "assets/images/thumbnail-onemap.jpg"
         });
-        basemaps.push(satelliteMap);
+
         var secFiveDMap = new Basemap({
             layers: [new BasemapLayer({
                 url: $BaseServiceUrl + "影像服务/25Dkg84/ImageServer"
@@ -197,7 +197,9 @@
             title: "2.5D空港图",
             thumbnailUrl: "assets/images/thumbnail-konggang-25D.png"
         });
-        basemaps.push(secFiveDMap);
+        // basemaps.push(secFiveDMap);
+        //统一加到数组中，更直观
+        basemaps=[waterBasemap,secFiveDMap,konggangMap,streetMap,satelliteMap];
         return basemaps;
     }
 

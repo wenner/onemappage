@@ -1,3 +1,4 @@
+
 vueExports.main = {
     el: '#outerwrap',
     data: {
@@ -50,6 +51,9 @@ vueExports.main = {
         safeDataDetailSelectedItem:{}
     },
     watch: {
+        result: function (val, oldVal) {
+            console.log(val,oldVal);
+        },
         currentDetailMenu: function (detailMenu) {
             if (!this.currentSelectedCompany || !this.currentDetailMenu) return false;
             var code = detailMenu.code;

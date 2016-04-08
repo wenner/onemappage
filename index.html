@@ -122,7 +122,7 @@
                            v-bind:class="{ 'active': item == currentSelectedCompany}"
                            @click="showResultItem(item)">
                             <!--此处的img src 加v-bind:src=... 之后图片就显示不出来，不加时，在页面初次加载时会出错，如何解决-->
-                            <sapn><img src="../onemappage/assets/images/location_icon/{{$index}}.PNG" alt="img"  onerror="nofind();"></sapn>{{item.value}}
+                            <sapn><img src="../onemappage/assets/images/location_icon/{{$index}}.PNG" alt="img"  onerror="nofind();"></sapn>{{item.feature.attributes.UNAME}}
                         </a>
                     </div>
                 </div>
@@ -151,16 +151,16 @@
                          transition="detail">
                         <table class="table">
                             <tr>
-                                <td colspan="2" style="font-weight:bold">{{currentSelectedCompany.value}}</td>
+                                <td colspan="2" style="font-weight:bold">{{currentSelectedCompany.feature.attributes.UNAME}}</td>
                             </tr>
                             <tr>
                                 <td style="width:100px">项目名称</td>
                                 <td>{{currentSelectedCompany.feature.attributes.XMMC}}</td>
                             </tr>
-                            <tr>
-                                <td>规划状态</td>
-                                <td>{{currentSelectedCompany.feature.attributes.GHZT}}</td>
-                            </tr>
+                            <!--<tr>-->
+                                <!--<td>规划状态</td>-->
+                                <!--<td>{{currentSelectedCompany.feature.attributes.GHZT}}</td>-->
+                            <!--</tr>-->
                             <tr>
                                 <td>性质</td>
                                 <td>{{currentSelectedCompany.feature.attributes.XZ}}</td>

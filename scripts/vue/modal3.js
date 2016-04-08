@@ -54,12 +54,12 @@ vueExports.modal3 = {
             heatLayer = new bism({
                 config: {
                     "useLocalMaximum": true,
-                    "radius": 15,
+                    "radius": 25,
                     "gradient": {
-                        0.45: "rgb(000,000,255)",
-                        0.55: "rgb(000,255,255)",
-                        0.65: "rgb(000,255,000)",
-                        0.75: "rgb(255,255,000)",
+                        0.15: "rgb(000,000,255)",
+                        0.45: "rgb(000,255,255)",
+                        0.60: "rgb(000,255,000)",
+                        0.85: "rgb(255,255,000)",
                         1.00: "rgb(255,000,000)"
                     }
                 },
@@ -145,7 +145,7 @@ vueExports.modal3 = {
         },
         draw: function (e) {
             //同一方法，对应不同按钮，获取此按钮的value 判断得到的是那个按钮事件
-            var btnValue = e.target.value.toLowerCase();
+            var btnValue = e.target.value;
             console.log(btnValue);
             // 实例化符号类
             var pointSym, lineSym, polygonSym;
@@ -160,7 +160,7 @@ vueExports.modal3 = {
 
             // 实例化查询参数类
             //var url = "http://60.29.110.104:6080/arcgis/rest/services/外业点位图map20151207/MapServer";
-            var url = "http://10.1.0.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer";
+            var url = "http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer";
             var queryTask0 = new esri.tasks.QueryTask(url + "/0"); //密度点84 (0)
             var queryTask1 = new esri.tasks.QueryTask(url + "/1");//红线84分类点 (1)
             var queryTask2 = new esri.tasks.QueryTask(url + "/2");//泵站84 (2)
