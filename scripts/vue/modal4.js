@@ -5,16 +5,24 @@ vueExports.modal4 = {
     el: '#modal4',
     data: {
         line:[],
-        switchAll:""
+        switchAll:"",
+        checked:false
     },
     watch: {
         line: function (val, oldVal) {
-            //console.log( val, oldVal);
+
         }
     },
     methods: {
         switchPipeline: function () {
-            //pipeLineLayer.setVisibleLayers(this.line);
+            if(this.line.length==4){
+                console.log(4);
+                $("[name = chkItem]:checkbox").attr("checked", true);
+            }else{
+                console.log(this.line.length);
+                $("[name = chkItem]:checkbox").attr("checked", false);
+            }
+            pipeLineLayer.setVisibleLayers(this.line);
             pipeLineLayer.show();
         },
         addPipeLineLayer: function () {
@@ -23,12 +31,12 @@ vueExports.modal4 = {
             //var layerDefs=[];
             //layerDefs[1]="name='konggang'";
             //layerDefs[2]="name='haigang'";
-            //imageParameters.layerDefinitions=layerDefs;
+            //imageParameters.layerDefinitions=layerDefs;5
             //只显示序号为1,2,3的图层
 
             // imageParameters.layerIds = [0];  //为了安全考虑，目前不把管线数据展示出来
-            imageParameters.layerIds = [7, 6, 5, 4, 3];
-            imageParameters.visibleLayers=[7,6,5,4,3];
+            imageParameters.layerIds = [8,7, 6, 4];  //不显示路灯
+            imageParameters.visibleLayers=[8,7,6,4];
             imageParameters.layerOption = ImageParameters.LAYER_OPTION_SHOW;
             imageParameters.transparent = true;
             //使用上面的参数构造ArcGISDynamicMapServiceLayer类的实例
@@ -41,12 +49,12 @@ vueExports.modal4 = {
         },
         closeAllPipeline: function () {
             if(this.switchAll){
-                this.line=["7", "6", "5", "4", "3"];
-                //pipeLineLayer.setVisibleLayers(this.line);
+                this.line=["8","7", "6", "4"];
+                pipeLineLayer.setVisibleLayers(this.line);
                 pipeLineLayer.show();
             }else{
                 this.line=[];
-                //pipeLineLayer.setVisibleLayers(this.line);
+                pipeLineLayer.setVisibleLayers(this.line);
                 pipeLineLayer.hide();   //隐藏管线图层
             }
         }

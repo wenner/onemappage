@@ -1745,6 +1745,9 @@ vueExports.main = {
         getProcessingDetail: function (company) {
           this.getFile(company);
         },
+        getSafeDetail:function (company) {
+
+        },
         clearGraphics: function () {
             //清除以前的currentSelectedCompany状态 以及清除所有高亮的graphic
             hightLightGraphicLayer.clear();  //为什么不清除图层呢
