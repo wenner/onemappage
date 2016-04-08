@@ -12,7 +12,7 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active tab1" id="modal5a" style="padding:5px">
-            <form class="form-inline">
+            <form class="form-inline text-center" style="margin-top: 20px;">
                 <div class="form-group" style="padding: 5px;">
                     <input type="text" class="form-control" id="m5t1t1" placeholder="Jane Doe" value="2"
                            v-model="tab1.t1">
@@ -30,7 +30,7 @@
                 </div>
             </form>
 
-            <div style="padding: 5px;">
+            <div style="padding: 40px;margin-left: -10px;" class="text-center">
                 <button class="btn btn-lg btn-warning" @click="areaService">
                     疏散分析
                 </button>
@@ -39,7 +39,7 @@
                 </button>
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane tab2" id="modal5b" style="padding:5px">
+        <div role="tabpanel" class="tab-pane tab2" id="modal5b" style="padding-top:30px">
             <form class="form-inline">
                 <div class="form-group" style="padding: 5px;">
                     <label>设置站点</label>
@@ -57,7 +57,7 @@
                 </div>
             </form>
 
-            <div style="padding: 5px;">
+            <div style="padding-top: 90px;" class="text-center">
                 <button class="btn btn-lg btn-warning" @click="solveRoute">
                     路径分析
                 </button>

@@ -19,11 +19,11 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="pipeLineLayer" style="padding:5px">
-            <div class="text-center" style="padding: 10px;">
+            <div class="text-center" style="padding: 30px;">
                 <label class="label label-info" style="color: #000;font-size:16px;">选择下列地下图层，开关图层</label>
             </div>
             <br/>
-            <div>
+            <div style="margin-left: 80px;">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" @change="closeAllPipeline" v-model="switchAll" name="chkItem">
@@ -33,31 +33,31 @@
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" value="4" @change="switchPipeline" v-model="line" >
-                        供电管线
+                        供电管线  <del style="color: red">　　　　　　　　　</del>
                     </label>
                 </div>
                 <!--<div class="checkbox">-->
                     <!--<label>-->
                         <!--<input type="checkbox" value="5" @change="switchPipeline" v-model="line" >-->
-                        <!--路灯电缆-->
+                        <!--路灯电缆  <del style="color: #ffcc00">　　　　　　　　　</del>-->
                     <!--</label>-->
                 <!--</div>-->
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" value="6" @change="switchPipeline" v-model="line" >
-                        燃气管线
+                        燃气管线  <del style="color: darkgoldenrod">　　　　　　　　　</del>
                     </label>
                 </div>
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" value="7" @change="switchPipeline" v-model="line" >
-                        污水管线
+                        污水管线  <del style="color: #080808">　　　　　　　　　</del>
                     </label>
                 </div>
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" value="8" @change="switchPipeline" v-model="line" >
-                        雨水管线
+                        雨水管线  <del style="color: #0265dc">　　　　　　　　　</del>
                     </label>
                 </div>
             </div>

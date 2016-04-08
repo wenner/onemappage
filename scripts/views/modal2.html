@@ -15,11 +15,11 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane tab1 active" id="modal2a" style="padding:5px">
-            <form class="form-inline">
+        <div role="tabpanel" class="tab-pane tab1 active" id="modal2a" style="padding:30px">
+            <form class="form-inline col-sm-offset-2">
                 <div class="form-group">
-                    <label for="inputBufferNum" class="col-sm-4 control-label">层级</label>
-                    <div class="col-sm-8">
+                    <label for="inputBufferNum" class="col-sm-7 control-label">层　　 　级</label>
+                    <div class="col-sm-4">
                         <!--<input type="number" class="form-control" id="inputEmail3" placeholder="1">-->
                         <select class="form-control" id="inputBufferNum" v-model="tab1.level">
                             <option value="1">1</option>
@@ -27,10 +27,10 @@
                             <option value="3">3</option>
                         </select>
                     </div>
-                </div>
+                </div><br><br>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="inputBufferDistance">缓冲区距离</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-6 control-label" for="inputBufferDistance">缓冲区距离</label>
+                    <div class="col-sm-5">
                         <select class="form-control" id="inputBufferDistance" v-model="tab1.distance">
                             <option value='100'>100</option>
                             <option value='200'>200</option>
@@ -43,9 +43,9 @@
                         </select>
                     </div>
                 </div>
-            </form>
-            <div class="text-center">
-                <button class="btn btn-sm btn-primary" id="btnBuffer" @click="tab1a">
+            </form><br>
+            <div class="text-center" style="margin-top: 15px">
+                <button class="btn btn-sm btn-primary" id="btnBuffer" @click="tab1a" style="margin-right: 20px">
                     <i class="fa fa-question"></i> 分析
                 </button>
                 <button class="btn btn-sm btn-warning" id="btnCleanBuffer" @click="clearBuffer">
@@ -54,12 +54,12 @@
             </div>
 
         </div>
-        <div role="tabpanel" class="tab-pane tab2" id="modal2b" >
-            <div class="text-center" style="padding:20px">
+        <div role="tabpanel" class="tab-pane tab2 col-sm-offset-2" id="modal2b" >
+            <div style="padding:30px">
                 <input class="label label-default">
-                     调色板
+                调色板
                 </input>
-                <input class="jscolor" value="#33FF33" type="text" v-model="tab2.color">
+                <input class="jscolor" value="#33FF33" type="text" v-model="tab2.color"><br><br>
                 <button class="btn btn-sm btn-primary" value="Rectangle" @click="Draw">
                     <i class="fa fa-question"></i> 矩形
                 </button>
@@ -74,13 +74,13 @@
                 </button>
             </div>
             <br/>
-            <div>
-                <button class="btn btn-lg btn-warning" @click="clearGraphic">
-                    清楚所有图形
+            <div style="margin-top:-30px">
+                <button class="btn btn-lg btn-warning col-sm-offset-1" @click="clearGraphic">
+                    清除所有图形
                 </button>
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane tab3" id="modal2c" >
+        <div role="tabpanel" class="tab-pane tab3" id="modal2c" style="margin-left:-60px; margin-top:2px;" >
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="inputMaterial" class="col-sm-4 control-label">泄露物质</label>
@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </form>
-            <div class="text-center">
+            <div class="text-center col-sm-offset-1">
                 <button class="btn btn-sm btn-primary" id="analysePoint" @click="setERGgraphic">
                     <i class="fa fa-question"></i> 事发点作为泄漏点
                 </button>
