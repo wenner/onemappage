@@ -186,7 +186,7 @@ vueExports.modal3 = {
             function activateTool() {
                 var tool = null;
                 console.log("进入activateTool方法");
-
+                $Map.setMapCursor("url(assets/images/cursor/e6.cur),auto");
                 switch (btnValue) {
                     case "rectangle":
                         console.log("进入画矩形case: "+btnValue);
@@ -229,10 +229,11 @@ vueExports.modal3 = {
             }
 
             function showResults(featureSet) {
-                console.log("进入显示查询出来的图形，加载到map中");
+                // console.log("进入显示查询出来的图形，加载到map中");
                 // 清除上一次的高亮显示
                 //$Map.graphics.clear();
                 tb.deactivate();
+                $Map.setMapCursor("url(assets/images/cursor/aero_arrow.cur),auto");
                 var symbol, infoTemplate;
                 symbol = pointSym;
                 //var taskName = document.getElementById("task").value;
@@ -265,9 +266,13 @@ vueExports.modal3 = {
             }
         },
         modal3delGraphic: function () {
+            tb.deactivate();
+            $Map.setMapCursor("url(assets/images/cursor/aero_arrow.cur),auto");
             $Map.graphics.clear();
         },
         printDoc:function(){
+            tb.deactivate();
+            $Map.setMapCursor("url(assets/images/cursor/aero_arrow.cur),auto");
             console.log("开始打印", this.docName);
             var PrintTemplate=esri.tasks.PrintTemplate;
             var template = new PrintTemplate();

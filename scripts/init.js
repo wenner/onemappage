@@ -227,7 +227,15 @@
     function initMapEvent() {
         $Map.on('mouse-move', showCoordinates);
         $Map.on('mouse-drag', showCoordinates);
+        //设置鼠标样式 目前场景有点混乱
+        // $Map.on("mouse-drag-start",function(){
+        //     $Map.setMapCursor("url(assets/images/cursor/pointer.cur),auto");
+        // });
+        // $Map.on("mouse-drag-end",function(){
+        //     $Map.setMapCursor("url(assets/images/cursor/aero_arrow.cur),auto");
+        // });
     }
+    //设置鼠标样式
 
     function showCoordinates(evt) {
         var mp = evt.mapPoint;
@@ -326,6 +334,7 @@
             outWasteLayer.enableMouseEvents();
 
         });
+
         //废弃物排放点位图层点击事件
         // outWasteLayer.on("click",function(evt){
         //    console.log(evt.graphic);
