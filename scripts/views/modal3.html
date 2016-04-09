@@ -188,17 +188,15 @@
 
         <div role="tabpanel" class="tab-pane" id="print" style="margin-top: 20px">
             <form class="form-horizontal" style="padding: 20px;">
-
-
                 <div class="form-group">
-                    <label for="docName" class="control-label col-sm-2 col-sm-offset-1" style="padding: 10px 0;"><h5><strong>标　　题</strong></h5></label>
+                    <label for="docName" class="col-sm-3 control-label" style="padding: 10px 0;">标　  　题</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control input-lg" id="docName" name="docName" style="padding: 10px 0;"
-                               placeholder="打印文件名称" value="公共影响因素分析结果及处置建议" v-model="docName">
-                    </div><br><br><br>
+                               placeholder="打印文件名称" value="公共影响因素分析结果" v-model="docName">
+                    </div>
+                </div>
                     <div class="form-group">
                         <label for="printFormat" class="col-sm-3 control-label" style="padding: 10px 0;">打印格式</label>
-
                         <div class="col-sm-8">
                             <select class="form-control" id="printFormat" v-model="print.printFormat">
                                 <option value="JPG">JPG</option>
@@ -226,7 +224,7 @@
                         </div>
                     </div>
 
-                </div>
+
             </form>
             <div class="text-center">
                 <button class="btn btn-lg btn-primary searchBtn" id="printDoc" @click="printDoc">

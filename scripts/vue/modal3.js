@@ -144,6 +144,11 @@ vueExports.modal3 = {
             }
         },
         draw: function (e) {
+            //清除图层中已经添加的graphic
+            searchGraphicsLayer.clear();
+            markLayer.clear();
+            //清空查询列表
+            $vmMain.result=[];
             //同一方法，对应不同按钮，获取此按钮的value 判断得到的是那个按钮事件
             var btnValue = e.target.value;
             console.log(btnValue);
@@ -272,9 +277,9 @@ vueExports.modal3 = {
                 //构造一个graphic对象，包含feature
                 //将graphic对象存入result数组中
                 var myresult=[];
-                var resultObject={feature:null};
                 var resultFeatures = featureSet.features;
                 for (var i = 0, il = resultFeatures.length; i < il; i++) {
+                    var resultObject={feature:null};  //将此变量放到for循环里面之后就没有vue.js:4546 Uncaught TypeError: Converting circular structure to JSON 错误 不明
                     // 从featureSet中得到当前地理特征
                     // 地理特征就是一图形对象
                     var graphic = resultFeatures[i];
@@ -323,7 +328,6 @@ vueExports.modal3 = {
             markLayer.clear();
         },
         printDoc:function(){
-            tb.deactivate();
             $Map.setMapCursor("url(assets/images/cursor/aero_arrow.cur),auto");
             console.log("开始打印", this.docName);
             var PrintTemplate=esri.tasks.PrintTemplate;
