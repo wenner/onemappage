@@ -282,18 +282,36 @@ vueExports.modal3 = {
                     // 设置信息模板
                     //graphic.setInfoTemplate(infoTemplate);
                     // 在地图的图形图层中增加图形
-                    $Map.graphics.add(graphic);
+                    searchGraphicsLayer.add(graphic);
                     resultObject.feature=graphic;
                     if(resultObject.feature!=null){
                         myresult.push(resultObject);
                     }
+                    var sExtent = graphic.geometry.getExtent();
+                    var pt = new esri.geometry.Point(
+                        (sExtent.xmin + sExtent.xmax) / 2,
+                        (sExtent.ymin + sExtent.ymax) / 2,
+                        new esri.SpatialReference($Map.spatialReference)
+                    );
+                    var pms;
+                    if (i < 10) {
+                        pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_" + i + ".PNG", 30, 80);
+                    } else {
+                        pms = new esri.symbol.PictureMarkerSymbol("../onemappage/assets/images/location_icon/_.PNG", 10, 30);
+                    }
+
+                    var gImg = new Graphic(pt, pms);
+                    markLayer.add(gImg);
                 }
-                console.log(myresult);
+                // console.log(myresult);
                 if(myresult.length==0){
                     $vmMain.result=[];
                 }else{
-                    $vmMain.result=myresult;
-                    $vmMain.sideState="list";
+                    for(var i=0;i<myresult.length;i++){
+                        $vmMain.result.push(myresult[i]);
+                    }
+                    // $vmMain.result=myresult;
+                    // $vmMain.sideState="list";
                 }
             }
         },
@@ -301,6 +319,8 @@ vueExports.modal3 = {
             tb.deactivate();
             $Map.setMapCursor("url(assets/images/cursor/aero_arrow.cur),auto");
             $Map.graphics.clear();
+            searchGraphicsLayer.clear();
+            markLayer.clear();
         },
         printDoc:function(){
             tb.deactivate();
