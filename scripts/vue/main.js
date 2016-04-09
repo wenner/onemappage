@@ -1678,6 +1678,9 @@ vueExports.main = {
             })
 
         },
+
+
+        //根据企业名称获取危险品信息
         QueryDangerInfoFromSQL: function (companyName) {
             // return false;
             // console.log("进入ajax查询数据方法");
@@ -1784,6 +1787,7 @@ vueExports.main = {
             console.log("没有查到数据,具体信息见下方");
             console.warn(data);
         },
+        //根据企业名称获取安全设施信息
         QuerySafeInfoFromSQL: function (companyName) {
             var name = companyName;
             var source = '/FMService/equipment';
@@ -1880,6 +1884,104 @@ vueExports.main = {
             console.log("没有查到数据,具体信息见下方");
             console.warn(data);
         },
+        //根据企业名称获取特种设备信息
+        QuerySpecialEquipmentInfoFromSQL: function (companyName) {
+            var name = companyName;
+            var source = '/FMService/equipment';
+            var field = '*';
+            var data = {
+                Fields: field.split(','),
+                Search: 'EnterpriseName = {0}',
+                Values: [name],
+                OrderFieldName: 'RegistrationTime',
+                OrderType: 'desc'
+            };
+            var arg_map = {
+                data: data,
+                success: onSuccess,
+                fail: onFail,
+                url: source
+            };
+            tjx.data.safetysearch.getDataTable(arg_map);
+            function onSuccess(data) {
+                //this.currentSelectedCompany=data;
+                //console.log(data);
+                var resultHead = [];
+                var resultCont;
+                for (var i = 0; i < data.ChsFields.length; i++) {
+                    resultHead.push(data.ChsFields[i].title);
+                }
+                resultHead = data.ChsFields;
+                console.log(resultHead);
+                for (var i = 0; i < data.DataCount; i++) {
+                    // console.log(data.Data[i]);
+                    resultCont += data.Data[i];
+                }
+                //对返回的数据解析成json格式
+                var self = this;
+                setTimeout(function () {
+                    console.log("服务器返回数据成功，开始进行解析");
+                    console.log(JSON.stringify(data));
+                    //模拟数据
+                    /*var rs = {
+                     "ChsFields":[
+                     {"title":"中文名称"} , {"title":"危险货物编号"} , {"title":"用途"} ,
+                     {"title":"日常用量"} , {"title":"最大储存量"} , {"title":"储存位置"}
+                     ] ,
+                     "CommandCount":0 ,
+                     "Commands":[] ,
+                     "Data":[
+                     ["硫酸" , "" , "其它" , "0.9kg/月" , "9kg" , ""] ,
+                     ["盐酸" , "" , "其它" , "0.6kg/月" , "6kg" , ""] ,
+                     ["石油醚" , "" , "其它" , "4kg/月" , "7kg" , ""] ,
+                     ["异辛烷" , "" , "其它" , "2kg/月" , "7kg" , ""] ,
+                     ["异丙醇" , "" , "其它" , "35kg/月" , "35kg" , ""] ,
+                     ["环己烷" , "" , "其它" , "0.2kg/月" , "4kg" , "品控部化学品库"] ,
+                     ["甲醇" , "" , "其它" , "0.4kg/月" , "8kg" , ""] ,
+                     ["乙醇" , "" , "其它" , "5kg/月" , "10kg" , "品控部化学品库"] ,
+                     ["丙酮" , "" , "其它" , "22kg/月" , "40kg" , "品控部化学品库"]
+                     ] ,
+                     "DataCount":6 ,
+                     "EngFields":[
+                     {"title":"ChemicalName"} ,
+                     {"title":"ChemicalNum"} ,
+                     {"title":"Usage"} ,
+                     {"title":"DailyDosage"} ,
+                     {"title":"MaximumStockingCapacity"} ,
+                     {"title":"StorageSite"}
+                     ] , "KeyField":null
+                     };*/
+                    //真实数据
+                    var rs = data;
+                    //self.currentCont= rs;
+                    //将表格数据格式解析成json格式
+                    var columns = [],
+                        store = [];
+                    for (var i = 0; i < rs.EngFields.length; i++) {
+                        var col = {},
+                            key = rs.EngFields[i].title;
+                        col = {code: key, text: rs.ChsFields[i].title};
+                        columns.push(col);
+                        for (var j = 0; j < rs.Data.length; j++) {
+                            if (!store[j]) store[j] = {};
+                            store[j][key] = rs.Data[j][i];
+                        }
+                    }
+                    self.safeData = {
+                        columns: columns,
+                        store: store,
+                        firstShowFields: [
+                            "DeviceName", "ModelName", "Category"
+                        ]
+                    };
+                }, 200);
+            }
+            function onFail(data) {
+                console.log("没有查到数据,具体信息见下方");
+                console.warn(data);
+            }
+        },
+
 
         //危险品名ChemicalName-->企业名
         QueryChemicalNameFromSQL: function (name) {
@@ -1938,7 +2040,7 @@ vueExports.main = {
             var resultName=[];
             function onSuccess(data) {
                 for(var i=0;i<data.Data.length;i++){
-                    var a=data.Data[i][9];
+                    var a=data.Data[i][10];
                     if(a!="" && a!=null){
                         resultName.push(a);
                     }
@@ -1972,7 +2074,7 @@ vueExports.main = {
             var resultName=[];
             function onSuccess(data) {
                 for(var i=0;i<data.Data.length;i++){
-                    var a=data.Data[i][9];
+                    var a=data.Data[i][10];
                     if(a!="" && a!=null){
                         resultName.push(a);
                     }
