@@ -57,6 +57,7 @@ vueExports.modal1 = {
                 var alarmSymbol;
                 if (evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
                     alarmSymbol = pictureSymbol;
+                    self.setExtent(evt);
                 } else if (evt.geometry.type === "line" || evt.geometry.type === "polyline") {
                     alarmSymbol = lineSymbol;
                 }
@@ -115,6 +116,8 @@ vueExports.modal1 = {
         },
         clearPoint: function () {
             tb.deactivate();
+            $vmMain.result=[];
+            this.pointResult=[];
             outWasteLayer.clear();
             markLayer.clear();
             hightLightGraphicLayer.clear();
@@ -126,11 +129,15 @@ vueExports.modal1 = {
         },
         //设置面层的放大显示
         setExtent: function (graphic) {
-            var Geometry = graphic.geometry;
-            
-            var Extent=Geometry.getExtent();
-            Extent = Extent.expand(1.5);
-            $Map.setExtent(Extent);
+            if(graphic.geometry.type=="point"){
+                var cPoint = new Point(graphic.geometry.x, graphic.geometry.y, new spatialReference($Map.spatialReference));
+                $Map.centerAndZoom(cPoint,8);
+            }else{
+                var Geometry = graphic.geometry;
+                var Extent=Geometry.getExtent();
+                Extent = Extent.expand(1);
+                $Map.setExtent(Extent);
+            }
         }
 
     }

@@ -60,16 +60,16 @@
                 调色板
                 </input>
                 <input class="jscolor" value="#33FF33" type="text" v-model="tab2.color"><br><br>
-                <button class="btn btn-sm btn-primary" value="Rectangle" @click="Draw">
+                <button class="btn btn-sm btn-primary" value="rectangle" @click="Draw">
                     <i class="fa fa-question"></i> 矩形
                 </button>
-                <button class="btn btn-sm btn-primary" value="Circle" @click="Draw">
+                <button class="btn btn-sm btn-primary" value="circle" @click="Draw">
                     <i class="fa fa-question"></i> 圆形
                 </button>
-                <button class="btn btn-sm btn-primary" value="Polygon" @click="Draw">
+                <button class="btn btn-sm btn-primary" value="polygon" @click="Draw">
                     <i class="fa fa-question"></i> 多边形
                 </button>
-                <button class="btn btn-sm btn-warning" value="FreehandPolygon" @click="Draw">
+                <button class="btn btn-sm btn-warning" value="freehandpolygon" @click="Draw">
                     <i class="fa fa-phone"></i> 手绘
                 </button>
             </div>
@@ -125,9 +125,9 @@
                 <button class="btn btn-sm btn-primary" id="analysePoint" @click="setERGgraphic">
                     <i class="fa fa-question"></i> 事发点作为泄漏点
                 </button>
-                <button class="btn btn-sm btn-warning">
-                    <i class="fa fa-phone"></i> 选择泄漏点
-                </button>
+                <!--<button class="btn btn-sm btn-warning">-->
+                    <!--<i class="fa fa-phone"></i> 选择泄漏点-->
+                <!--</button>-->
                 <button class="btn btn-sm btn-warning" @click="btnCleanResult">
                     <i class="fa fa-phone"></i> 清除结果
                 </button>

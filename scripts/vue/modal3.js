@@ -124,8 +124,11 @@ vueExports.modal3 = {
             query.outFields = ["X", "Y", "UNAME", "FID "];
             //var graphic = new Graphic();
             console.log("pointBufferFeature :  " + pointBufferFeature);
-            query.geometry = pointBufferFeature.geometry;
-            queryTask2.execute(query);
+            if(pointBufferFeature!=null){
+                query.geometry = pointBufferFeature.geometry;
+                queryTask2.execute(query);
+            }else{
+            }
 
             var selectSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 12, new SimpleLineSymbol(SimpleLineSymbol.STYLE_NULL, new Color([0, 0, 255, 0.9]), 1), new Color([0, 0, 255, 0.8]));
             var evtResult;  //用于临时保存空间查询出来的数据，以便后续二次操作

@@ -142,8 +142,8 @@ vueExports.modal2 = {
             tb.on("draw-end", addGraphic);
             $Map.disableMapNavigation();   //禁用map双击放大事件
 
-            console.log(evt.target.value, this.tab2.color); //获取到button的value值
-            var toDrawGraphic = evt.target.value.toLowerCase();
+            // console.log(evt.target.value, this.tab2.color); //获取到button的value值
+            var toDrawGraphic = evt.target.value;
             tb.activate(toDrawGraphic);
             function addGraphic(evt) {
                 //deactivate the toolbar

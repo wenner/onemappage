@@ -298,7 +298,7 @@
 
         dialog = new TooltipDialog({
             id: "tooltipDialog",
-            style: "position: absolute; width: 250px; font: normal normal normal 10pt Helvetica;z-index:100"
+            style: "position: absolute; width: 250px; font: normal normal normal 10pt Helvetica;z-index:100;"
         });
         dialog.startup();
 

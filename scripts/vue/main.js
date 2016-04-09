@@ -103,6 +103,7 @@ vueExports.main = {
             searchGraphicsLayer.clear();
             outWasteLayer.clear();
             // searchBuildingGraphicsLayer.clear();
+            hightLightGraphicLayer.clear();
             markLayer.clear();
             var self = this;
             self.sideLoading = true;
@@ -321,9 +322,9 @@ vueExports.main = {
             //当点击的名称对应的图形为线或面类型时获取其范围进行放大显示
             else {
                 var sExtent = sGeometry.getExtent();
-                sExtent = sExtent.expand(2);
+                sExtent = sExtent.expand(1.5);
                 map.setExtent(sExtent);
-                // console.log("对应的类型是线或面,范围：" + JSON.stringify(sExtent));  //JSON.stringify(obj)  将obj json对象转换为string
+                console.log("对应的类型是线或面,范围：" + JSON.stringify(sExtent));  //JSON.stringify(obj)  将obj json对象转换为string
                 //var p = map.toScreen(sGrapphic.geometry);
                 //var iw = map.infoWindow;
                 //iw.show();
