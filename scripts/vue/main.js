@@ -20,7 +20,7 @@ vueExports.main = {
             // {text: "排放监测", value: "outfall"}
         ],
         sideLoading: false,
-        keyword: '卡特彼勒',
+        keyword: '氨',
         keywordCollect:[],
         result: [],
         resultBulding: [],
@@ -135,32 +135,31 @@ vueExports.main = {
                         self.keywordCollect=keywords;
                         console.log("显示从SQL查询出来的企业名称列表");
                         console.log(self.keywordCollect);
+                        findParams.searchFields = ["XMMC", "UNAME"];
+                        if(self.keywordCollect.length>0){
+                            for(var i=0;i<self.keywordCollect.length;i++){
+                                console.log("进入keywordCollect循环赋值查询矢量  开始");
+                                self.sideLoading = true;
+                                findParams.searchText=self.keywordCollect[i];
+                                findTask.execute(findParams, function (result) {
+                                    self.result = result;
+                                    self.sideState = "list";
+                                    self.addResultGraphic();
+                                    for (var i = 0; i < self.result.length; i++) {
+                                        aa.push(i);
+                                    }
+                                    console.log(i);
+                                });
+                                if(i==self.keywordCollect.length-1){
+                                    self.sideLoading = false;
+                                }
+                            }
+                            console.log("进入keywordCollect循环赋值查询矢量  结束");
+                        }
                     }
                 },500);
             }
 ////////////////////////////////////////////////////////////////结束查找企业名称
-            findParams.searchFields = ["XMMC", "UNAME"];
-            console.log(this.keywordCollect);
-            if(this.keywordCollect.length>0){
-                for(var i=0;i<this.keywordCollect.length;i++){
-                    console.log("进入keywordCollect循环赋值查询矢量  开始");
-                    self.sideLoading = true;
-                    findParams.searchText=this.keywordCollect[i];
-                    findTask.execute(findParams, function (result) {
-                        self.result = result;
-                        self.sideState = "list";
-                        self.addResultGraphic();
-                        for (var i = 0; i < self.result.length; i++) {
-                            aa.push(i);
-                        }
-                        console.log(i);
-                    });
-                    if(i==this.keywordCollect.length-1){
-                        self.sideLoading = false;
-                    }
-                }
-                console.log("进入keywordCollect循环赋值查询矢量  结束");
-            }
             this.resultSort = aa;
         },
         addResultGraphic: function () {
