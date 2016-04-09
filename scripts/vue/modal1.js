@@ -2,12 +2,17 @@ vueExports.modal1 = {
     el: '#modal1',
     data: {
         address: "",
-        pointResult:[],
-        noEnterprise:""
+        pointResult: [],
+        noEnterprise: ""
     },
     methods: {
         drawPoint: function (evt) {
-            var self=this;
+            outWasteLayer.clear();
+            markLayer.clear();
+            hightLightGraphicLayer.clear();
+            alarmLayer.clear();
+            searchGraphicsLayer.clear();
+            var self = this;
             $Map.setMapCursor("url(assets/images/cursor/cur_arrow_color.cur),auto");
             var pictureSymbol = new PictureMarkerSymbol({
                 "url": "../onemappage/assets/images/alert.gif",
@@ -20,7 +25,7 @@ vueExports.modal1 = {
             //涉危企业面图层
             var redLineCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9", {
                 mode: FeatureLayer.MODE_SNAPSHOT,
-                outFields: ["XMMC", "分类", "UNAME", "FID", "JZXG", "YDXZ", "QYKK", "BXMMC","DISTRICT","Dlbmc","XZ","企业名","Zlbmc"]
+                outFields: ["XMMC", "分类", "UNAME", "FID", "JZXG", "YDXZ", "QYKK", "BXMMC", "DISTRICT", "Dlbmc", "XZ", "企业名", "Zlbmc"]
             });
             var polySymbol = new SimpleFillSymbol(
                 SimpleFillSymbol.STYLE_SOLID,
@@ -65,17 +70,18 @@ vueExports.modal1 = {
             function doQuery(evt) {
 
                 query.geometry = evt.geometry;
-                query.outFields = ["XMMC", "分类", "UNAME", "FID", "JZXG", "YDXZ", "QYKK", "BXMMC","DISTRICT","Dlbmc","XZ","企业名","Zlbmc"];
-                var queryTask=new esri.tasks.QueryTask("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9");
+                query.outFields = ["XMMC", "分类", "UNAME", "FID", "JZXG", "YDXZ", "QYKK", "BXMMC", "DISTRICT", "Dlbmc", "XZ", "企业名", "Zlbmc"];
+                var queryTask = new esri.tasks.QueryTask("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9");
                 queryTask.execute(query, showResults);
             }
+
             function showResults(featureSet) {
 
                 var symbol, infoTemplate;
                 symbol = polySymbol;
                 // infoTemplate = statesInfoTemplate;
                 //构造一个graphic对象，包含feature
-                var resultObject={feature:null};
+                var resultObject = {feature: null};
                 var resultFeatures = featureSet.features;
                 for (var i = 0, il = resultFeatures.length; i < il; i++) {
                     // 从featureSet中得到当前地理特征
@@ -88,19 +94,20 @@ vueExports.modal1 = {
 
                     // 在地图的图形图层中增加图形
                     searchGraphicsLayer.add(graphic);
-                    resultObject.feature=graphic;
+                    resultObject.feature = graphic;
+                    self.setExtent(graphic);
                 }
                 //将graphic对象存入result数组中
-                var result=[];
-                if(resultObject.feature!=null){
+                var result = [];
+                if (resultObject.feature != null) {
                     result.push(resultObject);
                 }
-                if(result.length==0){
-                    $vmMain.result=[];
-                }else{
-                    self.pointResult=result;
-                    $vmMain.result=result;
-                    $vmMain.sideState="list";
+                if (result.length == 0) {
+                    $vmMain.result = [];
+                } else {
+                    self.pointResult = result;
+                    $vmMain.result = result;
+                    $vmMain.sideState = "list";
                 }
                 // console.log(searchResultGraphic);
                 // console.log(featureSet);
@@ -108,11 +115,22 @@ vueExports.modal1 = {
         },
         clearPoint: function () {
             tb.deactivate();
+            outWasteLayer.clear();
+            markLayer.clear();
+            hightLightGraphicLayer.clear();
             alarmLayer.clear();
             searchGraphicsLayer.clear();
         },
         searchAddress: function () {
             console.log("你要查询的地址是： " + this.address);
+        },
+        //设置面层的放大显示
+        setExtent: function (graphic) {
+            var Geometry = graphic.geometry;
+            
+            var Extent=Geometry.getExtent();
+            Extent = Extent.expand(1.5);
+            $Map.setExtent(Extent);
         }
 
     }

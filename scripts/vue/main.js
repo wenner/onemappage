@@ -323,7 +323,7 @@ vueExports.main = {
                 var sExtent = sGeometry.getExtent();
                 sExtent = sExtent.expand(2);
                 map.setExtent(sExtent);
-                //console.log("对应的类型是线或面,范围：" + JSON.stringify(sExtent));  //JSON.stringify(obj)  将obj json对象转换为string
+                // console.log("对应的类型是线或面,范围：" + JSON.stringify(sExtent));  //JSON.stringify(obj)  将obj json对象转换为string
                 //var p = map.toScreen(sGrapphic.geometry);
                 //var iw = map.infoWindow;
                 //iw.show();
