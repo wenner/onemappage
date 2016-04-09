@@ -21,6 +21,14 @@
             max-height: 2000px;
         }
     </style>
+    <script type="text/javascript">
+        function nofind() {
+            var img = event.srcElement;
+            img.src = "../onemappage/assets/images/location_icon/_oneerror.png";
+            img.onerror = null;
+            // 控制不要一直跳动
+        }
+    </script>
 </head>
 <body  class="claro" style="height:100%;">
 <div id="pageloader" class="dark-div"
@@ -387,7 +395,6 @@
 <script type="text/javascript" src="../../js/tjx.data.safetysearch.js"></script>
 
 
-
 <script type="text/javascript" src="scripts/vue/main.js"></script>
 <!--
 <script type="text/javascript" src="scripts/vue/side.js"></script>
@@ -408,13 +415,6 @@
 <script type="text/javascript" src="assets/scripts/InfoTip.js"></script>
 <script type="text/javascript" src="assets/scripts/pdfobject.js"></script>
 
-<script type="text/javascript">
-    function nofind() {
-        var img = event.srcElement;
-        img.src = "../onemappage/assets/images/location_icon/_oneerror.png";
-        img.onerror = null;
-        // 控制不要一直跳动
-    }
-</script>
+
 </body>
 </html>

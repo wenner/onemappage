@@ -20,7 +20,7 @@ vueExports.main = {
             // {text: "排放监测", value: "outfall"}
         ],
         sideLoading: false,
-        keyword: '氨',
+        keyword: '锅炉',
         keywordCollect:[],
         result: [],
         resultBulding: [],
@@ -182,51 +182,7 @@ vueExports.main = {
             for (var i = 0; i < result.length; i++) {
                 console.log(i);
                 var item = result[i], graphic = item.feature, symbol, infoTemplate = null;
-                // 查询字段  根据选择的分类，分类加载graphic
-                switch (this.currentQueryType.value) {
-                    case "keyword":
-                        filterNum += 1;
-                        console.log("关键字");
-                        filterResult.push(item);
-                        addGraphicToMarkLayer(graphic);
-                        break;
-                    case "danger":
-                        if (graphic.attributes.分类 == "化学品类") {
-                            filterNum += 1;
-                            console.log("化学品类");
-                            filterResult.push(item);
-                            addGraphicToMarkLayer(graphic);
-                        }
-                        break;
-                    case "bomb":
-                        if (graphic.attributes.分类 == "易制爆类") {
-                            filterNum += 1;
-                            console.log("易制爆类");
-                            filterResult.push(item);
-                            addGraphicToMarkLayer(graphic);
-                        }
-                        break;
-                    case "oil":
-                        if (graphic.attributes.分类 == "油罐类") {
-                            filterNum += 1;
-                            console.log("油罐类");
-                            filterResult.push(item);
-                            addGraphicToMarkLayer(graphic);
-                        }
-                        break;
-                    case "gasStation":
-                        if (graphic.attributes.分类 == "加油站") {
-                            filterNum += 1;
-                            console.log("加油站");
-                            filterResult.push(item);
-                            addGraphicToMarkLayer(graphic);
-                        }
-                        break;
-                    default:
-                        console.log("请选择一个类别");
-                        break;
-                }
-
+                //此处addGraphicToMarkLayer定义在swith上方，防止出现调用前未定义  （在火狐浏览器中发生）
                 function addGraphicToMarkLayer(graphic) {
                     switch (graphic.geometry.type) {
                         case "point":
@@ -292,6 +248,52 @@ vueExports.main = {
                     //$Map.graphics.add(graphic);
                     searchGraphicsLayer.add(graphic);
                 }
+                // 查询字段  根据选择的分类，分类加载graphic
+                switch (this.currentQueryType.value) {
+                    case "keyword":
+                        filterNum += 1;
+                        console.log("关键字");
+                        filterResult.push(item);
+                        addGraphicToMarkLayer(graphic);
+                        break;
+                    case "danger":
+                        if (graphic.attributes.分类 == "化学品类") {
+                            filterNum += 1;
+                            console.log("化学品类");
+                            filterResult.push(item);
+                            addGraphicToMarkLayer(graphic);
+                        }
+                        break;
+                    case "bomb":
+                        if (graphic.attributes.分类 == "易制爆类") {
+                            filterNum += 1;
+                            console.log("易制爆类");
+                            filterResult.push(item);
+                            addGraphicToMarkLayer(graphic);
+                        }
+                        break;
+                    case "oil":
+                        if (graphic.attributes.分类 == "油罐类") {
+                            filterNum += 1;
+                            console.log("油罐类");
+                            filterResult.push(item);
+                            addGraphicToMarkLayer(graphic);
+                        }
+                        break;
+                    case "gasStation":
+                        if (graphic.attributes.分类 == "加油站") {
+                            filterNum += 1;
+                            console.log("加油站");
+                            filterResult.push(item);
+                            addGraphicToMarkLayer(graphic);
+                        }
+                        break;
+                    default:
+                        console.log("请选择一个类别");
+                        break;
+                }
+
+
             }
             //将过滤后的结果重新组合后再把结果赋到result公共变量中
             this.result = filterResult;
