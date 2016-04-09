@@ -127,7 +127,7 @@ vueExports.modal1 = {
         searchAddress: function () {
             console.log("你要查询的地址是： " + this.address);
         },
-        //设置面层的放大显示
+        //设置点或面层的放大显示
         setExtent: function (graphic) {
             if(graphic.geometry.type=="point"){
                 var cPoint = new Point(graphic.geometry.x, graphic.geometry.y, new spatialReference($Map.spatialReference));

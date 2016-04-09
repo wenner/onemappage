@@ -21,6 +21,7 @@ vueExports.main = {
         ],
         sideLoading: false,
         keyword: '卡特彼勒',
+        keywordCollect:[],
         result: [],
         resultBulding: [],
         resultSort: [],
@@ -119,24 +120,47 @@ vueExports.main = {
             //Layer: 密度点84 (0) 红线84分类点 (1) 泵站84 (2) 企业内部点位 (3) 供电管线84 (4) 路灯电缆84 (5) 燃气管线84 (6)
             // 污水管线84 (7) 雨水管线84 (8) 企业红线84 (9) 企业内部建筑物84 (10) 企业内部绿地84 (11)
             findParams.layerIds = [9];
-
-            findParams.searchFields = ["XMMC", "UNAME", "BXMMC", "YDXZ"];
-            if (this.keyword == '') {
-                console.log("this.keyword==''");
-                findParams.searchText = "天津";
-            } else {
-                console.log("this.keyword==" + this.keyword);
-                findParams.searchText = this.keyword;
+////////////////////////////////////////////////////////////////开始从SQL数据库查找匹配的企业名称
+            if(this.keyword.trim()!=""){
+                this.QueryChemicalNameFromSQL(this.keyword);
+                // var keywords=this.keywordCollect;
+                setTimeout(function(){
+                    if(self.keywordCollect.length>0){
+                        var keywords=[];
+                        for(var i=0;i<self.keywordCollect.length;i++){
+                            if(!keywords.contains(self.keywordCollect[i])){
+                                keywords.push(self.keywordCollect[i]);
+                            }
+                        }
+                        self.keywordCollect=keywords;
+                        console.log("显示从SQL查询出来的企业名称列表");
+                        console.log(self.keywordCollect);
+                    }
+                },500);
             }
-            findTask.execute(findParams, function (result) {
-                self.sideLoading = false;
-                self.result = result;
-                self.sideState = "list";
-                self.addResultGraphic();
-                for (var i = 0; i < self.result.length; i++) {
-                    aa.push(i);
+////////////////////////////////////////////////////////////////结束查找企业名称
+            findParams.searchFields = ["XMMC", "UNAME"];
+            console.log(this.keywordCollect);
+            if(this.keywordCollect.length>0){
+                for(var i=0;i<this.keywordCollect.length;i++){
+                    console.log("进入keywordCollect循环赋值查询矢量  开始");
+                    self.sideLoading = true;
+                    findParams.searchText=this.keywordCollect[i];
+                    findTask.execute(findParams, function (result) {
+                        self.result = result;
+                        self.sideState = "list";
+                        self.addResultGraphic();
+                        for (var i = 0; i < self.result.length; i++) {
+                            aa.push(i);
+                        }
+                        console.log(i);
+                    });
+                    if(i==this.keywordCollect.length-1){
+                        self.sideLoading = false;
+                    }
                 }
-            });
+                console.log("进入keywordCollect循环赋值查询矢量  结束");
+            }
             this.resultSort = aa;
         },
         addResultGraphic: function () {
@@ -1986,6 +2010,7 @@ vueExports.main = {
 
         //危险品名ChemicalName-->企业名
         QueryChemicalNameFromSQL: function (name) {
+            var self=this;
             var name = name;
             var source = '/FMService/chemical';
             var field = '*';
@@ -2006,10 +2031,14 @@ vueExports.main = {
             //将取到的名称存到resultName中
             var resultName=[];
             function onSuccess(data) {
+                console.log("查询危险品名ChemicalName-->企业名  成功");
+                self.QueryEquipmentNameFromSQL(name);
                 for(var i=0;i<data.Data.length;i++){
                     var a=data.Data[i][9];
                     if(a!="" && a!=null){
                         resultName.push(a);
+                        self.keywordCollect.push(a);
+                        console.log(a);
                     }
                 }
             }
@@ -2020,6 +2049,7 @@ vueExports.main = {
         },
         //安全设施名称EquipmentName-->企业名
         QueryEquipmentNameFromSQL: function (name) {
+            var self=this;
             var name = name;
             var source = '/FMService/equipment';
             var field = '*';
@@ -2040,10 +2070,14 @@ vueExports.main = {
             //将取到的名称存到resultName中
             var resultName=[];
             function onSuccess(data) {
+                console.log("查询安全设施名称EquipmentName-->企业名  成功");
+                self.QueryDeviceNameFromSQL(name);
                 for(var i=0;i<data.Data.length;i++){
                     var a=data.Data[i][10];
                     if(a!="" && a!=null){
                         resultName.push(a);
+                        self.keywordCollect.push(a);
+                        console.log(a);
                     }
                 }
             }
@@ -2054,6 +2088,7 @@ vueExports.main = {
         },
         //特种设备名称DeviceName-->企业名
         QueryDeviceNameFromSQL: function (name) {
+            var self=this;
             var name = name;
             var source = '/FMService/specialequipment';
             var field = '*';
@@ -2074,10 +2109,13 @@ vueExports.main = {
             //将取到的名称存到resultName中
             var resultName=[];
             function onSuccess(data) {
+                console.log("查询特种设备名称DeviceName-->企业名  成功");
                 for(var i=0;i<data.Data.length;i++){
                     var a=data.Data[i][10];
                     if(a!="" && a!=null){
                         resultName.push(a);
+                        self.keywordCollect.push(a);
+                        console.log(a);
                     }
                 }
             }
