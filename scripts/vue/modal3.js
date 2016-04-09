@@ -147,6 +147,20 @@ vueExports.modal3 = {
             //同一方法，对应不同按钮，获取此按钮的value 判断得到的是那个按钮事件
             var btnValue = e.target.value;
             console.log(btnValue);
+            //涉危企业面图层
+            var redLineCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9", {
+                mode: FeatureLayer.MODE_SNAPSHOT,
+                outFields: ["XMMC", "分类", "UNAME", "FID", "JZXG", "YDXZ", "QYKK", "BXMMC","DISTRICT","Dlbmc","XZ","企业名","Zlbmc"]
+            });
+            var polySymbol = new SimpleFillSymbol(
+                SimpleFillSymbol.STYLE_SOLID,
+                new SimpleLineSymbol(
+                    SimpleLineSymbol.STYLE_SOLID,
+                    new Color([255, 255, 255, 0.35]),
+                    1
+                ),
+                new Color([125, 125, 125, 0.35])
+            );
             // 实例化符号类
             var pointSym, lineSym, polygonSym;
             var redColor = new Color([255, 0, 0]);
@@ -165,6 +179,7 @@ vueExports.modal3 = {
             var queryTask1 = new esri.tasks.QueryTask(url + "/1");//红线84分类点 (1)
             var queryTask2 = new esri.tasks.QueryTask(url + "/2");//泵站84 (2)
             var queryTask3 = new esri.tasks.QueryTask(url + "/3");//企业内部点位 (3)
+            var queryTaskredLineCategory=new esri.tasks.QueryTask("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9");
             query = new esri.tasks.Query();
             query.returnGeometry = true;
 
@@ -210,9 +225,9 @@ vueExports.modal3 = {
                 query.geometry = evt.geometry;
                 //var taskName = document.getElementById("task").value;
                 var queryTask;
-                queryTask = queryTask1; //后期可以根据选择的项进行判断查询哪些图层
+                queryTask = queryTaskredLineCategory; //后期可以根据选择的项进行判断查询哪些图层
                 query.returnGeometry = true;
-                query.outFields = ["XMMC", "分类", "UNAME", "FID"];
+                query.outFields = ["XMMC", "分类", "UNAME", "FID", "JZXG", "YDXZ", "QYKK", "BXMMC","DISTRICT","Dlbmc","XZ","企业名","Zlbmc"];
                 /*if (this.c1 === "statesTask") {
                  queryTask = statesTask;
                  query.outFields = ["STATE_NAME", "AREA"];
@@ -235,7 +250,9 @@ vueExports.modal3 = {
                 tb.deactivate();
                 $Map.setMapCursor("url(assets/images/cursor/aero_arrow.cur),auto");
                 var symbol, infoTemplate;
-                symbol = pointSym;
+                // symbol = pointSym;
+                symbol = polySymbol; //此处用的是面层，故用polygonSym填充
+                console.log(featureSet);
                 //var taskName = document.getElementById("task").value;
                 //switch (taskName) {
                 //    case "citiesTask":
@@ -252,6 +269,10 @@ vueExports.modal3 = {
                 //        break;
                 //}
 
+                //构造一个graphic对象，包含feature
+                //将graphic对象存入result数组中
+                var myresult=[];
+                var resultObject={feature:null};
                 var resultFeatures = featureSet.features;
                 for (var i = 0, il = resultFeatures.length; i < il; i++) {
                     // 从featureSet中得到当前地理特征
@@ -262,6 +283,17 @@ vueExports.modal3 = {
                     //graphic.setInfoTemplate(infoTemplate);
                     // 在地图的图形图层中增加图形
                     $Map.graphics.add(graphic);
+                    resultObject.feature=graphic;
+                    if(resultObject.feature!=null){
+                        myresult.push(resultObject);
+                    }
+                }
+                console.log(myresult);
+                if(myresult.length==0){
+                    $vmMain.result=[];
+                }else{
+                    $vmMain.result=myresult;
+                    $vmMain.sideState="list";
                 }
             }
         },

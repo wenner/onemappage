@@ -122,7 +122,7 @@ vueExports.main = {
             findParams.searchFields = ["XMMC", "UNAME", "BXMMC", "YDXZ"];
             if (this.keyword == '') {
                 console.log("this.keyword==''");
-                findParams.searchText = "空港";
+                findParams.searchText = "天津";
             } else {
                 console.log("this.keyword==" + this.keyword);
                 findParams.searchText = this.keyword;

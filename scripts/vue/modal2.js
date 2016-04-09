@@ -179,8 +179,8 @@ vueExports.modal2 = {
 
             //根据数据框数据的条件进行参数设定，包括大小，旋转方向
             //1.大小的确定
-            var weight = 500;
-            var height = 700;
+            var weight = 800;
+            var height = 1100;
             // var rings = [
             //     [-500, -500],
             //     [500, -500],

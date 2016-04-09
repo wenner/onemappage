@@ -20,7 +20,7 @@ vueExports.modal1 = {
             //涉危企业面图层
             var redLineCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9", {
                 mode: FeatureLayer.MODE_SNAPSHOT,
-                outFields: ["UNAME", "JZXG", "YDXZ", "QYKK", "BXMMC"]
+                outFields: ["XMMC", "分类", "UNAME", "FID", "JZXG", "YDXZ", "QYKK", "BXMMC","DISTRICT","Dlbmc","XZ","企业名","Zlbmc"]
             });
             var polySymbol = new SimpleFillSymbol(
                 SimpleFillSymbol.STYLE_SOLID,
@@ -65,7 +65,7 @@ vueExports.modal1 = {
             function doQuery(evt) {
 
                 query.geometry = evt.geometry;
-                query.outFields = ["UNAME", "JZXG", "YDXZ", "QYKK", "BXMMC","XMMC","DISTRICT","Dlbmc","XZ","企业名","Zlbmc"];
+                query.outFields = ["XMMC", "分类", "UNAME", "FID", "JZXG", "YDXZ", "QYKK", "BXMMC","DISTRICT","Dlbmc","XZ","企业名","Zlbmc"];
                 var queryTask=new esri.tasks.QueryTask("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9");
                 queryTask.execute(query, showResults);
             }
@@ -92,7 +92,9 @@ vueExports.modal1 = {
                 }
                 //将graphic对象存入result数组中
                 var result=[];
-                result.push(resultObject);
+                if(resultObject.feature!=null){
+                    result.push(resultObject);
+                }
                 if(result.length==0){
                     $vmMain.result=[];
                 }else{

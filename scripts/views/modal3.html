@@ -148,7 +148,7 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" id="m3-tb2-v4-3" value="油管类" v-model="c4">油管类</label>
+                                    <input type="checkbox" id="m3-tb2-v4-3" value="油罐类" v-model="c4">油罐类</label>
                             </div>
                             <div class="checkbox">
                                 <label>
@@ -159,6 +159,9 @@
                     </div>
                 </div>
                 <div class='text-center' style="margin-top:15px">
+                    <button class="btn btn-primary" value="analysis" @click="analysis" style="margin-top: 5px">
+                        <i class="fa fa-question"></i><br>分析
+                    </button>
                     <button class="btn btn-primary" id="rectangle" value="rectangle" @click="draw">
                         <i class="fa fa-question"></i><br>矩形
                     </button>
@@ -168,9 +171,7 @@
                     <button class="btn btn-primary" id="polygon" value="polygon" @click="draw">
                         <i class="fa fa-question"></i><br>多边形
                     </button><br>
-                    <button class="btn btn-primary" value="analysis" @click="analysis" style="margin-top: 5px">
-                        <i class="fa fa-question"></i><br>分析
-                    </button>
+
                     <button class="btn btn-warning" id="freehandpolygon" value="freehandpolygon"
                             @click="draw" style="margin-top: 5px">
                         <i class="fa fa-phone"></i><br>手绘
