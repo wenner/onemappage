@@ -151,15 +151,13 @@ vueExports.main = {
                                     for (var i = 0; i < result.length; i++) {
                                         myresult.push(result[i]);
                                     }
-
-                                    self.addResultGraphic(result);
-
-
+                                    // self.addResultGraphic(result);
                                     // console.log(myresult, result);
                                     // self.addResultGraphic(myresult);
                                 });
                                 if (i == mykeywords.length - 1) {
                                     self.sideLoading = false;
+                                    self.addResultGraphic(myresult);
                                 }
                             }
 
