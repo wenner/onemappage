@@ -107,7 +107,7 @@ vueExports.main = {
             markLayer.clear();
             this.result = [];
             this.resultSort = [];
-            this.keywordCollect=[];
+            this.keywordCollect = [];
             var myresult = [];
             var self = this;
             self.sideLoading = true;
@@ -127,7 +127,7 @@ vueExports.main = {
             if (this.keyword.trim() != "") {
                 this.QueryChemicalNameFromSQL(this.keyword);
                 // var keywords=this.keywordCollect;
-                setTimeout(function(){
+                setTimeout(function () {
                     if (self.keywordCollect.length > 0) {
                         var mykeywords = [];
                         mykeywords = self.keywordCollect;
@@ -136,9 +136,9 @@ vueExports.main = {
                         console.log(mykeywords);
                         findParams.searchFields = ["XMMC", "UNAME"];
                         if (mykeywords.length > 0) {
+                            self.sideLoading = true;
                             for (var i = 0; i < mykeywords.length; i++) {
                                 console.log("进入keywordCollect循环赋值查询矢量  开始");
-                                self.sideLoading = true;
                                 findParams.searchText = mykeywords[i];
                                 findTask.execute(findParams, function (result) {
                                     // myresult.concat(result);//合并多个返回值，统一进行下一步操作
@@ -151,8 +151,12 @@ vueExports.main = {
                                     for (var i = 0; i < result.length; i++) {
                                         myresult.push(result[i]);
                                     }
-                                    console.log(myresult, result);
-                                    self.addResultGraphic(myresult);
+
+                                    self.addResultGraphic(result);
+
+
+                                    // console.log(myresult, result);
+                                    // self.addResultGraphic(myresult);
                                 });
                                 if (i == mykeywords.length - 1) {
                                     self.sideLoading = false;
@@ -167,13 +171,12 @@ vueExports.main = {
                             for (var i = 0; i < myresult.length; i++) {
                                 aa.push(i);
                             }
-                            console.log("进入keywordCollect循环赋值查询矢量  结束");
                         }
                     }
-                    self.result=myresult;
+                    self.result = myresult;
                     self.resultSort = aa;
                     // self.addResultGraphic(myresult);
-                },1000);
+                }, 1000);
             }
 
 ////////////////////////////////////////////////////////////////结束查找企业名称
@@ -183,8 +186,8 @@ vueExports.main = {
             console.log("进入添加graphic方法");
             var self = this;
             //$Map.graphics.clear();
-            this.clearGraphics();
-            searchGraphicsLayer.clear();
+            // this.clearGraphics();
+            // searchGraphicsLayer.clear();
             var scSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([102, 102, 255, 0.55]), 1), new Color([255, 102, 102, 0.35]));
             // var result = this.result;
             var result = myresult;
@@ -312,7 +315,7 @@ vueExports.main = {
         },
         showResultItem: function (item) {
             var self = this;
-            //this.clearGraphics();
+            this.clearGraphics();
             hightLightGraphicLayer.clear();
             outWasteLayer.clear();
             this.currentSelectedCompany = item;
@@ -2024,7 +2027,7 @@ vueExports.main = {
 
         //危险品名ChemicalName-->企业名
         QueryChemicalNameFromSQL: function (name) {
-            this.keywordCollect=[];
+            this.keywordCollect = [];
             var self = this;
             var name = name;
             var source = '/FMService/chemical';
