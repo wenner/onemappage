@@ -130,11 +130,19 @@ vueExports.main = {
                 setTimeout(function () {
                     if (self.keywordCollect.length > 0) {
                         var mykeywords = [];
-                        mykeywords = self.keywordCollect;
+                        // mykeywords = self.keywordCollect;
+                        var unitKeywords=[];
+                        for(var i=0;i<self.keywordCollect.length;i++){
+                            if (!unitKeywords.contains(self.keywordCollect[i])) {
+                                unitKeywords.push(self.keywordCollect[i]);
+                            }
+                        }
+                        mykeywords=unitKeywords;
                         // self.keywordCollect=mykeywords;
                         console.log("显示从SQL查询出来的企业名称列表");
                         console.log(mykeywords);
-                        findParams.searchFields = ["XMMC", "UNAME"];
+                        // findParams.searchFields = ["XMMC", "UNAME"];
+                        findParams.searchFields = ["UNAME"];
                         self.sideLoading = true;
                         for (var i = 0; i < mykeywords.length; i++) {
                             myresult = [];
@@ -174,7 +182,7 @@ vueExports.main = {
                     self.result = myresult;
                     self.resultSort = aa;
                     // self.addResultGraphic(myresult);
-                }, 1000);
+                }, 200);
             }
 
 ////////////////////////////////////////////////////////////////结束查找企业名称
