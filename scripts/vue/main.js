@@ -135,41 +135,41 @@ vueExports.main = {
                         console.log("显示从SQL查询出来的企业名称列表");
                         console.log(mykeywords);
                         findParams.searchFields = ["XMMC", "UNAME"];
-                        if (mykeywords.length > 0) {
-                            self.sideLoading = true;
-                            for (var i = 0; i < mykeywords.length; i++) {
-                                console.log("进入keywordCollect循环赋值查询矢量  开始");
-                                findParams.searchText = mykeywords[i];
-                                findTask.execute(findParams, function (result) {
-                                    // myresult.concat(result);//合并多个返回值，统一进行下一步操作
-                                    // self.result = result;
-                                    // self.sideState = "list";
-                                    // self.addResultGraphic();
-                                    // for (var i = 0; i < self.result.length; i++) {
-                                    //     aa.push(i);
-                                    // }
-                                    for (var i = 0; i < result.length; i++) {
-                                        myresult.push(result[i]);
-                                    }
-                                    // self.addResultGraphic(result);
-                                    // console.log(myresult, result);
-                                    // self.addResultGraphic(myresult);
-                                });
-                                if (i == mykeywords.length - 1) {
-                                    self.sideLoading = false;
-                                    self.addResultGraphic(myresult);
+                        self.sideLoading = true;
+                        for (var i = 0; i < mykeywords.length; i++) {
+                            myresult = [];
+                            console.log("进入keywordCollect循环赋值查询矢量  开始");
+                            findParams.searchText = mykeywords[i];
+                            findTask.execute(findParams, function (result) {
+                                // myresult.concat(result);//合并多个返回值，统一进行下一步操作
+                                // self.result = result;
+                                // self.sideState = "list";
+                                // self.addResultGraphic();
+                                // for (var i = 0; i < self.result.length; i++) {
+                                //     aa.push(i);
+                                // }
+                                for (var i = 0; i < result.length; i++) {
+                                    myresult.push(result[i]);
                                 }
-                            }
-
-
-                            console.log("开始添加图形并显示");
-                            // self.result = myresult;
-                            self.sideState = "list";
-
-                            for (var i = 0; i < myresult.length; i++) {
-                                aa.push(i);
+                                // self.addResultGraphic(result);
+                                // console.log(myresult, result);
+                                self.addResultGraphic(myresult);
+                            });
+                            if (i == mykeywords.length - 1) {
+                                self.sideLoading = false;
+                                // self.addResultGraphic(myresult);
                             }
                         }
+
+
+                        console.log("开始添加图形并显示");
+                        // self.result = myresult;
+                        self.sideState = "list";
+
+                        for (var i = 0; i < myresult.length; i++) {
+                            aa.push(i);
+                        }
+
                     }
                     self.result = myresult;
                     self.resultSort = aa;
@@ -191,6 +191,7 @@ vueExports.main = {
             var result = myresult;
             var filterResult = [];
             var filterNum = -1; //定义地图abcMark标志显示的个数
+            console.log(result.length);
             for (var i = 0; i < result.length; i++) {
                 console.log(i);
                 var item = result[i], graphic = item.feature, symbol, infoTemplate = null;
