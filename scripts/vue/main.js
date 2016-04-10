@@ -1,4 +1,3 @@
-
 vueExports.main = {
     el: '#outerwrap',
     data: {
@@ -20,8 +19,8 @@ vueExports.main = {
             // {text: "排放监测", value: "outfall"}
         ],
         sideLoading: false,
-        keyword: '锅炉',
-        keywordCollect:[],
+        keyword: '硫酸',
+        keywordCollect: [],
         result: [],
         resultBulding: [],
         resultSort: [],
@@ -47,13 +46,13 @@ vueExports.main = {
         processDataItem: {},
 
         safeData: null,
-        safeDataSelectedItem:{},
-        safeDataDetailData:[],
-        safeDataDetailSelectedItem:{}
+        safeDataSelectedItem: {},
+        safeDataDetailData: [],
+        safeDataDetailSelectedItem: {}
     },
     watch: {
         result: function (val, oldVal) {
-            console.log(val,oldVal);
+            console.log(val, oldVal);
         },
         currentDetailMenu: function (detailMenu) {
             if (!this.currentSelectedCompany || !this.currentDetailMenu) return false;
@@ -106,8 +105,10 @@ vueExports.main = {
             // searchBuildingGraphicsLayer.clear();
             hightLightGraphicLayer.clear();
             markLayer.clear();
-            this.result=[];
-            this.resultSort=[];
+            this.result = [];
+            this.resultSort = [];
+            this.keywordCollect=[];
+            var myresult = [];
             var self = this;
             self.sideLoading = true;
             var FindParameters = esri.tasks.FindParameters,
@@ -123,58 +124,70 @@ vueExports.main = {
             // 污水管线84 (7) 雨水管线84 (8) 企业红线84 (9) 企业内部建筑物84 (10) 企业内部绿地84 (11)
             findParams.layerIds = [9];
 ////////////////////////////////////////////////////////////////开始从SQL数据库查找匹配的企业名称
-            if(this.keyword.trim()!=""){
+            if (this.keyword.trim() != "") {
                 this.QueryChemicalNameFromSQL(this.keyword);
                 // var keywords=this.keywordCollect;
                 setTimeout(function(){
-                    if(self.keywordCollect.length>0){
-                        var mykeywords=[];
-                        mykeywords=self.keywordCollect;
+                    if (self.keywordCollect.length > 0) {
+                        var mykeywords = [];
+                        mykeywords = self.keywordCollect;
                         // self.keywordCollect=mykeywords;
                         console.log("显示从SQL查询出来的企业名称列表");
                         console.log(mykeywords);
                         findParams.searchFields = ["XMMC", "UNAME"];
-                        if(mykeywords.length>0){
-                            for(var i=0;i<mykeywords.length;i++){
+                        if (mykeywords.length > 0) {
+                            for (var i = 0; i < mykeywords.length; i++) {
                                 console.log("进入keywordCollect循环赋值查询矢量  开始");
                                 self.sideLoading = true;
-                                findParams.searchText=mykeywords[i];
+                                findParams.searchText = mykeywords[i];
                                 findTask.execute(findParams, function (result) {
-                                    self.result = result;
-                                    self.sideState = "list";
-                                    self.addResultGraphic();
-                                    for (var i = 0; i < self.result.length; i++) {
-                                        aa.push(i);
+                                    // myresult.concat(result);//合并多个返回值，统一进行下一步操作
+                                    // self.result = result;
+                                    // self.sideState = "list";
+                                    // self.addResultGraphic();
+                                    // for (var i = 0; i < self.result.length; i++) {
+                                    //     aa.push(i);
+                                    // }
+                                    for (var i = 0; i < result.length; i++) {
+                                        myresult.push(result[i]);
                                     }
-                                    console.log(i);
+                                    console.log(myresult, result);
+                                    self.addResultGraphic(myresult);
                                 });
-                                if(i==mykeywords.length-1){
+                                if (i == mykeywords.length - 1) {
                                     self.sideLoading = false;
                                 }
+                            }
+
+
+                            console.log("开始添加图形并显示");
+                            // self.result = myresult;
+                            self.sideState = "list";
+
+                            for (var i = 0; i < myresult.length; i++) {
+                                aa.push(i);
                             }
                             console.log("进入keywordCollect循环赋值查询矢量  结束");
                         }
                     }
-                },500);
+                    self.result=myresult;
+                    self.resultSort = aa;
+                    // self.addResultGraphic(myresult);
+                },1000);
             }
+
 ////////////////////////////////////////////////////////////////结束查找企业名称
-            this.resultSort = aa;
+
         },
-        addResultGraphic: function () {
-            var selft = this;
+        addResultGraphic: function (myresult) {
+            console.log("进入添加graphic方法");
+            var self = this;
             //$Map.graphics.clear();
             this.clearGraphics();
             searchGraphicsLayer.clear();
-            var scSymbol = new SimpleFillSymbol(
-                SimpleFillSymbol.STYLE_SOLID,
-                new SimpleLineSymbol(
-                    SimpleLineSymbol.STYLE_SOLID,
-                    new Color([102, 102, 255, 0.55]),
-                    1
-                ),
-                new Color([255, 102, 102, 0.35])
-            );
-            var result = this.result;
+            var scSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([102, 102, 255, 0.55]), 1), new Color([255, 102, 102, 0.35]));
+            // var result = this.result;
+            var result = myresult;
             var filterResult = [];
             var filterNum = -1; //定义地图abcMark标志显示的个数
             for (var i = 0; i < result.length; i++) {
@@ -246,6 +259,7 @@ vueExports.main = {
                     //$Map.graphics.add(graphic);
                     searchGraphicsLayer.add(graphic);
                 }
+
                 // 查询字段  根据选择的分类，分类加载graphic
                 switch (this.currentQueryType.value) {
                     case "keyword":
@@ -1666,11 +1680,11 @@ vueExports.main = {
             this.companyDischargeSelectedItem = child;
         },
         getProcessingDetail: function (company) {
-          this.getFile(company);
+            this.getFile(company);
         },
-        getSafeDetail:function (company) {
-            var self=this;
-            var name=company.feature.attributes.UNAME;
+        getSafeDetail: function (company) {
+            var self = this;
+            var name = company.feature.attributes.UNAME;
             this.QuerySafeInfoFromSQL(name); //此方法可以调通
         },
         clearGraphics: function () {
@@ -1680,9 +1694,9 @@ vueExports.main = {
             outWasteLayer.clear();
         },
         getFile: function (companyName) {
-            var self=this;
+            var self = this;
             console.log(companyName.feature.attributes.UNAME);
-            var url="http://ajhb.tjxrs.cn/FileService/file/"+companyName.feature.attributes.UNAME+"/report";
+            var url = "http://ajhb.tjxrs.cn/FileService/file/" + companyName.feature.attributes.UNAME + "/report";
 
             $.ajax({
                 type: "GET",
@@ -1690,11 +1704,11 @@ vueExports.main = {
                 dataType: "JSON",
                 success: function (data) {
                     console.log(data);
-                    for(var i=0;i<data.length;i++){
-                        var a=data[i].substr(-3);
+                    for (var i = 0; i < data.length; i++) {
+                        var a = data[i].substr(-3);
 
                     }
-                    self.processData=data;
+                    self.processData = data;
                 },
                 error: function () {
                     alert("异常！");
@@ -2000,6 +2014,7 @@ vueExports.main = {
                     };
                 }, 200);
             }
+
             function onFail(data) {
                 console.log("没有查到数据,具体信息见下方");
                 console.warn(data);
@@ -2009,7 +2024,8 @@ vueExports.main = {
 
         //危险品名ChemicalName-->企业名
         QueryChemicalNameFromSQL: function (name) {
-            var self=this;
+            this.keywordCollect=[];
+            var self = this;
             var name = name;
             var source = '/FMService/chemical';
             var field = '*';
@@ -2028,19 +2044,21 @@ vueExports.main = {
             };
             tjx.data.safetysearch.getDataTable(arg_map);
             //将取到的名称存到resultName中
-            var resultName=[];
+            var resultName = [];
+
             function onSuccess(data) {
                 console.log("查询危险品名ChemicalName-->企业名  成功");
                 self.QueryEquipmentNameFromSQL(name);
-                for(var i=0;i<data.Data.length;i++){
-                    var a=data.Data[i][9];
-                    if(a!="" && a!=null){
+                for (var i = 0; i < data.Data.length; i++) {
+                    var a = data.Data[i][9];
+                    if (a != "" && a != null) {
                         resultName.push(a);
                         self.keywordCollect.push(a);
                         console.log(a);
                     }
                 }
             }
+
             function onFail(data) {
                 console.log("危险品名ChemicalName-->企业名,没有查到数据,具体信息见下方");
                 console.warn(data);
@@ -2048,7 +2066,7 @@ vueExports.main = {
         },
         //安全设施名称EquipmentName-->企业名
         QueryEquipmentNameFromSQL: function (name) {
-            var self=this;
+            var self = this;
             var name = name;
             var source = '/FMService/equipment';
             var field = '*';
@@ -2067,19 +2085,21 @@ vueExports.main = {
             };
             tjx.data.safetysearch.getDataTable(arg_map);
             //将取到的名称存到resultName中
-            var resultName=[];
+            var resultName = [];
+
             function onSuccess(data) {
                 console.log("查询安全设施名称EquipmentName-->企业名  成功");
                 self.QueryDeviceNameFromSQL(name);
-                for(var i=0;i<data.Data.length;i++){
-                    var a=data.Data[i][10];
-                    if(a!="" && a!=null){
+                for (var i = 0; i < data.Data.length; i++) {
+                    var a = data.Data[i][10];
+                    if (a != "" && a != null) {
                         resultName.push(a);
                         self.keywordCollect.push(a);
                         console.log(a);
                     }
                 }
             }
+
             function onFail(data) {
                 console.log("安全设施名EquipmentName-->企业名,没有查到数据,具体信息见下方");
                 console.warn(data);
@@ -2087,7 +2107,7 @@ vueExports.main = {
         },
         //特种设备名称DeviceName-->企业名
         QueryDeviceNameFromSQL: function (name) {
-            var self=this;
+            var self = this;
             var name = name;
             var source = '/FMService/specialequipment';
             var field = '*';
@@ -2106,19 +2126,22 @@ vueExports.main = {
             };
             tjx.data.safetysearch.getDataTable(arg_map);
             //将取到的名称存到resultName中
-            var resultName=[];
+            var resultName = [];
+
             function onSuccess(data) {
                 console.log("查询特种设备名称DeviceName-->企业名  成功");
-                for(var i=0;i<data.Data.length;i++){
-                    var a=data.Data[i][10];
-                    if(a!="" && a!=null){
-                        if(!resultName.contains(a)){
+                for (var i = 0; i < data.Data.length; i++) {
+                    var a = data.Data[i][10];
+                    if (a != "" && a != null) {
+                        if (!resultName.contains(a)) {
                             resultName.push(a);
+                            self.keywordCollect.push(a);
                         }
                     }
                 }
-                self.keywordCollect=resultName;
+                // self.keywordCollect = resultName;
             }
+
             function onFail(data) {
                 console.log("特种设备名称DeviceName-->企业名,没有查到数据,具体信息见下方");
                 console.warn(data);
