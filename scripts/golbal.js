@@ -78,8 +78,19 @@ String.prototype.toRGB = function(){
         return "这个是颜色值吗？";
     }
 };
-Array.prototype.contains = function(item){
-    return RegExp("\\b"+item+"\\b").test(this);
+//这个扩展表达式不能匹配字符串
+// Array.prototype.contains = function(item){
+//     // return RegExp("\\b"+item+"\\b").test(this);
+//     return RegExp("(^|,)" + item.toString() + "($|,)").test(this);
+// };
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
 };
 Array.prototype.remove = function(val) {
     var index = this.indexOf(val);

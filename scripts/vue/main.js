@@ -106,6 +106,8 @@ vueExports.main = {
             // searchBuildingGraphicsLayer.clear();
             hightLightGraphicLayer.clear();
             markLayer.clear();
+            this.result=[];
+            this.resultSort=[];
             var self = this;
             self.sideLoading = true;
             var FindParameters = esri.tasks.FindParameters,
@@ -126,21 +128,17 @@ vueExports.main = {
                 // var keywords=this.keywordCollect;
                 setTimeout(function(){
                     if(self.keywordCollect.length>0){
-                        var keywords=[];
-                        for(var i=0;i<self.keywordCollect.length;i++){
-                            if(!keywords.contains(self.keywordCollect[i])){
-                                keywords.push(self.keywordCollect[i]);
-                            }
-                        }
-                        self.keywordCollect=keywords;
+                        var mykeywords=[];
+                        mykeywords=self.keywordCollect;
+                        // self.keywordCollect=mykeywords;
                         console.log("显示从SQL查询出来的企业名称列表");
-                        console.log(self.keywordCollect);
+                        console.log(mykeywords);
                         findParams.searchFields = ["XMMC", "UNAME"];
-                        if(self.keywordCollect.length>0){
-                            for(var i=0;i<self.keywordCollect.length;i++){
+                        if(mykeywords.length>0){
+                            for(var i=0;i<mykeywords.length;i++){
                                 console.log("进入keywordCollect循环赋值查询矢量  开始");
                                 self.sideLoading = true;
-                                findParams.searchText=self.keywordCollect[i];
+                                findParams.searchText=mykeywords[i];
                                 findTask.execute(findParams, function (result) {
                                     self.result = result;
                                     self.sideState = "list";
@@ -150,7 +148,7 @@ vueExports.main = {
                                     }
                                     console.log(i);
                                 });
-                                if(i==self.keywordCollect.length-1){
+                                if(i==mykeywords.length-1){
                                     self.sideLoading = false;
                                 }
                             }
@@ -2114,11 +2112,12 @@ vueExports.main = {
                 for(var i=0;i<data.Data.length;i++){
                     var a=data.Data[i][10];
                     if(a!="" && a!=null){
-                        resultName.push(a);
-                        self.keywordCollect.push(a);
-                        console.log(a);
+                        if(!resultName.contains(a)){
+                            resultName.push(a);
+                        }
                     }
                 }
+                self.keywordCollect=resultName;
             }
             function onFail(data) {
                 console.log("特种设备名称DeviceName-->企业名,没有查到数据,具体信息见下方");
