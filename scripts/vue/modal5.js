@@ -85,6 +85,7 @@ vueExports.modal5 = {
         clearAreaGraphics:function(){
             console.log("clearAreaGraphics");
             areaLayer.clear();
+            $Map.graphics.clear();
         },
         addStops:function(){
             console.log("addStops");

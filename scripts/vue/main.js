@@ -19,7 +19,7 @@ vueExports.main = {
             // {text: "排放监测", value: "outfall"}
         ],
         sideLoading: false,
-        keyword: '硫酸',
+        keyword: '卡特彼勒',
         keywordCollect: [],
         result: [],
         resultBulding: [],
@@ -124,6 +124,7 @@ vueExports.main = {
             // searchBuildingGraphicsLayer.clear();
             hightLightGraphicLayer.clear();
             markLayer.clear();
+            txtLayer.clear();
             this.result = [];
             this.resultSort = [];
             this.keywordCollect = [];
@@ -344,6 +345,7 @@ vueExports.main = {
             this.clearGraphics();
             hightLightGraphicLayer.clear();
             outWasteLayer.clear();
+            txtLayer.clear();
             this.currentSelectedCompany = item;
             // console.log(item);
             //console.log("显示点击的Geometry");
@@ -425,6 +427,7 @@ vueExports.main = {
             self.showDetail = false;
             self.showList = true;
             self.currentDetailMenu = null;
+            this.clearGraphics();
 
         },
         switchDetail: function (detailMenu) {
@@ -455,11 +458,12 @@ vueExports.main = {
             this.QueryDangerInfoFromSQL(companyName);
         },
         getDischargeDetail: function (company) {
+            console.log(company);
             var self = this;
             //获取远程数据,目前用本地数据模拟
             var data = [
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '1',
                     pfk: 'GF-KG337',
@@ -471,7 +475,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '2',
                     pfk: 'GF-KG338',
@@ -483,7 +487,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '3',
                     pfk: 'GF-KG339',
@@ -495,7 +499,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '4',
                     pfk: 'WS-KG285',
@@ -507,7 +511,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '5',
                     pfk: 'WS-KG286',
@@ -519,7 +523,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '6',
                     pfk: '',
@@ -531,7 +535,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '7',
                     pfk: '',
@@ -543,7 +547,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '8',
                     pfk: '',
@@ -555,7 +559,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '9',
                     pfk: '',
@@ -567,7 +571,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '10',
                     pfk: '',
@@ -579,7 +583,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '11',
                     pfk: '',
@@ -591,7 +595,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '12',
                     pfk: '',
@@ -603,7 +607,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '13',
                     pfk: '',
@@ -615,7 +619,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '14',
                     pfk: '',
@@ -627,7 +631,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '14',
                     pfk: 'FQ-KG455',
@@ -639,7 +643,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '15',
                     pfk: 'FQ-KG456',
@@ -651,7 +655,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '16',
                     pfk: 'FQ-KG457',
@@ -663,7 +667,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '17',
                     pfk: 'FQ-KG450',
@@ -675,7 +679,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '18',
                     pfk: 'FQ-KG451',
@@ -687,7 +691,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '19',
                     pfk: 'FQ-KG452',
@@ -699,7 +703,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '20',
                     pfk: 'FQ-KG453',
@@ -711,7 +715,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '21',
                     pfk: 'FQ-KG454',
@@ -723,7 +727,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '22',
                     pfk: 'FQ-KG458',
@@ -735,7 +739,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '23',
                     pfk: 'FQ-KG459',
@@ -747,7 +751,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '24',
                     pfk: 'FQ-KG460',
@@ -759,7 +763,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '25',
                     pfk: 'FQ-KG465',
@@ -771,7 +775,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '26',
                     pfk: 'FQ-KG466',
@@ -783,7 +787,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '27',
                     pfk: 'FQ-KG467',
@@ -795,7 +799,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '28',
                     pfk: 'FQ-KG468',
@@ -807,7 +811,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '29',
                     pfk: 'FQ-KG461',
@@ -819,7 +823,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '30',
                     pfk: 'FQ-KG462',
@@ -831,7 +835,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '31',
                     pfk: 'FQ-KG463',
@@ -843,7 +847,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '103',
+                    FID: '105',
                     companyName: '卡特彼勒（天津）有限公司',
                     sn: '32',
                     pfk: 'FQ-KG464',
@@ -855,7 +859,7 @@ vueExports.main = {
                     group: '废气监测点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '1',
                     pfk: 'GF-BS165',
@@ -867,7 +871,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '2',
                     pfk: '',
@@ -879,7 +883,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '3',
                     pfk: 'WS-KG184',
@@ -891,7 +895,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '4',
                     pfk: '',
@@ -903,7 +907,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '5',
                     pfk: '雨水 1',
@@ -915,7 +919,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '6',
                     pfk: '雨水 2',
@@ -927,7 +931,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '7',
                     pfk: '雨水 3',
@@ -939,7 +943,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '8',
                     pfk: '雨水 4',
@@ -951,7 +955,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '9',
                     pfk: '雨水 5',
@@ -963,7 +967,7 @@ vueExports.main = {
                     group: '雨水排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '10',
                     pfk: 'FQ-KG359',
@@ -975,7 +979,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '11',
                     pfk: 'FQ-KG358',
@@ -987,7 +991,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '12',
                     pfk: 'FQ-KG357',
@@ -999,7 +1003,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '13',
                     pfk: 'FQ-KG360',
@@ -1011,7 +1015,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '14',
                     pfk: 'FQ-KG356',
@@ -1023,7 +1027,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '15',
                     pfk: 'FQ-KG355',
@@ -1035,7 +1039,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '16',
                     pfk: 'FQ-KG226',
@@ -1047,7 +1051,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '17',
                     pfk: 'FQ-KG227',
@@ -1059,7 +1063,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '18',
                     pfk: 'FQ-KG225',
@@ -1071,7 +1075,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '19',
                     pfk: 'FQ-KG228',
@@ -1083,7 +1087,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '58',
+                    FID: '59',
                     companyName: '捷尔杰（天津）设备有限公司',
                     sn: '20',
                     pfk: 'FQ-KG224',
@@ -1095,7 +1099,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '1',
                     pfk: 'GF-KG117',
@@ -1107,7 +1111,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '2',
                     pfk: 'GF-KG 119',
@@ -1119,7 +1123,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '3',
                     pfk: 'GF-KG 118',
@@ -1131,7 +1135,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '4',
                     pfk: 'WS-KG149',
@@ -1143,7 +1147,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '5',
                     pfk: 'WS-KG150',
@@ -1155,7 +1159,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '6',
                     pfk: 'WS-KG151',
@@ -1167,7 +1171,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '7',
                     pfk: 'WS-KG152',
@@ -1179,7 +1183,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '8',
                     pfk: 'WS-KG153',
@@ -1191,7 +1195,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '9',
                     pfk: '',
@@ -1203,7 +1207,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '10',
                     pfk: '',
@@ -1215,7 +1219,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '11',
                     pfk: '',
@@ -1227,7 +1231,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '12',
                     pfk: '',
@@ -1239,7 +1243,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '13',
                     pfk: '',
@@ -1251,7 +1255,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '14',
                     pfk: '',
@@ -1263,7 +1267,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '15',
                     pfk: '',
@@ -1275,7 +1279,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '16',
                     pfk: '',
@@ -1287,7 +1291,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '17',
                     pfk: 'WS-KG153',
@@ -1299,7 +1303,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '18',
                     pfk: 'FQ-KG127',
@@ -1311,7 +1315,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '19',
                     pfk: 'FQ-KG129',
@@ -1323,7 +1327,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '55',
+                    FID: '155',
                     companyName: '空中客车（天津）总装有限公司',
                     sn: '20',
                     pfk: 'FQ-KG128',
@@ -1335,7 +1339,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '80',
+                    FID: '81',
                     companyName: '麦格纳汽车动力总成（天津）有限公司',
                     sn: '1',
                     pfk: 'FQ-KG260',
@@ -1347,7 +1351,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '80',
+                    FID: '81',
                     companyName: '麦格纳汽车动力总成（天津）有限公司',
                     sn: '2',
                     pfk: 'FQ-KG261',
@@ -1359,7 +1363,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '80',
+                    FID: '81',
                     companyName: '麦格纳汽车动力总成（天津）有限公司',
                     sn: '3',
                     pfk: 'FQ-KG237',
@@ -1371,7 +1375,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '80',
+                    FID: '81',
                     companyName: '麦格纳汽车动力总成（天津）有限公司',
                     sn: '4',
                     pfk: '-',
@@ -1383,7 +1387,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '80',
+                    FID: '81',
                     companyName: '麦格纳汽车动力总成（天津）有限公司',
                     sn: '5',
                     pfk: 'FQ-KG329',
@@ -1395,7 +1399,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '80',
+                    FID: '81',
                     companyName: '麦格纳汽车动力总成（天津）有限公司',
                     sn: '6',
                     pfk: 'FQ-KG330',
@@ -1407,7 +1411,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '80',
+                    FID: '81',
                     companyName: '麦格纳汽车动力总成（天津）有限公司',
                     sn: '7',
                     pfk: 'FQ-KG331',
@@ -1419,7 +1423,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '80',
+                    FID: '81',
                     companyName: '麦格纳汽车动力总成（天津）有限公司',
                     sn: '8',
                     pfk: 'FQ-KG447',
@@ -1431,7 +1435,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '80',
+                    FID: '81',
                     companyName: '麦格纳汽车动力总成（天津）有限公司',
                     sn: '9',
                     pfk: 'FQ-KG448',
@@ -1443,7 +1447,7 @@ vueExports.main = {
                     group: '废气排放点位'
                 },
                 {
-                    FID: '130',
+                    FID: '132',
                     companyName: '爱思开能源润滑油（天津）有限公司',
                     sn: '1',
                     pfk: 'WS-BS083',
@@ -1455,7 +1459,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '130',
+                    FID: '132',
                     companyName: '爱思开能源润滑油（天津）有限公司',
                     sn: '2',
                     pfk: '雨水总排口',
@@ -1467,7 +1471,7 @@ vueExports.main = {
                     group: '废水监测点位'
                 },
                 {
-                    FID: '130',
+                    FID: '132',
                     companyName: '爱思开能源润滑油（天津）有限公司',
                     sn: '3',
                     pfk: 'GF-BS062',
@@ -1479,7 +1483,7 @@ vueExports.main = {
                     group: '固废监测点位'
                 },
                 {
-                    FID: '130',
+                    FID: '132',
                     companyName: '爱思开能源润滑油（天津）有限公司',
                     sn: '4',
                     pfk: 'GF-BS063',
@@ -1527,7 +1531,7 @@ vueExports.main = {
                         case "固废监测点位":
                             pms = new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/gf.png", 35, 35);
                             var text = new esri.symbol.TextSymbol("固废监测点位");
-                            text.setOffset(0,-2);
+                            text.setOffset(0,4);
                             text.setFont(font);
                             text.setColor(new dojo.Color([255,255,255,100]));
                             var  gLbl= new esri.Graphic(pt,text,item);
@@ -1536,7 +1540,7 @@ vueExports.main = {
                         case "废水监测点位":
                             pms = new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/fs.png", 35, 35);
                             var text = new esri.symbol.TextSymbol("废水监测点位");
-                            text.setOffset(0,-2);
+                            text.setOffset(0,4);
                             text.setFont(font);
                             text.setColor(new dojo.Color([255,255,255,100]));
                             var  gLbl= new esri.Graphic(pt,text,item);
@@ -1545,7 +1549,7 @@ vueExports.main = {
                         case "雨水排放点位":
                             pms = new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/rains.png", 35, 35);
                             var text = new esri.symbol.TextSymbol("雨水排放点位");
-                            text.setOffset(0,-2);
+                            text.setOffset(0,4);
                             text.setFont(font);
                             text.setColor(new dojo.Color([255,255,255,100]));
                             var gLbl= new esri.Graphic(pt,text,item);
@@ -1554,7 +1558,7 @@ vueExports.main = {
                         case "废气排放点位":
                             pms = new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/fq.png", 35, 35);
                             var text = new esri.symbol.TextSymbol("废气排放点位");
-                            text.setOffset(0,-2);
+                            text.setOffset(0,4);
                             text.setFont(font);
                             text.setColor(new dojo.Color([255,255,255,100]));
                              var gLbl= new esri.Graphic(pt,text,item);
@@ -1765,6 +1769,7 @@ vueExports.main = {
             hightLightGraphicLayer.clear();  //为什么不清除图层呢
             dijitPopup.close(dialog);
             outWasteLayer.clear();
+            txtLayer.clear();
         },
         getFile: function (companyName) {
             var self = this;

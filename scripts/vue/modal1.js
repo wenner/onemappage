@@ -12,6 +12,7 @@ vueExports.modal1 = {
             hightLightGraphicLayer.clear();
             alarmLayer.clear();
             searchGraphicsLayer.clear();
+            txtLayer.clear();
             var self = this;
             $Map.setMapCursor("url(assets/images/cursor/cur_arrow_color.cur),auto");
             var pictureSymbol = new PictureMarkerSymbol({
@@ -123,6 +124,7 @@ vueExports.modal1 = {
             hightLightGraphicLayer.clear();
             alarmLayer.clear();
             searchGraphicsLayer.clear();
+            txtLayer.clear();
         },
         searchAddress: function () {
             console.log("你要查询的地址是： " + this.address);
