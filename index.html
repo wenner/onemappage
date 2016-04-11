@@ -37,7 +37,7 @@
         <div class="cube1"></div>
         <div class="cube2"></div>
     </div>
-    <div style="text-align:center;margin-top:10%;font-size:50px;color:#fff">空港 一张网地图展示</div>
+    <div style="text-align:center;margin-top:10%;font-size:50px;color:#fff">安监 环保 地理信息系统</div>
 </div>
 
 
@@ -142,29 +142,29 @@
                     </div>
 
                     <div v-show="result.length == 0 && sideLoading == false">
-                        <div class="statistic-box-container" v-for="item in ['企业整改' ,'从业人员持证' , '特种设备' , '安全设施检测']">
-                            <h3>{{item}}</h3>
+                        <div class="statistic-box-container" v-for="item in alarmSum">
+                            <h3 class="font-green-sharp">{{item.text}}</h3>
                             <div class='row text-center'>
-                                <div class="col-md-4"  @click="QueryEnterpriseNamesWithKeywordFromSQL('天津')">
+                                <div class="col-md-4"  @click="alarmSumSearch(item.value1)">
                                     <a href="#" class='statistic-box red' >
                                         <div>
-                                            <p>523</p>
+                                            <p>{{item.sum1}}</p>
                                             <span>超期</span>
                                         </div>
-                                    </a>
+                                    </a>`
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" @click="alarmSumSearch(item.value2)">
                                     <a href="#" class='statistic-box yellow'>
                                         <div>
-                                            <p style="font-size:30px;margin:10px">115</p>
+                                            <p style="font-size:30px;margin:10px" >{{item.sum2}}</p>
                                             <span>即将超期</span>
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" @click="alarmSumSearch(item.value3)">
                                     <a href="#" class='statistic-box green'>
                                         <div>
-                                            <p style="font-size:30px;margin:10px">5</p>
+                                            <p style="font-size:30px;margin:10px">{{item.sum3}}</p>
                                             <span>正常</span>
                                         </div>
                                     </a>
@@ -206,11 +206,11 @@
                                 <td>{{companyBaseInfo.BusinessAddress}}</td>
                             </tr>
                             <tr>
-                                <td><span class="glyphicon glyphicon-th" aria-hidden="true"></span>主要产品及规模:</td>
+                                <td>主要产品及规模:</td>
                                 <td>{{companyBaseInfo.ProductScale}}</td>
                             </tr>
                             <tr >
-                                <td><span class="glyphicon glyphicon-grain" aria-hidden="true"></span>主要原辅料及用量:</td>
+                                <td>主要原辅料及用量:</td>
                                 <td>{{companyBaseInfo.MaterialDosage}}</td>
                             </tr>
                             <tr>

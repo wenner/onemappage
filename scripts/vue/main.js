@@ -26,6 +26,13 @@ vueExports.main = {
         resultSort: [],
         currentSelectedCompany: {},
 
+        alarmSum:[
+            {text:"企业整改",value1:"钢",value2:"硫酸",value3:"氨",sum1:"5",sum2:"20",sum3:"30"},
+            {text:"从业人员持证",value1:"天津",value2:"钢",value3:"钢",sum1:"147",sum2:"15",sum3:"26"},
+            {text:"特种设备",value1:"灭火器",value2:"锅炉",value3:"天津",sum1:"68",sum2:"6",sum3:"450"},
+            {text:"安全设施检测",value1:"安全",value2:"硫酸",value3:"灭火器",sum1:"11",sum2:"21",sum3:"100"}
+        ],
+        
         //企业基本信息
         companyBaseInfo:{},
 
@@ -55,7 +62,7 @@ vueExports.main = {
     },
     watch: {
         result: function (val, oldVal) {
-            console.log(val, oldVal);
+            // console.log(val, oldVal);
         },
         currentDetailMenu: function (detailMenu) {
             if (!this.currentSelectedCompany || !this.currentDetailMenu) return false;
@@ -98,6 +105,11 @@ vueExports.main = {
              });
              */
             $("#" + menu.modal).tab();
+        },
+
+        alarmSumSearch:function(value){
+            this.keyword=value;
+            this.search();
         },
 
         search: function () {
@@ -143,7 +155,7 @@ vueExports.main = {
                         mykeywords=unitKeywords;
                         // self.keywordCollect=mykeywords;
                         console.log("显示从SQL查询出来的企业名称列表");
-                        console.log(mykeywords);
+                        // console.log(mykeywords);
                         // findParams.searchFields = ["XMMC", "UNAME"];
                         findParams.searchFields = ["UNAME"];
                         self.sideLoading = true;
@@ -204,7 +216,7 @@ vueExports.main = {
             var filterNum = -1; //定义地图abcMark标志显示的个数
             console.log(result.length);
             for (var i = 0; i < result.length; i++) {
-                console.log(i);
+                // console.log(i);
                 var item = result[i], graphic = item.feature, symbol, infoTemplate = null;
                 //此处addGraphicToMarkLayer定义在swith上方，防止出现调用前未定义  （在火狐浏览器中发生）
                 function addGraphicToMarkLayer(graphic) {
@@ -277,7 +289,7 @@ vueExports.main = {
                 switch (this.currentQueryType.value) {
                     case "keyword":
                         filterNum += 1;
-                        console.log("关键字");
+                        // console.log("关键字");
                         filterResult.push(item);
                         addGraphicToMarkLayer(graphic);
                         break;
@@ -329,7 +341,7 @@ vueExports.main = {
             hightLightGraphicLayer.clear();
             outWasteLayer.clear();
             this.currentSelectedCompany = item;
-            console.log(item);
+            // console.log(item);
             //console.log("显示点击的Geometry");
             //console.log(this.currentSelectedCompany.feature.attributes.ID);
 
@@ -1754,7 +1766,6 @@ vueExports.main = {
             var self = this;
             console.log(companyName.feature.attributes.UNAME);
             var url = "http://ajhb.tjxrs.cn/FileService/file/" + companyName.feature.attributes.UNAME + "/report";
-
             $.ajax({
                 type: "GET",
                 url: url,
@@ -2207,15 +2218,14 @@ vueExports.main = {
         },
         QueryEnterpriseNamesWithKeywordFromSQL:function(name){
             var self = this;
-            // var name = "%"+name+"%";
-            var name = "天津";
+            var name = "%"+name+"%";
             var source = '/FMService/enterprisename';
             var field = '*';
             var data = {
                 Fields: field.split(','),
                 Search: 'truename like {0}',
                 Values: [name],
-                OrderFieldName: 'RegistrationTime',
+                OrderFieldName: 'id',
                 OrderType: 'desc'
             };
             var arg_map = {
@@ -2229,9 +2239,9 @@ vueExports.main = {
             var resultName = [];
             function onSuccess(data) {
                 console.log("查询企业名称truename-->企业名  成功");
-                console.log(data);
+                // console.log(data);
                 for (var i = 0; i < data.Data.length; i++) {
-                    var a = data.Data[i][10];
+                    var a = data.Data[i][2];
                     if (a != "" && a != null) {
                         if (!resultName.contains(a)) {
                             resultName.push(a);

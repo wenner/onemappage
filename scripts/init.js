@@ -261,7 +261,7 @@
         //涉危企业面图层
         var redLineCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/9", {
             mode: FeatureLayer.MODE_SNAPSHOT,
-            outFields: ["UNAME", "JZXG", "YDXZ", "QYKK", "BXMMC"]
+            outFields: ["UNAME", "JZXG", "YDXZ", "BXMMC"]
         });
         //涉危企业点图层
         var redPointCategory = new FeatureLayer("http://60.29.110.104:6080/arcgis/rest/services/一张网/一张网动态图/MapServer/1", {
