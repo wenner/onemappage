@@ -293,7 +293,7 @@
                             </tr>
                             <template v-for="r in processData">
                                 <tr v-bind:class="{'info' : processData == r}"
-                                    @click="processData = (processData == r ? null : r)"
+                                    @click1="processData = (processData == r ? null : r)"
                                 >
                                     <td>{{$index+1}}</td>
                                     <td v-for="f in processData">
@@ -330,6 +330,92 @@
                                     </td>
                                 </tr>
                             </template>
+                        </table>
+                    </div>
+                    <div v-show="currentDetailMenu.code == 'report'"
+                         transition="detail">
+                        <table class="table">
+                            <thead>
+                            <td style="width: 30%;">企业名称:</td>
+                            <td  style="font-weight:bold;">{{companyBaseInfo.EnterpriseName}}</td>
+                            </thead>
+                            <tr>
+                                <td>检查时间:</td>
+                                <td>{{reportData[0].checkTime}}</td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td>要求完成时间:</td>-->
+                                <!--<td>{{reportData[0].deadLine}}</td>-->
+                            <!--</tr>-->
+                            <tr >
+                                <td>检查人员:</td>
+                                <td>{{reportData[0].checker}}</td>
+                            </tr>
+                            <tr>
+                                <td>部位:</td>
+                                <td>{{reportData[0].part}}</td>
+                            </tr>
+                            <tr>
+                                <td>问题及隐患:</td>
+                                <td>{{reportData[0].problem}}</td>
+                            </tr>
+                            <tr>
+                                <td>整改建议:</td>
+                                <td>{{reportData[0].suggest}}</td>
+                            </tr>
+                            <tr>
+                                <td>备注:</td>
+                                <td>{{reportData[0].memo}}</td>
+                            </tr>
+                            <tr>
+                                <td>现场照片:</td>
+                                <td><img src="assets/images/灭火器失效前.jpg" style="width: 250px;"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div v-show="currentDetailMenu.code == 'improve'"
+                         transition="detail">
+                        <table class="table">
+                            <thead>
+                            <td style="width: 30%;">企业名称:</td>
+                            <td  style="font-weight:bold;">{{companyBaseInfo.EnterpriseName}}</td>
+                            </thead>
+                            <tr>
+                                <td>检查时间:</td>
+                                <td>{{improveData[0].checkTime}}</td>
+                            </tr>
+                            <tr>
+                                <td>要求完成时间:</td>
+                                <td>{{improveData[0].deadLine}}</td>
+                            </tr>
+                            <tr >
+                                <td>检查人员:</td>
+                                <td>{{improveData[0].checker}}</td>
+                            </tr>
+                            <tr>
+                                <td>部位:</td>
+                                <td>{{improveData[0].part}}</td>
+                            </tr>
+                            <tr>
+                                <td>问题及隐患:</td>
+                                <td>{{improveData[0].problem}}</td>
+                            </tr>
+                            <tr>
+                                <td>整改建议:</td>
+                                <td>{{improveData[0].suggest}}</td>
+                            </tr>
+                            <tr>
+                                <td>备注:</td>
+                                <td>{{improveData[0].memo}}</td>
+                            </tr>
+                            <tr>
+                                <td>现场照片:</td>
+                                <td><img src="assets/images/锅炉房.jpg" style="width: 250px;"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><img src="assets/images/锅炉房1.jpg" style="width: 250px;"></td>
+                            </tr>
                         </table>
                     </div>
                 </div>

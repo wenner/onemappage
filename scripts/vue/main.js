@@ -42,8 +42,12 @@ vueExports.main = {
             {text: "排放检测", code: "discharge", icon: "fa-pagelines"},
             {text: "生产工艺", code: "processing", icon: "fa-sun-o"},
             {text: "安全设施", code: "safe", icon: "fa-yelp", disabled: false},
-            {text: "其他1", code: "other", icon: "fa-empire", disabled: true}
+            {text: "企业直报", code: "report", icon: "fa-bar-chart", disabled: false},
+            {text: "企业整改", code: "improve", icon: "fa-check-square-o", disabled: false},
+            {text: "其他", code: "other", icon: "fa-empire", disabled: false}
         ],
+        reportData:[],
+        improveData:[],
         currentDetailMenu: {},
 
         //企业安全明细数据
@@ -1776,7 +1780,12 @@ vueExports.main = {
                         var a = data[i].substr(-3);
 
                     }
-                    self.processData = data;
+                    if(data.length>0){
+                        self.processData = data;
+                    }else{
+
+                    }
+
                 },
                 error: function () {
                     alert("异常！");
@@ -1785,6 +1794,19 @@ vueExports.main = {
 
         },
 
+
+        getReportDetail:function(){
+            var deTail=[
+                {name:"单位名称",checkTime:"2016年4月08日",deadLine:"2016年5月08日",checker:"容北利",part:"作业现场",problem:"灭火器失效",suggest:"更换有效灭火器材。",memo:"限期整改",picture:""}
+            ]
+            this.reportData=deTail;
+        },
+        getImproveDetail:function(){
+            var deTail=[
+                {name:"单位名称",checkTime:"2016年4月05日",deadLine:"2016年5月05日",checker:"李晨",part:"锅炉房",problem:"房内堆积过多易燃物,容易引起火灾",suggest:"清理过多杂物，拉开易燃物与火源距离。",memo:"限期整改",picture:""}
+            ]
+            this.improveData=deTail;
+        },
 
         //根据企业名称获取危险品信息
         QueryDangerInfoFromSQL: function (companyName) {
@@ -1931,7 +1953,7 @@ vueExports.main = {
             var self = this;
             setTimeout(function () {
                 console.log("服务器返回数据成功，开始进行解析");
-                console.log(JSON.stringify(data));
+                // console.log(JSON.stringify(data));
                 //模拟数据
                 /*var rs = {
                  "ChsFields":[
