@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" style="height:100%" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" style="height:100%" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>一张网地图展示</title>
@@ -107,9 +108,9 @@
                                 </li>
                             </ul>
                         </div>
-                        <input type="text" class="form-control" id="searchText" v-model="keyword" placeholder="请输入查询内容">
+                        <input type="text" class="form-control" id="searchText" v-model="keyword" placeholder="请输入查询内容" v-on:keyup.enter="search">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" id="findBtn" @click="search | key 13">
+                            <button class="btn btn-default" type="button" id="findBtn" @click="search | key 13" >
                                 <i class="fa fa-search"></i>
                             </button>
                         </span>
