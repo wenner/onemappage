@@ -63,6 +63,9 @@
         outWasteLayer = new GraphicsLayer();
         $Map.addLayer(outWasteLayer);
 
+        txtLayer=new GraphicsLayer();
+        $Map.addLayer(txtLayer);
+        
         setSymbolStyle();
         var baseMaps = getBaseMaps();
         createMapToggle();
@@ -400,5 +403,3 @@
 
 
 })();
-
-

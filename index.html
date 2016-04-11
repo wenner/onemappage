@@ -109,13 +109,14 @@
                         </div>
                         <input type="text" class="form-control" id="searchText" v-model="keyword" placeholder="请输入查询内容">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" id="findBtn" @click="search">
+                            <button class="btn btn-default" type="button" id="findBtn" @click="search | key 13">
                                 <i class="fa fa-search"></i>
                             </button>
                         </span>
                     </div>
                     <div style="padding-top:10px">
                         <div v-show="sideLoading">查询数据中...</div>
+                        <div v-show="!sideLoading && result.length >0" @click="result=[];"><span>返回</span></div>
                         <div v-show="!sideLoading && result.length>0">
                             &nbsp;
                             <span class="pull-right">{{result.length}}条结果</span>
@@ -130,8 +131,46 @@
                            v-bind:class="{ 'active': item == currentSelectedCompany}"
                            @click="showResultItem(item)">
                             <!--此处的img src 加v-bind:src=... 之后图片就显示不出来，不加时，在页面初次加载时会出错，如何解决-->
-                            <sapn><img src="../onemappage/assets/images/location_icon/{{$index}}.PNG" alt="img"  onerror="nofind();"></sapn>{{item.feature.attributes.UNAME}}
+                            <template v-if="$index<10">
+                                <sapn><img src="../onemappage/assets/images/location_icon/{{$index}}.PNG" alt="img"  onerror="nofind();"></sapn>
+                            </template>
+                            <template v-if="$index>=10">
+                                <sapn><img src="../onemappage/assets/images/location_icon/_oneerror.PNG" alt="img"  onerror="nofind();"></sapn>
+                            </template>
+                            {{item.feature.attributes.UNAME}}
                         </a>
+                    </div>
+
+                    <div v-show="result.length == 0 && sideLoading == false">
+                        <div class="statistic-box-container" v-for="item in ['企业整改' ,'从业人员持证' , '特种设备' , '安全设施检测']">
+                            <h3>{{item}}</h3>
+                            <div class='row text-center'>
+                                <div class="col-md-4"  @click="QueryEnterpriseNamesWithKeywordFromSQL('天津')">
+                                    <a href="#" class='statistic-box red' >
+                                        <div>
+                                            <p>523</p>
+                                            <span>超期</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="#" class='statistic-box yellow'>
+                                        <div>
+                                            <p style="font-size:30px;margin:10px">115</p>
+                                            <span>即将超期</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="#" class='statistic-box green'>
+                                        <div>
+                                            <p style="font-size:30px;margin:10px">5</p>
+                                            <span>正常</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,28 +197,37 @@
                     <div v-show="currentDetailMenu.code == 'info'"
                          transition="detail">
                         <table class="table">
+                            <thead>
+                                <td style="width: 30%;">企业名称:</td>
+                                <td  style="font-weight:bold;">{{companyBaseInfo.EnterpriseName}}</td>
+                            </thead>
                             <tr>
-                                <td colspan="2" style="font-weight:bold">{{currentSelectedCompany.feature.attributes.UNAME}}</td>
+                                <td><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>生产/经营地址:</td>
+                                <td>{{companyBaseInfo.BusinessAddress}}</td>
                             </tr>
                             <tr>
-                                <td style="width:100px">项目名称</td>
-                                <td>{{currentSelectedCompany.feature.attributes.XMMC}}</td>
+                                <td><span class="glyphicon glyphicon-th" aria-hidden="true"></span>主要产品及规模:</td>
+                                <td>{{companyBaseInfo.ProductScale}}</td>
                             </tr>
-                            <!--<tr>-->
-                                <!--<td>规划状态</td>-->
-                                <!--<td>{{currentSelectedCompany.feature.attributes.GHZT}}</td>-->
-                            <!--</tr>-->
-                            <tr>
-                                <td>性质</td>
-                                <td>{{currentSelectedCompany.feature.attributes.XZ}}</td>
+                            <tr >
+                                <td><span class="glyphicon glyphicon-grain" aria-hidden="true"></span>主要原辅料及用量:</td>
+                                <td>{{companyBaseInfo.MaterialDosage}}</td>
                             </tr>
                             <tr>
-                                <td>企业名</td>
-                                <td>{{currentSelectedCompany.feature.attributes.企业名}}</td>
+                                <td><span class="glyphicon glyphicon-user" aria-hidden="true"></span>主要负责人:</td>
+                                <td>{{companyBaseInfo.PrincipalName}}  <span class="text-right"></span><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>联系方式:{{companyBaseInfo.PrincipalTelephone}}</td>
                             </tr>
                             <tr>
-                                <td>性质分类</td>
-                                <td>{{currentSelectedCompany.feature.attributes.Zlbmc}}</td>
+                                <td><span class="glyphicon glyphicon-user" aria-hidden="true"></span>分管安全负责人:</td>
+                                <td>{{companyBaseInfo.SafetyDirectorName}}  <span class="text-right"></span> <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>联系方式:{{companyBaseInfo.SafetyDirectorTelephone}}</td>
+                            </tr>
+                            <tr>
+                                <td><span class="glyphicon glyphicon-user" aria-hidden="true"></span>安全管理人员:</td>
+                                <td>{{companyBaseInfo.SecurityAdministratorName}}  <span class="text-right"></span><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>联系方式:{{companyBaseInfo.SecurityAdministratorTelephone}}</td>
+                            </tr>
+                            <tr>
+                                <td><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>电子邮箱:</td>
+                                <td>{{companyBaseInfo.Email}}   <span class="glyphicon glyphicon-print" aria-hidden="true"><span class="text-right"></span></span>传真:{{companyBaseInfo.Fax}}</td>
                             </tr>
                         </table>
                     </div>
@@ -286,8 +334,8 @@
                     </div>
                 </div>
                 <div class="sidefooter">
-                    <div class="row text-center" style="padding:10px 10px 0 10px;">
-                        <div class="col-md-4" v-for="item in detailMenus">
+                    <div class="row text-center" style="padding:10px 0px 0 10px;margin-left:0;margin-right:0">
+                        <div class="col-md-3" v-for="item in detailMenus" style="padding-left:0;padding-right: 10px;">
                             <a @click='switchDetail(item)'
                                :class="{'active' : currentDetailMenu == item , 'disabled' : item.disabled}">
                                 <i class="fa {{item.icon || 'fa-arrow-left'}}" style="font-size:22px"></i>
@@ -417,4 +465,3 @@
 
 
 </body>
-</html>

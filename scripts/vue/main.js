@@ -26,6 +26,9 @@ vueExports.main = {
         resultSort: [],
         currentSelectedCompany: {},
 
+        //企业基本信息
+        companyBaseInfo:{},
+
         detailMenus: [
             {text: "基本信息", code: "info", icon: "fa-info-circle"},
             {text: "危险品", code: "danger", icon: "fa-bomb"},
@@ -36,7 +39,7 @@ vueExports.main = {
         ],
         currentDetailMenu: {},
 
-        //企业明细数据
+        //企业安全明细数据
         companyDangerData: null,
         companyDangerSelectedItem: {},
         companyDischargeData: [],
@@ -413,7 +416,23 @@ vueExports.main = {
             console.log(detailMenu.code);
         },
         getInfoDetail: function (company) {
-            console.log(company)
+            var self=this;
+            console.log("进入详细信息列表");
+            var companyName = company.feature.attributes.UNAME;
+            var url="http://ajhb.tjxrs.cn/SecurityInfoService/enterprise/"+companyName;
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "JSON",
+                success: function (data) {
+                    console.log(data);
+                    // console.log(JSON.stringify(data));
+                    self.companyBaseInfo=data;
+                },
+                error: function () {
+                    alert("异常！");
+                }
+            })
         },
         getDangerDetail: function (company) {
             var companyName = company.feature.attributes.UNAME;
@@ -1484,18 +1503,46 @@ vueExports.main = {
                     outWasteContent.push([itemChildren.FID, itemChildren.sn, itemChildren.pfk, itemChildren.name, itemChildren.location, itemChildren.fqp, itemChildren.xx, itemChildren.yy]);
                     var pt = new Point(itemChildren.xx, itemChildren.yy, {"wkid": 102100});
                     var pms;
+
+                    var font  = new esri.symbol.Font();
+                    font.setSize("10pt");
+                    font.setFamily("微软雅黑");
                     switch (itemChildren.group) {
                         case "固废监测点位":
                             pms = new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/gf.png", 35, 35);
+                            var text = new esri.symbol.TextSymbol("固废监测点位");
+                            text.setOffset(0,-2);
+                            text.setFont(font);
+                            text.setColor(new dojo.Color([255,255,255,100]));
+                            var  gLbl= new esri.Graphic(pt,text,item);
+                            txtLayer.add(gLbl);
                             break;
                         case "废水监测点位":
                             pms = new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/fs.png", 35, 35);
+                            var text = new esri.symbol.TextSymbol("废水监测点位");
+                            text.setOffset(0,-2);
+                            text.setFont(font);
+                            text.setColor(new dojo.Color([255,255,255,100]));
+                            var  gLbl= new esri.Graphic(pt,text,item);
+                            txtLayer.add(gLbl);
                             break;
                         case "雨水排放点位":
                             pms = new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/rains.png", 35, 35);
+                            var text = new esri.symbol.TextSymbol("雨水排放点位");
+                            text.setOffset(0,-2);
+                            text.setFont(font);
+                            text.setColor(new dojo.Color([255,255,255,100]));
+                            var gLbl= new esri.Graphic(pt,text,item);
+                            txtLayer.add(gLbl);
                             break;
                         case "废气排放点位":
                             pms = new PictureMarkerSymbol("../onemappage/assets/images/outWaste_icon/fq.png", 35, 35);
+                            var text = new esri.symbol.TextSymbol("废气排放点位");
+                            text.setOffset(0,-2);
+                            text.setFont(font);
+                            text.setColor(new dojo.Color([255,255,255,100]));
+                             var gLbl= new esri.Graphic(pt,text,item);
+                            txtLayer.add(gLbl);
                             break;
                         default:
                             pms = new PictureMarkerSymbol("../onemappage/assets/images/point2.png", 30, 30);
@@ -2036,12 +2083,12 @@ vueExports.main = {
         QueryChemicalNameFromSQL: function (name) {
             this.keywordCollect = [];
             var self = this;
-            var name = name;
+            var name = "%"+name+"%";
             var source = '/FMService/chemical';
             var field = '*';
             var data = {
                 Fields: field.split(','),
-                Search: 'ChemicalName = {0}',
+                Search: 'ChemicalName like {0}',
                 Values: [name],
                 OrderFieldName: 'RegistrationTime',
                 OrderType: 'desc'
@@ -2077,12 +2124,12 @@ vueExports.main = {
         //安全设施名称EquipmentName-->企业名
         QueryEquipmentNameFromSQL: function (name) {
             var self = this;
-            var name = name;
+            var name = "%"+name+"%";
             var source = '/FMService/equipment';
             var field = '*';
             var data = {
                 Fields: field.split(','),
-                Search: 'EquipmentName = {0}',
+                Search: 'EquipmentName like {0}',
                 Values: [name],
                 OrderFieldName: 'RegistrationTime',
                 OrderType: 'desc'
@@ -2118,12 +2165,12 @@ vueExports.main = {
         //特种设备名称DeviceName-->企业名
         QueryDeviceNameFromSQL: function (name) {
             var self = this;
-            var name = name;
+            var name = "%"+name+"%";
             var source = '/FMService/specialequipment';
             var field = '*';
             var data = {
                 Fields: field.split(','),
-                Search: 'DeviceName = {0}',
+                Search: 'DeviceName like {0}',
                 Values: [name],
                 OrderFieldName: 'RegistrationTime',
                 OrderType: 'desc'
@@ -2139,6 +2186,7 @@ vueExports.main = {
             var resultName = [];
 
             function onSuccess(data) {
+                self.QueryEnterpriseNamesWithKeywordFromSQL(name);
                 console.log("查询特种设备名称DeviceName-->企业名  成功");
                 for (var i = 0; i < data.Data.length; i++) {
                     var a = data.Data[i][10];
@@ -2154,6 +2202,49 @@ vueExports.main = {
 
             function onFail(data) {
                 console.log("特种设备名称DeviceName-->企业名,没有查到数据,具体信息见下方");
+                console.warn(data);
+            }
+        },
+        QueryEnterpriseNamesWithKeywordFromSQL:function(name){
+            var self = this;
+            // var name = "%"+name+"%";
+            var name = "天津";
+            var source = '/FMService/enterprisename';
+            var field = '*';
+            var data = {
+                Fields: field.split(','),
+                Search: 'truename like {0}',
+                Values: [name],
+                OrderFieldName: 'RegistrationTime',
+                OrderType: 'desc'
+            };
+            var arg_map = {
+                data: data,
+                success: onSuccess,
+                fail: onFail,
+                url: source
+            };
+            tjx.data.safetysearch.getDataTable(arg_map);
+            //将取到的名称存到resultName中
+            var resultName = [];
+            function onSuccess(data) {
+                console.log("查询企业名称truename-->企业名  成功");
+                console.log(data);
+                for (var i = 0; i < data.Data.length; i++) {
+                    var a = data.Data[i][10];
+                    if (a != "" && a != null) {
+                        if (!resultName.contains(a)) {
+                            resultName.push(a);
+                            self.keywordCollect.push(a);
+                        }
+                    }
+                }
+                // console.log(self.keywordCollect);
+                // self.keywordCollect = resultName;
+            }
+
+            function onFail(data) {
+                console.log("查询企业名称truename-->企业名,没有查到数据,具体信息见下方");
                 console.warn(data);
             }
         }
