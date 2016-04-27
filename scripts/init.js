@@ -81,7 +81,7 @@
         var loadedCount = 0;
         modals.each(function (i, n) {
             var modal = $(n);
-            modalHref = modal.data("modalhref");
+            var modalHref = modal.data("modalhref");
             modal.load(modalHref, function () {
                 var modalExports = vueExports[modal.attr("id")];
                 if (modalExports) new Vue(modalExports);
@@ -249,7 +249,7 @@
 
     //将点平移到map正中 (并 缩放到制定map级别)
     function setMapCenter(evt, level) {
-        var location = new esri.geometry.Point(evt.mapPoint.x, evt.mapPoint.y, map.spatialReference)  //evt.mapPoint.y-5000 将y值向上提高5000m
+        var location = new esri.geometry.Point(evt.mapPoint.x, evt.mapPoint.y, map.spatialReference) ; //evt.mapPoint.y-5000 将y值向上提高5000m
         //map.centerAndZoom(location, level);   //将点平移到map正中 并 缩放到制定map级别
         map.centerAt(location);  //将点平移到map正中
     }

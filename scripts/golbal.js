@@ -53,7 +53,6 @@ var bottomBarMenus = [
 
 
 //十六进制颜色值的正则表达式
-
 /*16进制颜色转为RGB格式*/
 String.prototype.toRGB = function(){
     var ColorReg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
@@ -98,7 +97,3 @@ Array.prototype.remove = function(val) {
         this.splice(index, 1);
     }
 };
-// Object.prototype.push=function(o){
-//     //如果o是object
-//     if(typeof(o)=='object') for(var p in o) this[p]=o[p];
-// };
